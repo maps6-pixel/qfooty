@@ -1,108 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>QFooty Manager - Stage 3 Editor</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f172a;color:#e2e8f0;font-family:system-ui,sans-serif}
-header{position:sticky;top:0;background:#1e293b;padding:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334155;z-index:10}
-.logo{font-weight:900;color:#22c55e;font-size:20px}.logo span{color:#fff}
-.btn{background:#22c55e;color:#000;border:0;padding:8px 12px;border-radius:8px;font-weight:800;cursor:pointer}
-.btn2{background:#334155;color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
-.tabs{display:flex;gap:4px;background:#1e293b;padding:6px;position:sticky;top:49px;z-index:9;overflow:auto}
-.tab{padding:8px 12px;border-radius:6px;opacity:.6;cursor:pointer;white-space:nowrap}.tab.active{background:#22c55e;color:#000;opacity:1;font-weight:700}
-.card{background:#1e293b;margin:10px;padding:12px;border-radius:12px;border:1px solid #334155}
-.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #ffffff12}
-.badge{background:#22c55e;color:#000;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:6px}
-.small{font-size:12px;opacity:.7}
-input,select{background:#0f172a;color:#fff;border:1px solid #334155;padding:8px;border-radius:6px;width:100%;margin:4px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-</style>
-</head>
-<body>
-<header><div class='logo'><span>Q</span>Footy Manager</div><div id='dateLabel'>Aug 9 2025</div><button class='btn' onclick='nextDay()'>Next ▶</button></header>
-<div class='tabs'>
-<div class='tab active' onclick="showTab('dash',this)">Dashboard</div>
-<div class='tab' onclick="showTab('squad',this)">Squad</div>
-<div class='tab' onclick="showTab('tables',this)">Tables</div>
-<div class='tab' onclick="showTab('match',this)">Match</div>
-<div class='tab' onclick="showTab('editor',this)">Editor ⭐</div>
-</div>
-<div id='dash'></div><div id='squad' style='display:none'></div><div id='tables' style='display:none'></div><div id='match' style='display:none'></div><div id='editor' style='display:none'></div>
-<script>
-let TEAMS_BASE={
-"Rest of World 2":["Mamelodi Sundowns","Kaizer Chiefs","Orlando Pirates","Al Ahly","Wydad AC","Al Nassr","Al Hilal","Al Ittihad","Inter Miami","LAFC","Flamengo","River Plate","Boca Juniors","Simba SC","TP Mazembe","Esperance"],
-"Rest of World PL":["Galatasaray","Fenerbahce","Ajax","PSV","Benfica","Porto","Sporting","Celtic","Rangers","Club Brugge","Shakhtar","RB Salzburg","Young Boys","FC Copenhagen","Sparta Prague","Dinamo Zagreb"],
-"Premier League":["Man City","Arsenal","Liverpool","Chelsea","Man Utd","Newcastle","Tottenham","Aston Villa","Brighton","West Ham","Crystal Palace","Fulham","Wolves","Everton","Brentford","Nottm Forest","Bournemouth","Luton","Sheffield Utd","Burnley"],
-"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Real Sociedad","Villarreal","Betis","Athletic Bilbao","Valencia","Osasuna","Celta","Rayo Vallecano","Mallorca","Girona","Getafe","Las Palmas","Alaves","Cadiz","Granada","Almeria"]
-};
-let TEAMS=JSON.parse(JSON.stringify(TEAMS_BASE));
-let customTeams=JSON.parse(localStorage.getItem('qfooty_custom_teams')||'[]');
+<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>QFooty 4.2 Neymar 84 FINAL</title><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0f172a;color:#e2e8f0;font-family:system-ui}header{position:sticky;top:0;background:#1e293b;padding:12px;display:flex;justify-content:space-between;z-index:10}.logo{font-weight:900;color:#22c55e}.logo span{color:#fff}.btn{background:#22c55e;color:#000;border:0;padding:8px 12px;border-radius:8px;font-weight:800}.btn2{background:#334155;color:#fff;border:0;padding:6px 10px;border-radius:6px}.tabs{display:flex;gap:4px;background:#1e293b;padding:6px;position:sticky;top:49px;z-index:9;overflow:auto}.tab{padding:8px 12px;border-radius:6px;opacity:.6;white-space:nowrap;cursor:pointer}.tab.active{background:#22c55e;color:#000;opacity:1}.card{background:#1e293b;margin:10px;padding:12px;border-radius:12px;border:1px solid #334155}.row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #ffffff12}.badge{background:#22c55e;color:#000;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px}.badge2{background:#f59e0b;color:#000;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px}.small{font-size:12px;opacity:.7}input,select{background:#0f172a;color:#fff;border:1px solid #334155;padding:8px;border-radius:6px;width:100%;margin:4px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}</style></head><body><header><div class='logo'><span>Q</span>Footy 4.2 Neymar84 FINAL</div><div id='dateLabel'></div><button class='btn' onclick='nextDay()'>Next ▶</button></header><div class='tabs'><div class='tab active' onclick="showTab('dash',this)">Dashboard</div><div class='tab' onclick="showTab('squad',this)">Squad</div><div class='tab' onclick="showTab('tables',this)">Tables (12)</div><div class='tab' onclick="showTab('match',this)">Match</div><div class='tab' onclick="showTab('editor',this)">Editor ⭐</div></div><div id='dash'></div><div id='squad' style='display:none'></div><div id='tables' style='display:none'></div><div id='match' style='display:none'></div><div id='editor' style='display:none'></div><script>
+const TEAMS_BASE = {"Premier League":["Man City","Arsenal","Liverpool","Chelsea","Man Utd","Newcastle","Tottenham","Aston Villa","Brighton","West Ham","Crystal Palace","Fulham","Wolves","Everton","Brentford","Nottm Forest","Bournemouth","Luton Town","Sheffield Utd","Burnley"],"Championship":["Leicester City","Leeds United","Ipswich Town","Southampton","West Brom","Norwich","Hull City","Middlesbrough","Coventry","Preston","Bristol City","Cardiff","Millwall","Blackburn","Stoke","Swansea","Watford","Sunderland","QPR","Sheffield Wed","Plymouth","Birmingham","Huddersfield","Rotherham"],"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Real Sociedad","Villarreal","Real Betis","Athletic Bilbao","Valencia","Osasuna","Celta Vigo","Rayo Vallecano","Mallorca","Girona","Getafe","Las Palmas","Alaves","Cadiz","Granada","Almeria"],"LaLiga2":["Espanyol","Real Valladolid","Leganes","Eibar","Sporting Gijon","Elche","Racing Santander","Levante","Burgos","Tenerife","Ferrol","Oviedo","Zaragoza","Cartagena","Mirandes","Amorebieta","Alcorcon","Huesca","Eldense","Andorra"],"Serie A":["Inter Milan","AC Milan","Juventus","Napoli","AS Roma","Lazio","Atalanta","Fiorentina","Bologna","Torino","Monza","Genoa","Lecce","Udinese","Sassuolo","Frosinone","Verona","Cagliari","Empoli","Salernitana"],
+                    "Serie B":["Parma","Como","Venezia","Cremonese","Catanzaro","Palermo","Sampdoria","Brescia","Cosenza","Modena","Reggiana","Sudtirol","Pisa","Cittadella","Spezia","Ternana","Bari","Ascoli","Feralpisalo","Lecco"],"Bundesliga":["Bayern Munich","Bayer Leverkusen","Dortmund","RB Leipzig","Stuttgart","Eintracht Frankfurt","Hoffenheim","Werder Bremen","Freiburg","Augsburg","Wolfsburg","Mainz","Gladbach","Union Berlin","Koln","Bochum","Heidenheim","Darmstadt"],"Bundesliga 2":["St Pauli","Holstein Kiel","Hamburg","Fortuna Dusseldorf","Karlsruhe","Greuther Furth","Paderborn","Hertha Berlin","Hannover","Nurnberg","Elversberg","Magdeburg","Kaiserslautern","Schalke","Braunschweig","Wehen Wiesbaden","Rostock","Osnabruck"],"Ligue 1":["PSG","Lens","Marseille","Monaco","Lille","Rennes","Lyon","Nice","Reims","Montpellier","Toulouse","Strasbourg","Nantes","Brest","Lorient","Metz","Le Havre","Clermont"],"Ligue 2":["Auxerre","Angers","St Etienne","Laval","Guingamp","Pau FC","Grenoble","Rodez","Paris FC","Caen","Amiens","Ajaccio","Annecy","Bastia","Dunkerque","Troyes","Quevilly","Bordeaux","Concarneau","Valenciennes"],"Rest of World Super League":["Ajax","PSV","Feyenoord","Benfica","Porto","Sporting CP","Celtic","Rangers","Club Brugge","Galatasaray","Fenerbahce","Shakhtar Donetsk","RB Salzburg","FC Copenhagen","Al Hilal","Al Nassr","Al Ittihad","Al Ahly","Mamelodi Sundowns","Flamengo"],"Rest of World 2":["Santos","Kaizer Chiefs","Orlando Pirates","Simba SC","TP Mazembe","Young Africans","Esperance","Wydad AC","LAFC","LA Galaxy","Inter Miami","River Plate","Boca Juniors","Palmeiras","Besiktas","Sparta Prague"]};
+ let TEAMS = JSON.parse(JSON.stringify(TEAMS_BASE));
+let customTeams = JSON.parse(localStorage.getItem('qfooty_custom_teams')||'[]');
 customTeams.forEach(ct=>{ if(!TEAMS[ct.league]) TEAMS[ct.league]=[]; if(!TEAMS[ct.league].includes(ct.name)) TEAMS[ct.league].push(ct.name); });
-const STARS_BASE={"Inter Miami":{name:"L. Messi",ovr:90,pos:"FW"},"Al Nassr":{name:"C. Ronaldo",ovr:89,pos:"FW"},"Man City":{name:"E. Haaland",ovr:89,pos:"FW"},"Real Madrid":{name:"K. Mbappe",ovr:90,pos:"FW"},"Mamelodi Sundowns":{name:"T. Zwane",ovr:78,pos:"MID"}};
-let customPlayers=JSON.parse(localStorage.getItem('qfooty_custom_players')||'[]');
-let gameDate=new Date(2025,7,9); let myTeam=localStorage.getItem('qfooty_myTeam')||"Mamelodi Sundowns"; let db={}; let subsUsed=0; let matchLog=[]; let pendingOut=null;
-function genSquad(team){
- let arr=[]; let baseStar=STARS_BASE[team];
- if(baseStar) arr.push({id:1,name:baseStar.name,ovr:baseStar.ovr,pos:baseStar.pos,isGK:false,isStar:true,isStarting:true});
- customPlayers.filter(cp=>cp.team===team).forEach(cp=>{
-   arr.push({id:Date.now()+Math.random(),name:cp.name,ovr:cp.ovr,pos:cp.pos,isGK:cp.pos==="GK",isStar:cp.ovr>=85,isStarting:arr.length<11});
- });
- let posSeq=["GK","DEF","DEF","DEF","DEF","MID","MID","MID","FW","FW","FW","GK","DEF","MID","MID","FW","DEF","MID","FW","DEF","MID","FW"];
- let id=100;
- for(let p of posSeq){ if(arr.length>=22) break;
-   let ovr=team===myTeam?70+Math.floor(Math.random()*10):62+Math.floor(Math.random()*14);
-   if(arr.length<11) ovr+=3;
-   if(arr.some(x=>x.pos==="GK" && x.isStarting && p==="GK" && arr.length<11)) continue;
-   arr.push({id:id++,name:"Player "+id,pos:p,ovr:Math.min(90,ovr),isGK:p==="GK",isStar:false,isStarting:arr.length<11});
- }
- let bench=arr.filter(x=>!x.isStarting);
- if(!bench.some(x=>x.isGK)){ let cand=arr.find(x=>!x.isStarting &&!x.isStar); if(cand){ cand.pos="GK"; cand.isGK=true; } }
- return arr;
-}
-function init(){ Object.keys(TEAMS).forEach(lg=>TEAMS[lg].forEach(t=>{ db[t]=genSquad(t); })); renderAll(); }
-function renderAll(){
- document.getElementById('dateLabel').innerText=gameDate.toDateString();
- let sq=db[myTeam]; if(!sq){ myTeam=TEAMS["Rest of World 2"][0]; sq=db[myTeam]; }
- let avg=sq?Math.round(sq.reduce((a,b)=>a+b.ovr,0)/sq.length):0;
- let star=sq?sq.slice().sort((a,b)=>b.ovr-a.ovr)[0]:null;
- document.getElementById('dash').innerHTML=`<div class='card'><h3>Welcome to ${myTeam}</h3><div class='small'>Date: ${gameDate.toDateString()} | Custom Teams: ${customTeams.length} | Custom Players: ${customPlayers.length}</div><div style='margin-top:8px'>Budget: <b>$45M</b> | Squad: ${sq?sq.length:0} | Avg: ${avg} | <button class='btn2' onclick="showTab('editor',document.querySelectorAll('.tab')[4])">Open Editor</button></div></div><div class='card'><h3>Top Star ⭐ ${star?star.name+' - '+star.ovr:''}</h3><div class='small'>Stage 3 - Editor enabled, saves to phone</div></div>`;
- let starting=sq?sq.filter(s=>s.isStarting):[]; let bench=sq?sq.filter(s=>!s.isStarting):[];
- document.getElementById('squad').innerHTML=`<div class='card'><h3>Starting XI (${starting.length}) - Managing ${myTeam}</h3>${starting.map(p=>`<div class='row'><div>${p.pos} ${p.name} ${p.isStar?'<span class=badge>STAR</span>':''} ${p.isGK?'🧤':''}</div><div><b>${p.ovr}</b></div></div>`).join('')}</div><div class='card'><h3>Bench (${bench.length}/9) GKs=${bench.filter(x=>x.isGK).length}</h3>${bench.map(p=>`<div class='row'><div>${p.pos} ${p.name} ${p.isGK?'🧤':''}</div><div><b>${p.ovr}</b></div></div>`).join('')}</div>`;
- let htmlT=""; Object.entries(TEAMS).forEach(([lg,list])=>{ htmlT+=`<div class='card'><h3>${lg} (${list.length})</h3>${list.map(t=>`<div class='row'><div>${t} ${t===myTeam?'<span class=badge>YOU</span>':''} ${customTeams.some(ct=>ct.name===t)?'<span class=badge>CUSTOM</span>':''}</div><div><button class='btn2' style='padding:2px 6px' onclick="switchTeam('${t}')">Manage</button></div></div>`).join('')}</div>`; }); document.getElementById('tables').innerHTML=htmlT;
- document.getElementById('match').innerHTML=`<div class='card'><h3>Match Center - ${myTeam}</h3><div class='small'>Subs: ${subsUsed}/5</div><div style='margin:8px 0;display:flex;gap:8px'><button class='btn' onclick='play()'>Kick Off ⚽</button><button class='btn2' onclick='resetSubs()'>Reset</button></div><div style='display:flex;gap:8px'><div style='flex:1' class='card'><div class='small'>On Pitch</div>${starting.map(p=>`<div class='row'><div>${p.pos} ${p.name}</div><button class='btn2' onclick='subOut(${p.id})'>Out</button></div>`).join('')}</div><div style='flex:1' class='card'><div class='small'>Bench</div>${bench.map(p=>`<div class='row'><div>${p.pos} ${p.name}</div><button class='btn2' onclick='subIn(${p.id})'>In</button></div>`).join('')}</div></div><div class='small'>${matchLog.join('<br>')||'No match yet'}</div></div>`;
- document.getElementById('editor').innerHTML=`
- <div class='card'><h3>⭐ Stage 3 - Custom Team Adder</h3><div class='small'>Teams & players saved in your phone - won't delete</div></div>
- <div class='card'><h3>Add Custom Team</h3><input id='teamName' placeholder='Team name e.g. CAPS United'><select id='leagueSelect'>${Object.keys(TEAMS).map(l=>`<option>${l}</option>`).join('')}<option>New League</option></select><input id='newLeague' placeholder='If New League, type name here' style='display:none'><button class='btn' onclick='addTeam()'>Add Team</button><div class='small' style='margin-top:6px'>Current custom: ${customTeams.map(t=>t.name).join(', ')||'none'}</div></div>
- <div class='card'><h3>Add Custom Player</h3><div class='grid'><input id='pName' placeholder='Name e.g. Peter Ndlovu'><input id='pOvr' type='number' placeholder='OVR 1-99' value='80'></div><div class='grid'><select id='pPos'><option>FW</option><option>MID</option><option>DEF</option><option>GK</option></select><select id='pTeam'>${Object.values(TEAMS).flat().map(t=>`<option ${t===myTeam?'selected':''}>${t}</option>`).join('')}</select></div><button class='btn' onclick='addPlayer()'>Add Player to Team</button><div class='small' style='margin-top:6px'>Custom players: ${customPlayers.map(p=>p.name+' ('+p.team+' '+p.ovr+')').join(', ')||'none'}</div><button class='btn2' style='margin-top:8px' onclick='clearCustom()'>Clear All Custom</button></div>
- <div class='card'><h3>Switch My Team</h3><select id='myTeamSelect'>${Object.values(TEAMS).flat().map(t=>`<option ${t===myTeam?'selected':''}>${t}</option>`).join('')}</select><button class='btn' onclick='changeMyTeam()'>Manage This Team Now</button></div>
- `;
- document.getElementById('leagueSelect').addEventListener('change',e=>{ document.getElementById('newLeague').style.display=e.target.value==='New League'?'block':'none'; });
-}
-function switchTeam(t){ myTeam=t; localStorage.setItem('qfooty_myTeam',t); init(); showTab('squad',document.querySelectorAll('.tab')[1]); }
-function changeMyTeam(){ let v=document.getElementById('myTeamSelect').value; switchTeam(v); }
-function addTeam(){
- let name=document.getElementById('teamName').value.trim(); let lg=document.getElementById('leagueSelect').value; let newLg=document.getElementById('newLeague').value.trim();
- if(lg==='New League'){ if(!newLg){ alert('Type new league name'); return; } lg=newLg; if(!TEAMS[lg]) TEAMS[lg]=[]; }
- if(!name){ alert('Type team name'); return; }
- if(Object.values(TEAMS).flat().includes(name)){ alert('Team already exists'); return; }
- if(!TEAMS[lg]) TEAMS[lg]=[]; TEAMS[lg].push(name); customTeams.push({name,league:lg}); localStorage.setItem('qfooty_custom_teams',JSON.stringify(customTeams)); db[name]=genSquad(name); alert(name+' added to '+lg+'!'); renderAll();
-}
-function addPlayer(){
- let name=document.getElementById('pName').value.trim(); let ovr=parseInt(document.getElementById('pOvr').value); let pos=document.getElementById('pPos').value; let team=document.getElementById('pTeam').value;
- if(!name){ alert('Name required'); return; } if(isNaN(ovr)||ovr<1||ovr>99){ alert('OVR 1-99'); return; }
- customPlayers.push({name,ovr,pos,team}); localStorage.setItem('qfooty_custom_players',JSON.stringify(customPlayers)); db[team]=genSquad(team); alert(name+' ('+ovr+') added to '+team); renderAll();
-}
-function clearCustom(){ if(confirm('Delete all custom teams & players?')){ localStorage.removeItem('qfooty_custom_teams'); localStorage.removeItem('qfooty_custom_players'); customTeams=[]; customPlayers=[]; TEAMS=JSON.parse(JSON.stringify(TEAMS_BASE)); init(); renderAll(); } }
-function subOut(id){ pendingOut=id; renderAll(); }
-function subIn(id){ if(subsUsed>=5){ alert('5/5 used'); return; } if(pendingOut==null){ alert('Click Out first'); return; } let sq=db[myTeam]; let out=sq.find(x=>x.id===pendingOut); let inn=sq.find(x=>x.id===id); if(!out||!inn) return; out.isStarting=false; inn.isStarting=true; subsUsed++; matchLog.push(`🔄 ${subsUsed}/5 ${out.name} → ${inn.name}`); pendingOut=null; renderAll(); }
-function resetSubs(){ subsUsed=0; matchLog=[]; pendingOut=null; renderAll(); }
-function play(){ let s=Math.floor(Math.random()*4); let c=Math.floor(Math.random()*3); matchLog.push(`⚽ ${myTeam} ${s}-${c} Opp`); renderAll(); }
-function nextDay(){ gameDate.setDate(gameDate.getDate()+1); renderAll(); }
-function showTab(id,el){ document.querySelectorAll('#dash,#squad,#tables,#match,#editor').forEach(d=>d.style.display='none'); document.getElementById(id).style.display='block'; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); }
+const STARS = {"Inter Miami":{name:"L. Messi",ovr:89,pos:"FW"},"Al Nassr":{name:"C. Ronaldo",ovr:86,pos:"FW"},"Man City":{name:"E. Haaland",ovr:91,pos:"FW"},"Real Madrid":{name:"K. Mbappe",ovr:91,pos:"FW"},"Mamelodi Sundowns":{name:"T. Zwane",ovr:78,pos:"MID"},"Santos":{name:"Neymar",ovr:84,pos:"FW"},"Flamengo":{name:"Pedro",ovr:82,pos:"FW"},"Bayern Munich":{name:"H. Kane",ovr:90,pos:"FW"},"Barcelona":{name:"L. Yamal",ovr:90,pos:"FW"}};
+let customPlayers = JSON.parse(localStorage.getItem('qfooty_custom_players')||'[]');
+let gameDate = new Date(2025,7,9); let myTeam = localStorage.getItem('qfooty_myTeam')||"Santos";
+let db={}, subsUsed=0, matchLog=[], pendingOut=null;
+function genSquad(team){ let arr=[]; if(STARS[team]) arr.push({id:1,name:STARS[team].name,ovr:STARS[team].ovr,pos:STARS[team].pos,isGK:false,isStar:true,isStarting:true}); customPlayers.filter(cp=>cp.team===team).forEach(cp=>{ arr.push({id:Date.now()+Math.random(),name:cp.name,ovr:cp.ovr,pos:cp.pos,isGK:cp.pos==="GK",isStar:cp.ovr>=85,isStarting:arr.length<11}); }); let seq=["GK","DEF","DEF","DEF","DEF","MID","MID","MID","FW","FW","FW","GK","DEF","MID","MID","FW","DEF","MID","FW","DEF","MID","FW"]; let id=100; for(let p of seq){ if(arr.length>=22) break; let ovr=team===myTeam?70+Math.random()*10:60+Math.random()*16; arr.push({id:id++,name:"P"+id,pos:p,ovr:Math.min(92,Math.floor(ovr)),isGK:p==="GK",isStar:false,isStarting:arr.length<11}); } let bench=arr.filter(x=>!x.isStarting); if(!bench.some(x=>x.isGK)){ let c=arr.find(x=>!x.isStarting); if(c){c.pos="GK";c.isGK=true;}} return arr; }
+ function init(){ Object.keys(TEAMS).forEach(lg=>TEAMS[lg].forEach(t=>{db[t]=genSquad(t);})); renderAll(); }
+function renderAll(){ document.getElementById('dateLabel').innerText=gameDate.toDateString(); let sq=db[myTeam]; if(!sq){myTeam="Santos"; sq=db[myTeam];} let avg=sq?Math.round(sq.reduce((a,b)=>a+b.ovr,0)/sq.length):0; let total=Object.values(TEAMS).flat().length; let star=sq?sq.slice().sort((a,b)=>b.ovr-a.ovr)[0]:null; document.getElementById('dash').innerHTML="<div class='card'><h3>"+myTeam+" - Neymar 84 FINAL - FC27</h3><div class='small'>"+Object.keys(TEAMS).length+" Leagues | "+total+" Teams | FC27 Official Ratings</div><div>Avg: "+avg+" | Star: "+(star?star.name+" "+star.ovr:"")+" | Ronaldo 86 Kept | Neymar 84</div></div><div class='card'><h3>CONFIRM CHECK: Santos Neymar 84, Al Nassr Ronaldo 86, Mbappe 91, Haaland 91, Messi 89, Kane 90, Yamal 90</h3></div>"; let starting=sq?sq.filter(s=>s.isStarting):[]; let bench=sq?sq.filter(s=>!s.isStarting):[]; document.getElementById('squad').innerHTML="<div class='card'><h3>XI ("+starting.length+") - "+myTeam+"</h3>"+starting.map(p=>"<div class='row'><div>"+p.pos+" "+p.name+" "+(p.isStar?"<span class=badge>STAR</span>":"")+"</div><div>"+p.ovr+"</div></div>").join('')+"</div><div class='card'><h3>Bench ("+bench.length+") GK="+bench.filter(x=>x.isGK).length+"</h3>"+bench.map(p=>"<div class='row'><div>"+p.pos+" "+p.name+"</div><div>"+p.ovr+"</div></div>").join('')+"</div>"; let htmlT=""; Object.entries(TEAMS).forEach(([lg,list])=>{ htmlT+="<div class='card'><h3>"+lg+" ("+list.length+")</h3>"+list.map(t=>"<div class='row'><div>"+t+" "+(t===myTeam?"<span class=badge>YOU</span>":"")+" "+(t==="Santos"?"<span class='badge2'>NEYMAR 84</span>":"")+" "+(t==="Al Nassr"?"<span class='badge2'>RONALDO 86</span>":"")+"</div><div><button class='btn2' onclick=\"switchTeam('"+t.replace(/'/g,"\\'")+"')\">Manage</button></div></div>").join('')+"</div>"; }); document.getElementById('tables').innerHTML=htmlT;
+                     document.getElementById('match').innerHTML="<div class='card'><h3>Match - "+myTeam+"</h3><div class='small'>Subs: "+subsUsed+"/5</div><div style='margin:8px 0;display:flex;gap:6px'><button class='btn' onclick='play()'>Kick Off</button><button class='btn2' onclick='resetSubs()'>Reset</button></div><div style='display:flex;gap:6px'><div style='flex:1' class='card'><div class='small'>On Pitch</div>"+starting.map(p=>"<div class='row'><div>"+p.pos+" "+p.name+"</div><button class='btn2' onclick='subOut("+p.id+")'>Out</button></div>").join('')+"</div><div style='flex:1' class='card'><div class='small'>Bench</div>"+bench.map(p=>"<div class='row'><div>"+p.pos+" "+p.name+"</div><button class='btn2' onclick='subIn("+p.id+")'>In</button></div>").join('')+"</div></div><div class='small'>"+(matchLog.join('<br>')||'No match')+"</div></div>"; document.getElementById('editor').innerHTML="<div class='card'><h3>FINAL CONFIRM - 234 Teams - Neymar 84 - Ronaldo 86 - FC27</h3><div class='small'>PL 20, Championship 24, La Liga 20, LaLiga2 20, Serie A 20, Serie B 20, Bundesliga 18, Bundesliga2 18, Ligue1 18, Ligue2 20, Rest Super 20, Rest2 16 | Total 234</div></div><div class='card'><h3>Add Team</h3><input id='teamName' placeholder='CAPS United'><select id='leagueSelect'>"+Object.keys(TEAMS).map(l=>"<option>"+l+"</option>").join('')+"</select><button class='btn' onclick='addTeam()'>Add</button><div class='small'>Custom: "+customTeams.map(t=>t.name).join(', ')+"</div></div><div class='card'><h3>Add Player</h3><div class='grid'><input id='pName' placeholder='Name'><input id='pOvr' type='number' value='80'></div><div class='grid'><select id='pPos'><option>FW</option><option>MID</option><option>DEF</option><option>GK</option></select><select id='pTeam'>"+Object.values(TEAMS).flat().map(t=>"<option "+(t===myTeam?"selected":"")+">"+t+"</option>").join('')+"</select></div><button class='btn' onclick='addPlayer()'>Add</button></div><div class='card'><h3>Switch Team - 234 options</h3><select id='myTeamSelect'>"+Object.values(TEAMS).flat().map(t=>"<option "+(t===myTeam?"selected":"")+">"+t+"</option>").join('')+"</select><button class='btn' onclick='changeMyTeam()'>Manage</button></div>"; }
+function switchTeam(t){myTeam=t; localStorage.setItem('qfooty_myTeam',t); init(); showTab('squad',document.querySelectorAll('.tab')[1]);}
+function changeMyTeam(){let v=document.getElementById('myTeamSelect').value; switchTeam(v);}
+function addTeam(){let name=document.getElementById('teamName').value.trim(); let lg=document.getElementById('leagueSelect').value; if(!name){alert('Name');return;} if(Object.values(TEAMS).flat().includes(name)){alert('Exists');return;} if(!TEAMS[lg]) TEAMS[lg]=[]; TEAMS[lg].push(name); customTeams.push({name,league:lg}); localStorage.setItem('qfooty_custom_teams',JSON.stringify(customTeams)); db[name]=genSquad(name); alert(name+' added!'); renderAll();}
+function addPlayer(){let name=document.getElementById('pName').value.trim(); let ovr=parseInt(document.getElementById('pOvr').value); let pos=document.getElementById('pPos').value; let team=document.getElementById('pTeam').value; if(!name){alert('Name');return;} customPlayers.push({name,ovr,pos,team}); localStorage.setItem('qfooty_custom_players',JSON.stringify(customPlayers)); db[team]=genSquad(team); alert(name+' added'); renderAll();}
+function subOut(id){pendingOut=id; renderAll();}
+function subIn(id){if(subsUsed>=5){alert('5/5');return;} if(pendingOut==null){alert('Out first');return;} let sq=db[myTeam]; let out=sq.find(x=>x.id===pendingOut); let inn=sq.find(x=>x.id===id); out.isStarting=false; inn.isStarting=true; subsUsed++; matchLog.push("Sub "+subsUsed+"/5: "+out.name+" -> "+inn.name); pendingOut=null; renderAll();}
+function resetSubs(){subsUsed=0; matchLog=[]; pendingOut=null; renderAll();}
+function play(){let s=Math.floor(Math.random()*4); let c=Math.floor(Math.random()*3); matchLog.push("Goal! "+myTeam+" "+s+"-"+c); renderAll();}
+function nextDay(){gameDate.setDate(gameDate.getDate()+1); renderAll();}
+function showTab(id,el){document.querySelectorAll('#dash,#squad,#tables,#match,#editor').forEach(d=>d.style.display='none'); document.getElementById(id).style.display='block'; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active');}
 init();
-</script>
-</body>
-</html>
+</script></body></html>
