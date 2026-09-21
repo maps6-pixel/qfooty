@@ -1,0 +1,2 @@
+# qfooty
+Football Manager game
