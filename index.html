@@ -1,156 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QFooty Manager</title>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>QFooty Manager - Stage 2.1 Fixed</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui;background:#0f172a;color:#fff;min-height:100vh}
-header{background:#1e293b;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-.logo{font-weight:900;font-size:22px}.logo span{color:#22c55e}
-button{background:#22c55e;color:#000;border:none;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer}
-.tabs{display:flex;overflow:auto;background:#1e293b;border-bottom:1px solid #334155}
-.tab{padding:12px 16px;white-space:nowrap;cursor:pointer;opacity:.6}.tab.active{opacity:1;border-bottom:3px solid #22c55e}
-.screen{display:none;padding:14px}.screen.active{display:block}
-.card{background:#1e293b;border-radius:12px;padding:12px;margin-bottom:10px}
-.pitch{background:linear-gradient(#16a34a,#15803d);border:2px solid #fff;border-radius:8px;min-height:420px;position:relative;padding:10px}
-.player-dot{position:absolute;background:#0f172a;border:2px solid #fff;border-radius:20px;padding:4px 8px;font-size:11px;transform:translate(-50%,-50%);cursor:grab;text-align:center;min-width:60px}
-table{width:100%;border-collapse:collapse;font-size:13px} th{opacity:.6;text-align:left;padding:6px} td{padding:6px;border-top:1px solid #334155}
-.badge{display:inline-block;background:#334155;padding:2px 6px;border-radius:6px;font-size:10px}
-select,input{background:#0f172a;color:#fff;border:1px solid #334155;padding:8px;border-radius:8px;width:100%}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f172a;color:#e2e8f0;font-family:system-ui,sans-serif}
+header{position:sticky;top:0;background:#1e293b;padding:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334155;z-index:10}
+.logo{font-weight:900;color:#22c55e;font-size:20px}.logo span{color:#fff}
+.btn{background:#22c55e;color:#000;border:0;padding:8px 12px;border-radius:8px;font-weight:800;cursor:pointer}
+.tabs{display:flex;gap:4px;background:#1e293b;padding:6px;position:sticky;top:49px;z-index:9;overflow:auto}
+.tab{padding:8px 12px;border-radius:6px;opacity:.6;cursor:pointer;white-space:nowrap}.tab.active{background:#22c55e;color:#000;opacity:1;font-weight:700}
+.card{background:#1e293b;margin:10px;padding:12px;border-radius:12px;border:1px solid #334155}
+.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #ffffff12}
+.badge{background:#22c55e;color:#000;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:6px}
+.small{font-size:12px;opacity:.7}
+.start11{border-left:3px solid #22c55e;padding-left:6px}
 </style>
 </head>
 <body>
-<header><div class="logo"><span>Q</span>Footy Manager</div><div id="date">Aug 9 2025</div><button onclick="nextDay()">Next Day ▶</button></header>
-<div class="tabs">
-<div class="tab active" onclick="showTab('dash')">Dashboard</div>
-<div class="tab" onclick="showTab('squad')">Squad</div>
-<div class="tab" onclick="showTab('tables')">Tables</div>
-<div class="tab" onclick="showTab('fixtures')">Fixtures</div>
-<div class="tab" onclick="showTab('transfers')">Transfers</div>
-<div class="tab" onclick="showTab('match')">Match</div>
+<header><div class='logo'><span>Q</span>Footy Manager</div><div id='dateLabel'>Aug 9 2025</div><button class='btn' onclick='nextDay()'>Next Day ▶</button></header>
+<div class='tabs'>
+<div class='tab active' onclick="showTab('dash',this)">Dashboard</div>
+<div class='tab' onclick="showTab('squad',this)">Squad</div>
+<div class='tab' onclick="showTab('tables',this)">Tables</div>
+<div class='tab' onclick="showTab('match',this)">Match</div>
 </div>
-
-<div id="dash" class="screen active"></div>
-<div id="squad" class="screen">
-<div class="card"><select id="formation" onchange="renderSquad()"><option>4-4-2</option><option>4-3-3</option><option>4-2-3-1</option><option>3-5-2</option><option>3-4-3</option><option>5-3-2</option><option>4-1-4-1</option><option>5-4-1</option><option>4-4-1-1</option><option>3-4-2-1</option><option>4-5-1</option><option>4-3-2-1</option></select><small style="opacity:.6"> Drag players anywhere - custom formation</small></div>
-<div class="pitch" id="pitch"></div>
-<div id="bench" class="card"></div>
-</div>
-<div id="tables" class="screen"></div>
-<div id="fixtures" class="screen"></div>
-<div id="transfers" class="screen"></div>
-<div id="match" class="screen"></div>
-
+<div id='dash'></div><div id='squad' style='display:none'></div><div id='tables' style='display:none'></div><div id='match' style='display:none'></div>
 <script>
-const TEAMS = {
-"Premier League":["Man City","Arsenal","Liverpool","Chelsea","Man Utd","Newcastle","Tottenham","Aston Villa","Brighton","West Ham","Crystal Palace","Fulham","Wolves","Everton","Brentford","Bournemouth","Nottm Forest","Leicester","Ipswich","Southampton"],
-"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Villarreal","Real Sociedad","Athletic Bilbao","Real Betis","Valencia","Girona","Osasuna","Getafe","Celta Vigo","Rayo Vallecano","Alaves","Mallorca","Las Palmas","Leganes","Valladolid","Espanyol"],
-"Rest of World PL":["Galatasaray","Fenerbahce","Ajax","PSV","Sporting Lisbon","Benfica","Porto","Celtic","Rangers","Club Brugge","Shakhtar","Olympiacos","Besiktas","Feyenoord","Red Star","Young Boys"],
-"Rest of World 2":["Inter Miami","Al Nassr","Al Hilal","Al Ittihad","Al Ahli","Flamengo","Palmeiras","River Plate","Boca Juniors","Mamelodi Sundowns","Al Ahly","Wydad","LAFC","Al Ain","Kaizer Chiefs","Auckland City"]
+const TEAMS={
+"Rest of World 2":["Mamelodi Sundowns","Kaizer Chiefs","Orlando Pirates","Al Ahly","Wydad AC","Al Nassr","Al Hilal","Al Ittihad","Inter Miami","LAFC","Flamengo","River Plate","Boca Juniors","Simba SC","TP Mazembe","Esperance"],
+"Rest of World PL":["Galatasaray","Fenerbahce","Ajax","PSV","Benfica","Porto","Sporting","Celtic","Rangers","Club Brugge","Shakhtar","RB Salzburg","Young Boys","FC Copenhagen","Sparta Prague","Dinamo Zagreb"],
+"Premier League":["Man City","Arsenal","Liverpool","Chelsea","Man Utd","Newcastle","Tottenham","Aston Villa","Brighton","West Ham","Crystal Palace","Fulham","Wolves","Everton","Brentford","Nottm Forest","Bournemouth","Luton","Sheffield Utd","Burnley"],
+"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Real Sociedad","Villarreal","Betis","Athletic Bilbao","Valencia","Osasuna","Celta","Rayo Vallecano","Mallorca","Girona","Getafe","Las Palmas","Alaves","Cadiz","Granada","Almeria"]
 };
-const STARS = {
-"Inter Miami":[{n:"Lionel Messi",ov:90,pos:"FWD",age:38},{n:"Luis Suarez",ov:85,pos:"FWD",age:38},{n:"Busquets",ov:82,pos:"MID",age:37}],
-"Al Nassr":[{n:"Cristiano Ronaldo",ov:88,pos:"FWD",age:40},{n:"Sadio Mane",ov:84,pos:"FWD",age:33}],
-"Al Hilal":[{n:"Neymar Jr",ov:86,pos:"FWD",age:33},{n:"Mitrovic",ov:84,pos:"FWD",age:30}],
-"Al Ittihad":[{n:"Karim Benzema",ov:86,pos:"FWD",age:37},{n:"N'Golo Kante",ov:84,pos:"MID",age:34}],
-"Real Madrid":[{n:"Kylian Mbappe",ov:91,pos:"FWD",age:26},{n:"Vinicius Jr",ov:90,pos:"FWD",age:25},{n:"Jude Bellingham",ov:89,pos:"MID",age:22}],
-"Man City":[{n:"Erling Haaland",ov:91,pos:"FWD",age:25}],
-"Barcelona":[{n:"Lamine Yamal",ov:86,pos:"FWD",age:18}],
-"Arsenal":[{n:"Bukayo Saka",ov:87,pos:"FWD",age:23}]
-};
-let currentDate = new Date("2025-08-09");
-let myTeam = "Mamelodi Sundowns";
-let mySquad = [];
-let formations = {
-"4-4-2":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:45,pos:"MID"},{x:65,y:45,pos:"MID"},{x:85,y:45,pos:"MID"},{x:35,y:15,pos:"FWD"},{x:65,y:15,pos:"FWD"}],
-"4-3-3":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:20,y:15,pos:"FWD"},{x:50,y:10,pos:"FWD"},{x:80,y:15,pos:"FWD"}],
-"4-2-3-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:35,y:55,pos:"MID"},{x:65,y:55,pos:"MID"},{x:25,y:35,pos:"MID"},{x:50,y:30,pos:"MID"},{x:75,y:35,pos:"MID"},{x:50,y:10,pos:"FWD"}],
-"3-5-2":[{x:50,y:90,pos:"GK"},{x:25,y:70,pos:"DEF"},{x:50,y:70,pos:"DEF"},{x:75,y:70,pos:"DEF"},{x:10,y:45,pos:"MID"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:90,y:45,pos:"MID"},{x:35,y:15,pos:"FWD"},{x:65,y:15,pos:"FWD"}],
-"3-4-3":[{x:50,y:90,pos:"GK"},{x:25,y:70,pos:"DEF"},{x:50,y:70,pos:"DEF"},{x:75,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:45,pos:"MID"},{x:65,y:45,pos:"MID"},{x:85,y:45,pos:"MID"},{x:20,y:15,pos:"FWD"},{x:50,y:10,pos:"FWD"},{x:80,y:15,pos:"FWD"}],
-"5-3-2":[{x:50,y:90,pos:"GK"},{x:10,y:65,pos:"DEF"},{x:30,y:70,pos:"DEF"},{x:50,y:72,pos:"DEF"},{x:70,y:70,pos:"DEF"},{x:90,y:65,pos:"DEF"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:35,y:15,pos:"FWD"},{x:65,y:15,pos:"FWD"}],
-"4-1-4-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:50,y:60,pos:"MID"},{x:15,y:35,pos:"MID"},{x:35,y:35,pos:"MID"},{x:65,y:35,pos:"MID"},{x:85,y:35,pos:"MID"},{x:50,y:10,pos:"FWD"}],
-"5-4-1":[{x:50,y:90,pos:"GK"},{x:10,y:65,pos:"DEF"},{x:30,y:70,pos:"DEF"},{x:50,y:72,pos:"DEF"},{x:70,y:70,pos:"DEF"},{x:90,y:65,pos:"DEF"},{x:15,y:35,pos:"MID"},{x:35,y:40,pos:"MID"},{x:65,y:40,pos:"MID"},{x:85,y:35,pos:"MID"},{x:50,y:10,pos:"FWD"}],
-"4-4-1-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:45,pos:"MID"},{x:65,y:45,pos:"MID"},{x:85,y:45,pos:"MID"},{x:50,y:30,pos:"MID"},{x:50,y:10,pos:"FWD"}],
-"3-4-2-1":[{x:50,y:90,pos:"GK"},{x:25,y:70,pos:"DEF"},{x:50,y:70,pos:"DEF"},{x:75,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:50,pos:"MID"},{x:65,y:50,pos:"MID"},{x:85,y:45,pos:"MID"},{x:35,y:25,pos:"MID"},{x:65,y:25,pos:"MID"},{x:50,y:10,pos:"FWD"}],
-"4-5-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:10,y:40,pos:"MID"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:90,y:40,pos:"MID"},{x:50,y:10,pos:"FWD"}],
-"4-3-2-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:30,y:50,pos:"MID"},{x:50,y:55,pos:"MID"},{x:70,y:50,pos:"MID"},{x:35,y:30,pos:"FWD"},{x:65,y:30,pos:"FWD"},{x:50,y:10,pos:"FWD"}]
-};
+const STARS={"Inter Miami":{name:"L. Messi",ovr:90,pos:"FW"},"Al Nassr":{name:"C. Ronaldo",ovr:89,pos:"FW"},"Man City":{name:"E. Haaland",ovr:89,pos:"FW"},"Real Madrid":{name:"K. Mbappe",ovr:90,pos:"FW"},"Mamelodi Sundowns":{name:"T. Zwane",ovr:78,pos:"MID"}};
+let gameDate=new Date(2025,7,9); let myTeam="Mamelodi Sundowns"; let db={}; let subsUsed=0; let matchLog=[]; let pendingOut=null;
 function genSquad(team){
- let squad=[];
- if(STARS[team]) squad.push(...STARS[team].map(s=>({...s,val:Math.round(s.ov*1.2)+"M",wage:(s.ov*2)+"k"})));
- let need = 22 - squad.length;
- let positions=["GK","DEF","DEF","DEF","DEF","MID","MID","MID","MID","FWD","FWD"];
- for(let i=0;i<need;i++){ let pos=positions[i%positions.length]; let ov=60+Math.floor(Math.random()*18); squad.push({n:"Player "+(i+1),ov,pos,age:19+Math.floor(Math.random()*12),val:(ov*0.3).toFixed(1)+"M",wage:(ov*0.8).toFixed(0)+"k"}) }
- return squad.sort((a,b)=>b.ov-a.ov);
+ let arr=[]; let star=STARS[team];
+ if(star) arr.push({id:1,name:star.name,ovr:star.ovr,pos:star.pos,isGK:false,isStar:true,isStarting:true});
+ let posSeq=["GK","DEF","DEF","DEF","DEF","MID","MID","MID","FW","FW","FW","GK","DEF","MID","MID","FW","DEF","MID","FW","DEF","MID","FW"];
+ let id=arr.length+1;
+ for(let p of posSeq){ if(arr.length>=22) break;
+   let ovr=team===myTeam?70+Math.floor(Math.random()*10):62+Math.floor(Math.random()*14);
+   if(arr.length<11) ovr+=3;
+   arr.push({id:id++,name:"Player "+id,pos:p,ovr:Math.min(90,ovr),isGK:p==="GK",isStar:false,isStarting:arr.length<11});
+ }
+ let bench=arr.filter(x=>!x.isStarting);
+ if(!bench.some(x=>x.isGK)){ arr[12].pos="GK"; arr[12].isGK=true; }
+ return arr;
 }
-mySquad = genSquad(myTeam);
-function showTab(id){
- document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
- document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- if(event) event.target.classList.add('active');
- if(id==='dash') renderDash();
- if(id==='squad') renderSquad();
- if(id==='tables') renderTables();
- if(id==='fixtures') renderFixtures();
- if(id==='transfers') renderTransfers();
- if(id==='match') renderMatch();
+function init(){
+ Object.keys(TEAMS).forEach(lg=>TEAMS[lg].forEach(t=>{ db[t]=genSquad(t); }));
+ renderAll();
 }
-function nextDay(){
- currentDate.setDate(currentDate.getDate()+1);
- document.getElementById('date').textContent=currentDate.toDateString();
- renderDash();
+function renderAll(){
+ document.getElementById('dateLabel').innerText=gameDate.toDateString();
+ let sq=db[myTeam]; if(!sq) return;
+ let avg=Math.round(sq.reduce((a,b)=>a+b.ovr,0)/sq.length);
+ let star=sq.sort((a,b)=>b.ovr-a.ovr)[0];
+ document.getElementById('dash').innerHTML=`<div class='card'><h3>Welcome to ${myTeam}</h3><div class='small'>Date: ${gameDate.toDateString()} - Season 2025/26</div><div style='margin-top:8px'>Budget: <b>$45M</b> | Squad: ${sq.length} | Avg OVR: ${avg}</div></div><div class='card'><h3>Next Match</h3><div>${myTeam} vs Galatasaray - Tomorrow 15:00</div><div style='margin-top:8px'><button class='btn' onclick="showTab('match',document.querySelectorAll('.tab')[3])">Play Match</button></div></div><div class='card'><h3>Top Star ⭐ ${star.name} - OVR ${star.ovr}</h3><div class='small'>Stage 2.1 FIXED - Stage1 restored + Bench + 5 subs</div></div>`;
+ let starting=sq.filter(s=>s.isStarting); let bench=sq.filter(s=>!s.isStarting);
+ document.getElementById('squad').innerHTML=`<div class='card'><h3>Starting XI (${starting.length})</h3>${starting.map(p=>`<div class='row start11'><div>${p.pos} ${p.name} ${p.isStar?'<span class=badge>STAR</span>':''} ${p.isGK?'🧤':''}</div><div><b>${p.ovr}</b> <button onclick='toBench(${p.id})'>Bench</button></div></div>`).join('')}</div><div class='card'><h3>Bench (${bench.length}/9) - Need 1 GK 🧤 = ${bench.filter(x=>x.isGK).length}</h3>${bench.map(p=>`<div class='row'><div>${p.pos} ${p.name} ${p.isGK?'🧤':''}</div><div><b>${p.ovr}</b> <button onclick='toStarting(${p.id})'>Start</button></div></div>`).join('')}</div>`;
+ let htmlT=""; Object.entries(TEAMS).forEach(([lg,list])=>{ htmlT+=`<div class='card'><h3>${lg}</h3>${list.map(t=>`<div class='row'><div>${t} ${t===myTeam?'<span class=badge>YOU</span>':''}</div><div class='small'>${db[t]?Math.round(db[t].reduce((a,b)=>a+b.ovr,0)/db[t].length):'--'} OVR</div></div>`).join('')}</div>`; }); document.getElementById('tables').innerHTML=htmlT;
+ document.getElementById('match').innerHTML=`<div class='card'><h3>Match Center - ${myTeam} vs Galatasaray</h3><div class='small'>Subs used: ${subsUsed}/5 | ${pendingOut?'Pending out: '+db[myTeam].find(x=>x.id===pendingOut).name:'Click Sub Out then Sub In'}</div><div style='margin:8px 0;display:flex;gap:8px'><button class='btn' onclick='play()'>Kick Off ⚽</button><button class='btn' style='background:#334155;color:#fff' onclick='resetSubs()'>Reset Subs</button></div><div style='display:flex;gap:8px'><div style='flex:1' class='card'><div class='small'>On Pitch</div>${starting.map(p=>`<div class='row'><div>${p.pos} ${p.name}</div><button onclick='subOut(${p.id})'>Out</button></div>`).join('')}</div><div style='flex:1' class='card'><div class='small'>Bench</div>${bench.map(p=>`<div class='row'><div>${p.pos} ${p.name} ${p.isGK?'🧤':''}</div><button onclick='subIn(${p.id})'>In</button></div>`).join('')}</div></div><div class='small' style='margin-top:8px'>${matchLog.length?matchLog.join('<br>'):'No match yet. Use Sub Out -> Sub In for 5 subs.'}</div></div>`;
 }
-function renderDash(){
- let html=`<div class="card"><h3>Welcome to ${myTeam}</h3><p style="opacity:.7;margin-top:6px">Date: ${currentDate.toDateString()} - Season 2025/26</p><p style="margin-top:10px">Budget: <b>$45M</b> | Squad: ${mySquad.length} | Avg OVR: ${Math.round(mySquad.reduce((a,b)=>a+b.ov,0)/mySquad.length)}</p></div>`;
- html+=`<div class="card"><h4>Next Match</h4><p>${myTeam} vs Galatasaray - Tomorrow 15:00</p><button style="margin-top:8px" onclick="showTab('match')">Play Match</button></div>`;
- html+=`<div class="card"><h4>Top Star</h4><p>⭐ ${mySquad[0].n} - OVR ${mySquad[0].ov}</p></div>`;
- document.getElementById('dash').innerHTML=html;
-}
-function renderSquad(){
- let f=document.getElementById('formation').value;
- let spots=formations[f];
- let pitch=document.getElementById('pitch');
- pitch.innerHTML="";
- spots.forEach((spot,i)=>{
-   let p=mySquad[i]||{n:"Empty",ov:"--"};
-   let div=document.createElement('div'); div.className='player-dot';
-   div.style.left=spot.x+'%'; div.style.top=spot.y+'%';
-   div.innerHTML=`${p.n.split(' ')[0]}<br><b>${p.ov}</b><br><span class=badge>${spot.pos}</span>`;
-   pitch.appendChild(div);
- });
- document.getElementById('bench').innerHTML="<h4>Bench</h4>"+mySquad.slice(11).map(p=>`${p.n} - ${p.pos} - ${p.ov}`).join("<br>");
-}
-function renderTables(){
- let html="";
- Object.keys(TEAMS).forEach(league=>{
-   html+=`<div class="card"><h4>${league}</h4><table><tr><th>#</th><th>Team</th><th>Pts</th></tr>`;
-   TEAMS[league].forEach((t,i)=>{ html+=`<tr><td>${i+1}</td><td>${t} ${t===myTeam?'<span class=badge>YOU</span>':''}</td><td>${Math.floor(Math.random()*30)}</td></tr>` });
-   html+=`</table></div>`;
- });
- document.getElementById('tables').innerHTML=html;
-}
-function renderFixtures(){
- let html=`<div class="card"><h4>Fixtures - Rest of World</h4>`;
- html+=`<div style="padding:8px 0;display:flex;justify-content:space-between"><span>Mamelodi vs Al Nassr (Ronaldo!)</span><span>Sat</span></div>`;
- html+=`<div style="padding:8px 0;display:flex;justify-content:space-between"><span>Inter Miami vs Al Hilal (Messi vs Neymar)</span><span>Sun</span></div>`;
- html+=`<div style="padding:8px 0;display:flex;justify-content:space-between"><span>Galatasaray vs Ajax</span><span>Sat</span></div>`;
- html+=`</div>`;
- document.getElementById('fixtures').innerHTML=html;
-}
-function renderTransfers(){
- let html=`<div class="card"><h4>Transfer Market - Open</h4></div>`;
- html+=`<div class="card" style="display:flex;justify-content:space-between"><div><b>Lionel Messi</b> (Inter Miami)<br><span class=badge>FWD OVR 90</span></div><button onclick="buyPlayer('Messi')">Buy $18M</button></div>`;
- html+=`<div class="card" style="display:flex;justify-content:space-between"><div><b>Cristiano Ronaldo</b> (Al Nassr)<br><span class=badge>FWD OVR 88</span></div><button onclick="buyPlayer('Ronaldo')">Buy $16M</button></div>`;
- html+=`<div class="card" style="display:flex;justify-content:space-between"><div><b>Neymar Jr</b> (Al Hilal)<br><span class=badge>FWD OVR 86</span></div><button onclick="buyPlayer('Neymar')">Buy $14M</button></div>`;
- document.getElementById('transfers').innerHTML=html;
-}
-function buyPlayer(name){ alert(name+" signed for "+myTeam+"!"); mySquad.unshift({n:name,ov:89,pos:"FWD",age:30}); renderSquad(); }
-function renderMatch(){
- document.getElementById('match').innerHTML=`<div class="card"><h3>${myTeam} 0 - 0 Opponent</h3><p>12' Messi chance...</p><p>34' Ronaldo header... GOAL!</p><button style="margin-top:12px;width:100%;padding:12px" onclick="alert('Win! Using '+document.getElementById('formation').value)">Sim Match</button></div>`;
-}
-renderDash(); renderSquad();
+function toBench(id){ let s=db[myTeam].find(x=>x.id===id); if(s) s.isStarting=false; renderAll(); }
+function toStarting(id){ let sq=db[myTeam]; if(sq.filter(x=>x.isStarting).length>=11){ alert('XI full - bench one first'); return; } let s=sq.find(x=>x.id===id); if(s) s.isStarting=true; renderAll(); }
+function subOut(id){ pendingOut=id; renderAll(); }
+function subIn(id){ if(subsUsed>=5){ alert('5/5 subs used!'); return; } if(pendingOut==null){ alert('Click Out first'); return; } let sq=db[myTeam]; let out=sq.find(x=>x.id===pendingOut); let inn=sq.find(x=>x.id===id); out.isStarting=false; inn.isStarting=true; subsUsed++; matchLog.push(`🔄 ${subsUsed}/5 Sub: ${out.name} OFF → ${inn.name} ON`); pendingOut=null; renderAll(); }
+function resetSubs(){ subsUsed=0; matchLog=[]; pendingOut=null; renderAll(); }
+function play(){ let s=Math.floor(Math.random()*4); let c=Math.floor(Math.random()*3); matchLog.push(`⚽ ${myTeam} ${s}-${c} Galatasaray`); renderAll(); }
+function nextDay(){ gameDate.setDate(gameDate.getDate()+1); renderAll(); }
+function showTab(id,el){ document.querySelectorAll('#dash,#squad,#tables,#match').forEach(d=>d.style.display='none'); document.getElementById(id).style.display='block'; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); }
+init();
 </script>
 </body>
 </html>
