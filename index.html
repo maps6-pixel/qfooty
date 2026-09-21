@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QFooty Manager</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui;background:#0f172a;color:#fff;min-height:100vh}
+header{background:#1e293b;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.logo{font-weight:900;font-size:22px}.logo span{color:#22c55e}
+button{background:#22c55e;color:#000;border:none;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer}
+.tabs{display:flex;overflow:auto;background:#1e293b;border-bottom:1px solid #334155}
+.tab{padding:12px 16px;white-space:nowrap;cursor:pointer;opacity:.6}.tab.active{opacity:1;border-bottom:3px solid #22c55e}
+.screen{display:none;padding:14px}.screen.active{display:block}
+.card{background:#1e293b;border-radius:12px;padding:12px;margin-bottom:10px}
+.pitch{background:linear-gradient(#16a34a,#15803d);border:2px solid #fff;border-radius:8px;min-height:420px;position:relative;padding:10px}
+.player-dot{position:absolute;background:#0f172a;border:2px solid #fff;border-radius:20px;padding:4px 8px;font-size:11px;transform:translate(-50%,-50%);cursor:grab;text-align:center;min-width:60px}
+table{width:100%;border-collapse:collapse;font-size:13px} th{opacity:.6;text-align:left;padding:6px} td{padding:6px;border-top:1px solid #334155}
+.badge{display:inline-block;background:#334155;padding:2px 6px;border-radius:6px;font-size:10px}
+select,input{background:#0f172a;color:#fff;border:1px solid #334155;padding:8px;border-radius:8px;width:100%}
+</style>
+</head>
+<body>
+<header><div class="logo"><span>Q</span>Footy Manager</div><div id="date">Aug 9 2025</div><button onclick="nextDay()">Next Day ▶</button></header>
+<div class="tabs">
+<div class="tab active" onclick="showTab('dash')">Dashboard</div>
+<div class="tab" onclick="showTab('squad')">Squad</div>
+<div class="tab" onclick="showTab('tables')">Tables</div>
+<div class="tab" onclick="showTab('fixtures')">Fixtures</div>
+<div class="tab" onclick="showTab('transfers')">Transfers</div>
+<div class="tab" onclick="showTab('match')">Match</div>
+</div>
+
+<div id="dash" class="screen active"></div>
+<div id="squad" class="screen">
+<div class="card"><select id="formation" onchange="renderSquad()"><option>4-4-2</option><option>4-3-3</option><option>4-2-3-1</option><option>3-5-2</option><option>3-4-3</option><option>5-3-2</option><option>4-1-4-1</option><option>5-4-1</option><option>4-4-1-1</option><option>3-4-2-1</option><option>4-5-1</option><option>4-3-2-1</option></select><small style="opacity:.6"> Drag players anywhere - custom formation</small></div>
+<div class="pitch" id="pitch"></div>
+<div id="bench" class="card"></div>
+</div>
+<div id="tables" class="screen"></div>
+<div id="fixtures" class="screen"></div>
+<div id="transfers" class="screen"></div>
+<div id="match" class="screen"></div>
+
+<script>
+const TEAMS = {
+"Premier League":["Man City","Arsenal","Liverpool","Chelsea","Man Utd","Newcastle","Tottenham","Aston Villa","Brighton","West Ham","Crystal Palace","Fulham","Wolves","Everton","Brentford","Bournemouth","Nottm Forest","Leicester","Ipswich","Southampton"],
+"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Villarreal","Real Sociedad","Athletic Bilbao","Real Betis","Valencia","Girona","Osasuna","Getafe","Celta Vigo","Rayo Vallecano","Alaves","Mallorca","Las Palmas","Leganes","Valladolid","Espanyol"],
+"Rest of World PL":["Galatasaray","Fenerbahce","Ajax","PSV","Sporting Lisbon","Benfica","Porto","Celtic","Rangers","Club Brugge","Shakhtar","Olympiacos","Besiktas","Feyenoord","Red Star","Young Boys"],
+"Rest of World 2":["Inter Miami","Al Nassr","Al Hilal","Al Ittihad","Al Ahli","Flamengo","Palmeiras","River Plate","Boca Juniors","Mamelodi Sundowns","Al Ahly","Wydad","LAFC","Al Ain","Kaizer Chiefs","Auckland City"]
+};
+const STARS = {
+"Inter Miami":[{n:"Lionel Messi",ov:90,pos:"FWD",age:38},{n:"Luis Suarez",ov:85,pos:"FWD",age:38},{n:"Busquets",ov:82,pos:"MID",age:37}],
+"Al Nassr":[{n:"Cristiano Ronaldo",ov:88,pos:"FWD",age:40},{n:"Sadio Mane",ov:84,pos:"FWD",age:33}],
+"Al Hilal":[{n:"Neymar Jr",ov:86,pos:"FWD",age:33},{n:"Mitrovic",ov:84,pos:"FWD",age:30}],
+"Al Ittihad":[{n:"Karim Benzema",ov:86,pos:"FWD",age:37},{n:"N'Golo Kante",ov:84,pos:"MID",age:34}],
+"Real Madrid":[{n:"Kylian Mbappe",ov:91,pos:"FWD",age:26},{n:"Vinicius Jr",ov:90,pos:"FWD",age:25},{n:"Jude Bellingham",ov:89,pos:"MID",age:22}],
+"Man City":[{n:"Erling Haaland",ov:91,pos:"FWD",age:25}],
+"Barcelona":[{n:"Lamine Yamal",ov:86,pos:"FWD",age:18}],
+"Arsenal":[{n:"Bukayo Saka",ov:87,pos:"FWD",age:23}]
+};
+let currentDate = new Date("2025-08-09");
+let myTeam = "Mamelodi Sundowns";
+let mySquad = [];
+let formations = {
+"4-4-2":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:45,pos:"MID"},{x:65,y:45,pos:"MID"},{x:85,y:45,pos:"MID"},{x:35,y:15,pos:"FWD"},{x:65,y:15,pos:"FWD"}],
+"4-3-3":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:20,y:15,pos:"FWD"},{x:50,y:10,pos:"FWD"},{x:80,y:15,pos:"FWD"}],
+"4-2-3-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:35,y:55,pos:"MID"},{x:65,y:55,pos:"MID"},{x:25,y:35,pos:"MID"},{x:50,y:30,pos:"MID"},{x:75,y:35,pos:"MID"},{x:50,y:10,pos:"FWD"}],
+"3-5-2":[{x:50,y:90,pos:"GK"},{x:25,y:70,pos:"DEF"},{x:50,y:70,pos:"DEF"},{x:75,y:70,pos:"DEF"},{x:10,y:45,pos:"MID"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:90,y:45,pos:"MID"},{x:35,y:15,pos:"FWD"},{x:65,y:15,pos:"FWD"}],
+"3-4-3":[{x:50,y:90,pos:"GK"},{x:25,y:70,pos:"DEF"},{x:50,y:70,pos:"DEF"},{x:75,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:45,pos:"MID"},{x:65,y:45,pos:"MID"},{x:85,y:45,pos:"MID"},{x:20,y:15,pos:"FWD"},{x:50,y:10,pos:"FWD"},{x:80,y:15,pos:"FWD"}],
+"5-3-2":[{x:50,y:90,pos:"GK"},{x:10,y:65,pos:"DEF"},{x:30,y:70,pos:"DEF"},{x:50,y:72,pos:"DEF"},{x:70,y:70,pos:"DEF"},{x:90,y:65,pos:"DEF"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:35,y:15,pos:"FWD"},{x:65,y:15,pos:"FWD"}],
+"4-1-4-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:50,y:60,pos:"MID"},{x:15,y:35,pos:"MID"},{x:35,y:35,pos:"MID"},{x:65,y:35,pos:"MID"},{x:85,y:35,pos:"MID"},{x:50,y:10,pos:"FWD"}],
+"5-4-1":[{x:50,y:90,pos:"GK"},{x:10,y:65,pos:"DEF"},{x:30,y:70,pos:"DEF"},{x:50,y:72,pos:"DEF"},{x:70,y:70,pos:"DEF"},{x:90,y:65,pos:"DEF"},{x:15,y:35,pos:"MID"},{x:35,y:40,pos:"MID"},{x:65,y:40,pos:"MID"},{x:85,y:35,pos:"MID"},{x:50,y:10,pos:"FWD"}],
+"4-4-1-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:45,pos:"MID"},{x:65,y:45,pos:"MID"},{x:85,y:45,pos:"MID"},{x:50,y:30,pos:"MID"},{x:50,y:10,pos:"FWD"}],
+"3-4-2-1":[{x:50,y:90,pos:"GK"},{x:25,y:70,pos:"DEF"},{x:50,y:70,pos:"DEF"},{x:75,y:70,pos:"DEF"},{x:15,y:45,pos:"MID"},{x:35,y:50,pos:"MID"},{x:65,y:50,pos:"MID"},{x:85,y:45,pos:"MID"},{x:35,y:25,pos:"MID"},{x:65,y:25,pos:"MID"},{x:50,y:10,pos:"FWD"}],
+"4-5-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:10,y:40,pos:"MID"},{x:30,y:45,pos:"MID"},{x:50,y:50,pos:"MID"},{x:70,y:45,pos:"MID"},{x:90,y:40,pos:"MID"},{x:50,y:10,pos:"FWD"}],
+"4-3-2-1":[{x:50,y:90,pos:"GK"},{x:15,y:70,pos:"DEF"},{x:35,y:70,pos:"DEF"},{x:65,y:70,pos:"DEF"},{x:85,y:70,pos:"DEF"},{x:30,y:50,pos:"MID"},{x:50,y:55,pos:"MID"},{x:70,y:50,pos:"MID"},{x:35,y:30,pos:"FWD"},{x:65,y:30,pos:"FWD"},{x:50,y:10,pos:"FWD"}]
+};
+function genSquad(team){
+ let squad=[];
+ if(STARS[team]) squad.push(...STARS[team].map(s=>({...s,val:Math.round(s.ov*1.2)+"M",wage:(s.ov*2)+"k"})));
+ let need = 22 - squad.length;
+ let positions=["GK","DEF","DEF","DEF","DEF","MID","MID","MID","MID","FWD","FWD"];
+ for(let i=0;i<need;i++){ let pos=positions[i%positions.length]; let ov=60+Math.floor(Math.random()*18); squad.push({n:"Player "+(i+1),ov,pos,age:19+Math.floor(Math.random()*12),val:(ov*0.3).toFixed(1)+"M",wage:(ov*0.8).toFixed(0)+"k"}) }
+ return squad.sort((a,b)=>b.ov-a.ov);
+}
+mySquad = genSquad(myTeam);
+function showTab(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ if(event) event.target.classList.add('active');
+ if(id==='dash') renderDash();
+ if(id==='squad') renderSquad();
+ if(id==='tables') renderTables();
+ if(id==='fixtures') renderFixtures();
+ if(id==='transfers') renderTransfers();
+ if(id==='match') renderMatch();
+}
+function nextDay(){
+ currentDate.setDate(currentDate.getDate()+1);
+ document.getElementById('date').textContent=currentDate.toDateString();
+ renderDash();
+}
+function renderDash(){
+ let html=`<div class="card"><h3>Welcome to ${myTeam}</h3><p style="opacity:.7;margin-top:6px">Date: ${currentDate.toDateString()} - Season 2025/26</p><p style="margin-top:10px">Budget: <b>$45M</b> | Squad: ${mySquad.length} | Avg OVR: ${Math.round(mySquad.reduce((a,b)=>a+b.ov,0)/mySquad.length)}</p></div>`;
+ html+=`<div class="card"><h4>Next Match</h4><p>${myTeam} vs Galatasaray - Tomorrow 15:00</p><button style="margin-top:8px" onclick="showTab('match')">Play Match</button></div>`;
+ html+=`<div class="card"><h4>Top Star</h4><p>⭐ ${mySquad[0].n} - OVR ${mySquad[0].ov}</p></div>`;
+ document.getElementById('dash').innerHTML=html;
+}
+function renderSquad(){
+ let f=document.getElementById('formation').value;
+ let spots=formations[f];
+ let pitch=document.getElementById('pitch');
+ pitch.innerHTML="";
+ spots.forEach((spot,i)=>{
+   let p=mySquad[i]||{n:"Empty",ov:"--"};
+   let div=document.createElement('div'); div.className='player-dot';
+   div.style.left=spot.x+'%'; div.style.top=spot.y+'%';
+   div.innerHTML=`${p.n.split(' ')[0]}<br><b>${p.ov}</b><br><span class=badge>${spot.pos}</span>`;
+   pitch.appendChild(div);
+ });
+ document.getElementById('bench').innerHTML="<h4>Bench</h4>"+mySquad.slice(11).map(p=>`${p.n} - ${p.pos} - ${p.ov}`).join("<br>");
+}
+function renderTables(){
+ let html="";
+ Object.keys(TEAMS).forEach(league=>{
+   html+=`<div class="card"><h4>${league}</h4><table><tr><th>#</th><th>Team</th><th>Pts</th></tr>`;
+   TEAMS[league].forEach((t,i)=>{ html+=`<tr><td>${i+1}</td><td>${t} ${t===myTeam?'<span class=badge>YOU</span>':''}</td><td>${Math.floor(Math.random()*30)}</td></tr>` });
+   html+=`</table></div>`;
+ });
+ document.getElementById('tables').innerHTML=html;
+}
+function renderFixtures(){
+ let html=`<div class="card"><h4>Fixtures - Rest of World</h4>`;
+ html+=`<div style="padding:8px 0;display:flex;justify-content:space-between"><span>Mamelodi vs Al Nassr (Ronaldo!)</span><span>Sat</span></div>`;
+ html+=`<div style="padding:8px 0;display:flex;justify-content:space-between"><span>Inter Miami vs Al Hilal (Messi vs Neymar)</span><span>Sun</span></div>`;
+ html+=`<div style="padding:8px 0;display:flex;justify-content:space-between"><span>Galatasaray vs Ajax</span><span>Sat</span></div>`;
+ html+=`</div>`;
+ document.getElementById('fixtures').innerHTML=html;
+}
+function renderTransfers(){
+ let html=`<div class="card"><h4>Transfer Market - Open</h4></div>`;
+ html+=`<div class="card" style="display:flex;justify-content:space-between"><div><b>Lionel Messi</b> (Inter Miami)<br><span class=badge>FWD OVR 90</span></div><button onclick="buyPlayer('Messi')">Buy $18M</button></div>`;
+ html+=`<div class="card" style="display:flex;justify-content:space-between"><div><b>Cristiano Ronaldo</b> (Al Nassr)<br><span class=badge>FWD OVR 88</span></div><button onclick="buyPlayer('Ronaldo')">Buy $16M</button></div>`;
+ html+=`<div class="card" style="display:flex;justify-content:space-between"><div><b>Neymar Jr</b> (Al Hilal)<br><span class=badge>FWD OVR 86</span></div><button onclick="buyPlayer('Neymar')">Buy $14M</button></div>`;
+ document.getElementById('transfers').innerHTML=html;
+}
+function buyPlayer(name){ alert(name+" signed for "+myTeam+"!"); mySquad.unshift({n:name,ov:89,pos:"FWD",age:30}); renderSquad(); }
+function renderMatch(){
+ document.getElementById('match').innerHTML=`<div class="card"><h3>${myTeam} 0 - 0 Opponent</h3><p>12' Messi chance...</p><p>34' Ronaldo header... GOAL!</p><button style="margin-top:12px;width:100%;padding:12px" onclick="alert('Win! Using '+document.getElementById('formation').value)">Sim Match</button></div>`;
+}
+renderDash(); renderSquad();
+</script>
+</body>
+</html>
