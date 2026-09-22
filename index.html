@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>QFooty 10.4 RoW 32 TEAMS</title><style>
+<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>QFooty 10.6 RoW 32 TEAMS</title><style>
 *{box-sizing:border-box;margin:0;padding:0}body{background:#0f172a;color:#e2e8f0;font-family:system-ui;min-height:100vh;padding-bottom:70px}
 .cyber-bg{min-height:100vh;background:#0f172a;padding:10px}
 .title{font-size:28px;font-weight:900;background:#e2e8f0;color:#000;display:inline-block;padding:6px 14px;transform:rotate(-2deg);margin:12px auto}
@@ -26,16 +26,18 @@
 .small{font-size:10px;opacity:.7}
 .tabBar{display:flex;gap:3px;background:#0a0f1e;padding:3px;overflow:auto}.tab{padding:5px 7px;background:#1e293b;border-radius:6px;font-size:10px;cursor:pointer;white-space:nowrap}.tab.on{background:#22c55e;color:#000}
 .badge{background:#22c55e;color:#000;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800}.badge2{background:#facc15;color:#000;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800}.badgeR{background:#3b82f6;color:#fff;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800}
+.xg{font-size:9px;opacity:.75;color:#22c55e}
 </style></head><body><div id='app'></div><script>
+/* ============ STATIC DATA ============ */
 const MY_LEAGUES=[
-{id:'epl',name:'Premier League',flag:'🏴󐁧󐁢󐁥󐁮󐁧󐁿',country:'England',tier:'1st',tier2:'Championship',teams:20,teams2:24,season:'2025/26',dates:'Aug 2025-May 2026'},
+{id:'epl',name:'Premier League',flag:'🏴',country:'England',tier:'1st',tier2:'Championship',teams:20,teams2:24,season:'2025/26',dates:'Aug 2025-May 2026'},
 {id:'laliga',name:'La Liga',flag:'🇪🇸',country:'Spain',tier:'1st',tier2:'La Liga 2',teams:20,teams2:22,season:'2025/26',dates:'Aug 2025-May 2026'},
 {id:'bundes',name:'Bundesliga',flag:'🇩🇪',country:'Germany',tier:'1st',tier2:'2. Bundesliga',teams:18,teams2:18,season:'2025/26',dates:'Aug 2025-May 2026'},
 {id:'ligue1',name:'Ligue 1',flag:'🇫🇷',country:'France',tier:'1st',tier2:'Ligue 2',teams:18,teams2:20,season:'2025/26',dates:'Aug 2025-May 2026'},
 {id:'seriea',name:'Serie A',flag:'🇮🇹',country:'Italy',tier:'1st',tier2:'Serie B',teams:20,teams2:20,season:'2025/26',dates:'Aug 2025-May 2026'}
 ];
 const TIER2_LEAGUES=[
-{id:'epl2',name:'Championship',flag:'🏴󐁧󐁢󐁥󐁮󐁧󐁿',country:'England',tier:'2nd',teams:24,season:'2025/26',parent:'epl'},
+{id:'epl2',name:'Championship',flag:'🏴',country:'England',tier:'2nd',teams:24,season:'2025/26',parent:'epl'},
 {id:'laliga2',name:'La Liga 2',flag:'🇪🇸',country:'Spain',tier:'2nd',teams:22,season:'2025/26',parent:'laliga'},
 {id:'bundes2',name:'2. Bundesliga',flag:'🇩🇪',country:'Germany',tier:'2nd',teams:18,season:'2025/26',parent:'bundes'},
 {id:'ligue2',name:'Ligue 2',flag:'🇫🇷',country:'France',tier:'2nd',teams:20,season:'2025/26',parent:'ligue1'},
@@ -100,27 +102,126 @@ const TEAMS_DATA={
 let selectedLeagues=['epl','laliga','bundes','ligue1','seriea']; let selectedTier2=['epl2','laliga2','bundes2','ligue2','serie2']; let selectedRow=['row1','row2']; let selectedEuro=['ucl']; let selectedIntl=['wc2026'];
 let myTeam=localStorage.getItem('qfooty_team')||'Santos'; let coach=localStorage.getItem('coach')||'Given'; let budget=75;
 let saves=JSON.parse(localStorage.getItem('qfooty_saves')||'[]');
-let baseSquad=[
-{n:"Neymar",pos:"ATT",age:33,energy:88,val:"75M",sal:"500 k",flag:"BRA",ovr:86,star:1,note:"Santos - Neymar"},
-{n:"Messi",pos:"ATT",age:38,energy:85,val:"90M",sal:"600 k",flag:"ARG",ovr:89,star:1,note:"Inter Miami - Messi"},
-{n:"Ronaldo",pos:"ATT",age:40,energy:82,val:"120M",sal:"800 k",flag:"POR",ovr:87,star:1,note:"Al Nassr - Ronaldo"},
-{n:"Logen",pos:"GK",age:18,energy:100,val:"92M",sal:"384 k",flag:"GER",ovr:74,star:1},
-{n:"Chelsea",pos:"CDL",age:16,energy:91,val:"98M",sal:"407 k",flag:"BEL",ovr:76},
-{n:"Tariro",pos:"OM",age:20,energy:96,val:"40M",sal:"320 k",flag:"ZIM",ovr:73,g:0},
-{n:"Palmer",pos:"ATT",age:22,energy:98,val:"85M",sal:"450 k",flag:"ENG",ovr:86,star:1,g:0},
-{n:"Blessed",pos:"F",age:19,energy:100,val:"50M",sal:"340 k",flag:"RSA",ovr:75,g:0}
-];
-let squad=JSON.parse(JSON.stringify(baseSquad));
-let fixtures=[], table={}, stats={}, liveMinute=0,scoreA=0,scoreB=0,scorersA=[], currentRound=1, season="2025/26";
+
+/* ============ REAL PLAYER DATA (RoW League 1 & 2, 32 clubs) ============
+   Researched from current club/press sources; a few smaller-league squads
+   (e.g. Wydad, Urawa, Colo-Colo) are best-effort since reliable public
+   squad data for them is thinner. Use Team Editor to correct anything
+   that's drifted after a transfer window. */
+function mkP(n,pos,age,flag,ovr,star){ return {n,pos,age,energy:88+Math.floor(Math.random()*12),val:'-',sal:'-',flag,ovr,star:star?1:0,g:0}; }
+const TEAM_SQUADS={
+"Santos":[mkP("Diógenes","GK",24,"BRA",73),mkP("Gabriel Brazão","GK",24,"BRA",74),mkP("Adonis Frías","DF",26,"ARG",75),mkP("Alexis Duarte","DF",26,"PAR",74),mkP("João Basso","DF",25,"BRA",75),mkP("Luan Peres","DF",30,"BRA",78,1),mkP("Zé Ivaldo","DF",25,"BRA",75),mkP("Igor Vinícius","DF",27,"BRA",75),mkP("Mayke","DF",32,"BRA",74),mkP("Gabriel Menino","MF",25,"BRA",78,1),mkP("Guilherme","FW",23,"BRA",80,1),mkP("Álvaro Barreal","FW",25,"ARG",79),mkP("Gabriel","FW",29,"BRA",78)],
+"Inter Miami":[mkP("Drake Callender","GK",29,"USA",77),mkP("Tomás Avilés","DF",23,"ARG",76),mkP("Jordi Alba","DF",37,"ESP",78,1),mkP("Sergio Busquets","MF",37,"ESP",80,1),mkP("Federico Redondo","MF",22,"ARG",78),mkP("Benjamin Cremaschi","MF",21,"USA",76),mkP("Diego Gómez","MF",21,"PAR",76),mkP("Leonardo Campana","FW",25,"ECU",75),mkP("Facundo Farías","FW",22,"ARG",76),mkP("Luis Suárez","FW",39,"URU",84,1),mkP("Lionel Messi","FW",39,"ARG",93,1)],
+"Al Nassr":[mkP("Bento","GK",25,"BRA",80,1),mkP("Ibrahima Konaté","DF",24,"ESP",76),mkP("Mohamed Simakan","DF",25,"FRA",78),mkP("Ayman Yahya","DF",26,"KSA",73),mkP("Sultan Al Ghannam","DF",29,"KSA",74),mkP("Abdulelah Al Amri","DF",30,"KSA",74),mkP("Marcelo Brozovic","MF",33,"CRO",79),mkP("Angelo","MF",21,"BRA",76),mkP("Abdulrahman Al Khaibari","MF",22,"KSA",73),mkP("João Félix","FW",26,"POR",80),mkP("Kingsley Coman","FW",29,"FRA",81),mkP("Sadio Mané","FW",34,"SEN",82,1),mkP("Cristiano Ronaldo","FW",41,"POR",86,1)],
+"Flamengo":[mkP("Agustín Rossi","GK",30,"ARG",80,1),mkP("Léo Pereira","DF",29,"BRA",80),mkP("Léo Ortiz","DF",27,"BRA",79),mkP("Danilo","DF",34,"BRA",78),mkP("Ayrton Lucas","DF",27,"BRA",77),mkP("Wesley","DF",22,"BRA",76),mkP("Erick Pulgar","MF",31,"CHI",78),mkP("Jorginho","MF",34,"ITA",78),mkP("Saúl Ñíguez","MF",31,"ESP",76),mkP("Giorgian De Arrascaeta","MF",31,"URU",84,1),mkP("Gerson","MF",28,"BRA",80),mkP("Bruno Henrique","FW",34,"BRA",78),mkP("Pedro","FW",28,"BRA",83,1)],
+"Palmeiras":[mkP("Weverton","GK",37,"BRA",79),mkP("Gustavo Gómez","DF",32,"PAR",81,1),mkP("Micael","DF",29,"BRA",75),mkP("Joaquín Piquerez","DF",28,"URU",77),mkP("Marcos Rocha","DF",35,"BRA",73),mkP("Richard Ríos","MF",25,"COL",80),mkP("Aníbal Moreno","MF",26,"ARG",76),mkP("Raphael Veiga","MF",29,"BRA",80,1),mkP("Facundo Torres","FW",25,"URU",78),mkP("Vitor Roque","FW",21,"BRA",79),mkP("Flaco López","FW",23,"ARG",76)],
+"River Plate":[mkP("Franco Armani","GK",38,"ARG",79),mkP("Paulo Díaz","DF",30,"CHI",77),mkP("Germán Pezzella","DF",33,"ARG",76),mkP("Marcos Acuña","DF",33,"ARG",78),mkP("Fabricio Bustos","DF",29,"ARG",74),mkP("Enzo Pérez","MF",38,"ARG",76),mkP("Kevin Castaño","MF",25,"COL",75),mkP("Ignacio Fernández","MF",34,"ARG",78),mkP("Facundo Colidio","FW",24,"ARG",76),mkP("Maximiliano Salas","FW",25,"ARG",77),mkP("Miguel Borja","FW",30,"COL",78,1)],
+"Boca Juniors":[mkP("Sergio Romero","GK",37,"ARG",78),mkP("Marcos Rojo","DF",34,"ARG",76),mkP("Nicolás Figal","DF",30,"ARG",75),mkP("Frank Fabra","DF",31,"COL",76),mkP("Cristian Medina","MF",23,"ARG",76),mkP("Kevin Zenón","MF",24,"ARG",77),mkP("Rodrigo Battaglia","MF",33,"ARG",74),mkP("Miguel Merentiel","FW",28,"URU",78),mkP("Milton Giménez","FW",28,"ARG",76),mkP("Edinson Cavani","FW",38,"URU",80,1)],
+"Al Hilal":[mkP("Yassine Bounou","GK",34,"MAR",81,1),mkP("Kalidou Koulibaly","DF",34,"SEN",81,1),mkP("Renan Lodi","DF",27,"BRA",77),mkP("Rúben Neves","MF",28,"POR",81),mkP("Sergej Milinković-Savić","MF",30,"SRB",81,1),mkP("Salem Al-Dawsari","FW",34,"KSA",79),mkP("Malcom","FW",28,"BRA",80),mkP("Marcos Leonardo","FW",22,"BRA",76),mkP("Aleksandar Mitrović","FW",31,"SRB",81,1)],
+"Ajax":[mkP("Remko Pasveer","GK",41,"NED",73),mkP("Jorrel Hato","DF",19,"NED",78,1),mkP("Youri Baas","DF",22,"NED",73),mkP("Devyne Rensch","DF",23,"NED",74),mkP("Kenneth Taylor","MF",23,"NED",76),mkP("Branco van den Boomen","MF",27,"NED",75),mkP("Mika Godts","FW",20,"BEL",75),mkP("Wout Weghorst","FW",33,"NED",76),mkP("Brian Brobbey","FW",23,"NED",79,1)],
+"Benfica":[mkP("Anatolii Trubin","GK",24,"UKR",79),mkP("António Silva","DF",21,"POR",80,1),mkP("Alexander Bah","DF",28,"DEN",75),mkP("Nicolás Otamendi","DF",37,"ARG",77),mkP("Florentino Luís","MF",25,"POR",77),mkP("Orkun Kökçü","MF",24,"NED",78),mkP("Andreas Schjelderup","FW",21,"NOR",76),mkP("Vangelis Pavlidis","FW",26,"GRE",79),mkP("Ángel Di María","FW",37,"ARG",81,1)],
+"Porto":[mkP("Diogo Costa","GK",26,"POR",83,1),mkP("Nehuén Pérez","DF",25,"ARG",76),mkP("Martim Fernandes","DF",21,"POR",74),mkP("Ivan Jaime","MF",22,"POR",74),mkP("Alan Varela","MF",23,"ARG",78),mkP("Stephen Eustáquio","MF",28,"CAN",76),mkP("Pepê","FW",27,"BRA",78),mkP("Rodrigo Mora","FW",18,"POR",76),mkP("Samu Aghehowa","FW",20,"ESP",77)],
+"Celtic":[mkP("Kasper Schmeichel","GK",38,"DEN",78),mkP("Cameron Carter-Vickers","DF",27,"USA",78),mkP("Alistair Johnston","DF",26,"CAN",76),mkP("Greg Taylor","DF",27,"SCO",73),mkP("Callum McGregor","MF",32,"SCO",78,1),mkP("Reo Hatate","MF",27,"JPN",77),mkP("Daizen Maeda","FW",27,"JPN",77),mkP("Adam Idah","FW",24,"IRL",75)],
+"Galatasaray":[mkP("Günay Güvenç","GK",29,"TUR",76),mkP("Davinson Sánchez","DF",29,"COL",77),mkP("Abdülkerim Bardakcı","DF",29,"TUR",75),mkP("Lucas Torreira","MF",29,"URU",78),mkP("Kerem Aktürkoğlu","MF",26,"TUR",76),mkP("Yunus Akgün","FW",25,"TUR",75),mkP("Victor Osimhen","FW",26,"NGA",84,1),mkP("Mauro Icardi","FW",32,"ARG",81,1)],
+"Al Ahly":[mkP("Mohamed El Shenawy","GK",34,"EGY",79,1),mkP("Yasser Ibrahim","DF",26,"EGY",77),mkP("Mohamed Hany","DF",25,"EGY",75),mkP("Ahmed Eid","DF",25,"EGY",74),mkP("Yassin Marei","DF",26,"EGY",74),mkP("Emam Ashour","MF",25,"EGY",77),mkP("Afsha","MF",27,"EGY",78,1),mkP("Hussein El Shahat","FW",30,"EGY",77),mkP("Achraf Bencharki","FW",31,"MAR",77),mkP("Zizo","FW",27,"EGY",77),mkP("Trézéguet","FW",29,"EGY",79,1)],
+"LA Galaxy":[mkP("John McCarthy","GK",30,"USA",75),mkP("Maya Yoshida","DF",37,"JPN",76),mkP("Emiro Garcés","DF",23,"COL",73),mkP("Riqui Puig","MF",26,"ESP",80,1),mkP("Mark Delgado","MF",30,"USA",73),mkP("Gabriel Pec","FW",24,"BRA",76),mkP("Joseph Paintsil","FW",27,"GHA",77),mkP("Dejan Joveljić","FW",25,"SRB",76)],
+"Rangers":[mkP("Jack Butland","GK",32,"ENG",76),mkP("James Tavernier","DF",34,"ENG",78,1),mkP("John Souttar","DF",29,"SCO",74),mkP("Nicolas Raskin","MF",25,"BEL",76),mkP("Tom Lawrence","MF",32,"WAL",75),mkP("Hamza Igamane","FW",21,"MAR",76),mkP("Cyriel Dessers","FW",30,"NGA",76),mkP("Danilo","FW",25,"BRA",76)],
+"Corinthians":[mkP("Hugo Souza","GK",26,"BRA",78),mkP("Fagner","DF",35,"BRA",73),mkP("Félix Torres","DF",27,"ECU",76),mkP("Raniele","MF",27,"BRA",76),mkP("Rodrigo Garro","MF",27,"ARG",78,1),mkP("Talles Magno","FW",23,"BRA",75),mkP("Memphis Depay","FW",31,"NED",80,1),mkP("Yuri Alberto","FW",24,"BRA",79,1)],
+"Fluminense":[mkP("Fábio","GK",44,"BRA",76),mkP("Samuel Xavier","DF",30,"BRA",74),mkP("Thiago Silva","DF",41,"BRA",79,1),mkP("Martinelli","MF",30,"BRA",76),mkP("Lima","MF",25,"BRA",75),mkP("Kauã Elias","FW",21,"BRA",75),mkP("Serna","FW",26,"COL",75),mkP("Germán Cano","FW",37,"ARG",79,1)],
+"Racing Club":[mkP("Gabriel Arias","GK",33,"CHI",77),mkP("Gastón Martirena","DF",29,"URU",74),mkP("Marco Di Cesare","DF",23,"ARG",73),mkP("Juan Nardoni","MF",27,"ARG",75),mkP("Gastón Colprán","MF",23,"ARG",73),mkP("Adrián Martínez","FW",23,"ARG",75),mkP("Baltasar Rodríguez","FW",22,"ARG",74),mkP("Maximiliano Salas","FW",25,"ARG",75)],
+"Independiente":[mkP("Rodrigo Rey","GK",30,"ARG",74),mkP("Kevin Lomónaco","DF",22,"ARG",74),mkP("Iván Marcone","MF",34,"ARG",75),mkP("Gabriel Ávalos","FW",30,"PAR",74),mkP("Santiago Montiel","FW",25,"ARG",74),mkP("Gonzalo Verón","FW",30,"ARG",74)],
+"LAFC":[mkP("Hugo Lloris","GK",38,"FRA",78,1),mkP("Aaron Long","DF",32,"USA",74),mkP("Mateusz Bogusz","MF",24,"POL",76),mkP("Kwadwo Opoku","FW",23,"GHA",75),mkP("Denis Bouanga","FW",30,"GAB",79,1),mkP("Olivier Giroud","FW",39,"FRA",77)],
+"Club America":[mkP("Luis Malagón","GK",27,"MEX",78),mkP("Israel Reyes","DF",23,"MEX",75),mkP("Kevin Álvarez","DF",25,"MEX",74),mkP("Álvaro Fidalgo","MF",27,"ESP",78),mkP("Erick Sánchez","MF",22,"MEX",75),mkP("Alejandro Zendejas","FW",27,"MEX",76),mkP("Brian Rodríguez","FW",25,"URU",75),mkP("Henry Martín","FW",30,"MEX",78,1)],
+"Chivas":[mkP("Raúl Rangel","GK",25,"MEX",76),mkP("Gilberto Sepúlveda","DF",25,"MEX",75),mkP("Fernando Beltrán","MF",26,"MEX",75),mkP("Érick Gutiérrez","MF",29,"MEX",76),mkP("Roberto Alvarado","FW",26,"MEX",77,1),mkP("Armando González","FW",21,"MEX",76)],
+"PSV":[mkP("Walter Benítez","GK",32,"ARG",79),mkP("Olivier Boscagli","DF",27,"FRA",76),mkP("Jerdy Schouten","MF",28,"NED",77),mkP("Ismael Saibari","MF",24,"MAR",76),mkP("Guus Til","MF",27,"NED",76),mkP("Ivan Perišić","FW",36,"CRO",78),mkP("Ricardo Pepi","FW",22,"USA",77),mkP("Luuk de Jong","FW",35,"NED",78,1)],
+"Feyenoord":[mkP("Timon Wellenreuther","GK",29,"GER",76),mkP("Gernot Trauner","DF",33,"AUT",76),mkP("Quilindschy Hartman","DF",23,"NED",75),mkP("Quinten Timber","MF",24,"NED",78),mkP("Antoni Milambo","MF",20,"NED",74),mkP("Ayase Ueda","FW",26,"JPN",76),mkP("Anis Hadj Moussa","FW",22,"ALG",75)],
+"Sporting CP":[mkP("Franco Israel","GK",25,"URU",76),mkP("Gonçalo Inácio","DF",23,"POR",79,1),mkP("Ousmane Diomande","DF",21,"CIV",77),mkP("Hidemasa Morita","MF",30,"JPN",77),mkP("Pedro Gonçalves","MF",26,"POR",79),mkP("Geny Catamo","FW",24,"MOZ",76),mkP("Francisco Trincão","FW",25,"POR",78)],
+"Fenerbahce":[mkP("Ederson","GK",32,"BRA",83,1),mkP("Milan Škriniar","DF",30,"SVK",78),mkP("İsmail Yüksek","MF",26,"TUR",75),mkP("Fred","MF",32,"BRA",76),mkP("Dušan Tadić","FW",36,"SRB",77),mkP("Youssef En-Nesyri","FW",28,"MAR",78),mkP("Edin Džeko","FW",39,"BIH",79,1)],
+"Wydad":[mkP("Abdelali M'Hamdi","GK",29,"MAR",73),mkP("Mohamed Moufid","DF",24,"MAR",74),mkP("Ayman El Wafi","DF",25,"MAR",73),mkP("Ayman Dairani","DF",26,"MAR",72),mkP("Walid Sabbar","MF",29,"MAR",73),mkP("Ramiro Vaca","MF",29,"BOL",74),mkP("Abdelghafour Lamirat","MF",28,"MAR",72),mkP("Mohamed Rayhi","FW",31,"NED",74),mkP("Zouhair El Moutaraji","FW",29,"MAR",75,1)],
+"Urawa Reds":[mkP("Shusaku Nishikawa","GK",38,"JPN",75),mkP("Marcos Guilherme","MF",30,"BRA",74),mkP("Ataru Esaka","MF",29,"JPN",73),mkP("Yusuke Matsuo","FW",27,"JPN",74),mkP("Thomas Deng","DF",29,"AUS",73)],
+"Al Ittihad":[mkP("Ahmed Al Aqidi","GK",25,"KSA",75),mkP("Fabinho","DF",31,"BRA",79,1),mkP("Roger Ibañez","DF",25,"BRA",77),mkP("N'Golo Kanté","MF",34,"FRA",80,1),mkP("Houssem Aouar","MF",27,"FRA",76),mkP("Igor Coronado","FW",30,"BRA",76),mkP("Karim Benzema","FW",37,"FRA",82,1)],
+"Seattle Sounders":[mkP("Stefan Frei","GK",39,"SUI",76),mkP("Jackson Ragen","DF",24,"USA",74),mkP("Cristian Roldan","MF",30,"USA",75),mkP("Albert Rusnák","MF",30,"SVK",76),mkP("Jordan Morris","FW",31,"USA",76,1),mkP("Danny Musovski","FW",29,"USA",73)],
+"Colo-Colo":[mkP("Fernando de Paul","GK",29,"CHI",74),mkP("Erick Wiemberg","DF",25,"CHI",73),mkP("Esteban Pavez","MF",34,"CHI",73),mkP("Arturo Vidal","MF",38,"CHI",78,1),mkP("Marco Bolados","FW",29,"CHI",74),mkP("Lautaro Pastrán","FW",25,"ARG",74),mkP("Maximiliano Romero","FW",27,"ARG",75)]
+};
+let squad=JSON.parse(JSON.stringify(TEAM_SQUADS[myTeam]||TEAM_SQUADS["Santos"]));
+let fixtures=[], table={}, stats={}, liveMinute=0,scoreA=0,scoreB=0,scorersA=[],scorersB=[], currentRound=1, season="2025/26";
+
+/* ============ MATCH ENGINE (stat-driven) ============ */
+// Build a lookup of every listed team -> approximate club rating, derived from its $ value.
+// This replaces the old hardcoded "8', 36', 53'" scripted goals.
+let TEAM_RATING_MAP=null;
+function buildTeamRatingMap(){
+ if(TEAM_RATING_MAP) return TEAM_RATING_MAP;
+ TEAM_RATING_MAP={};
+ Object.values(TEAMS_DATA).forEach(list=>{
+  list.forEach(entry=>{
+   let name=entry.split(' $')[0];
+   let m=entry.match(/\$(\d+)/);
+   let val=m?parseInt(m[1]):40;
+   // Map club budget ($10M-$300M) onto a ~62-92 rating curve (log-ish, diminishing returns)
+   let rating=Math.round(62+Math.min(30,(Math.log(val+1)/Math.log(300))*30));
+   TEAM_RATING_MAP[name]=rating;
+  });
+ });
+ return TEAM_RATING_MAP;
+}
+function opponentRating(name){
+ let map=buildTeamRatingMap();
+ if(map[name]!=null) return map[name];
+ return 70; // fallback for unlisted teams
+}
+// My team's effective rating = energy-weighted average of the starting XI (squad already sorted best-first-ish).
+function squadRating(){
+ let xi=squad.slice(0,11);
+ if(!xi.length) return 70;
+ let sum=0,w=0;
+ xi.forEach(p=>{ let weight=(p.energy||90)/100; sum+=p.ovr*weight; w+=weight; });
+ return sum/w;
+}
+// Expected goals for each side from the rating gap, clamped to sane football scorelines.
+function expectedGoals(myR,oppR){
+ let diff=myR-oppR; // roughly -30..+30
+ let myXG=Math.max(0.25,Math.min(4.2,1.35+diff/14));
+ let oppXG=Math.max(0.25,Math.min(4.2,1.35-diff/14));
+ return {myXG,oppXG};
+}
+// Pick a scorer from the squad, weighted heavily toward attacking positions & star quality.
+function pickScorer(){
+ let weights=squad.map(p=>{
+  let posW = p.pos==='FW' ? 5 : p.pos==='MF' ? 2 : p.pos==='DF' ? 0.5 : p.pos==='GK' ? 0.04 : 1;
+  let starW = p.star ? 1.6 : 1;
+  let energyW = (p.energy||90)/100;
+  return posW*starW*energyW;
+ });
+ let total=weights.reduce((a,b)=>a+b,0);
+ let r=Math.random()*total;
+ for(let i=0;i<squad.length;i++){ r-=weights[i]; if(r<=0) return squad[i]; }
+ return squad[squad.length-1];
+}
+// Live match state, built fresh each kickoff from real ratings (not scripted).
+let match=null;
+function buildMatchEvents(myXG,oppXG){
+ // Turn expected-goals totals into per-minute probabilities, then roll 90 minutes once at kickoff
+ // so the "live" playback just replays a schedule of real goal-minute events.
+ let events=[];
+ let myProb=myXG/90, oppProb=oppXG/90;
+ for(let min=1;min<=90;min++){
+  if(Math.random()<myProb) events.push({min,side:'me'});
+  if(Math.random()<oppProb) events.push({min,side:'opp'});
+ }
+ events.sort((a,b)=>a.min-b.min);
+ return events;
+}
+
 function home(){
- document.getElementById('app').innerHTML=`<div class='cyber-bg center'><div class='title'>QFOOTY 10.4</div><div class='small' style='color:#22c55e'>RoW L1 & L2 - 32 TEAMS - Santos Neymar, Miami Messi, Nassr Ronaldo</div><div class='small'>Top 5 Europe + Tier 2 + RoW 32 teams (16+16) + UCL + WC</div><div style='margin-top:14px'><button class='menu-btn' onclick='newGameLeagues()'>New game - Select Leagues + RoW 32</button><button class='menu-btn' onclick='loadGameScreen()'>Load game - ${myTeam}</button><button class='menu-btn' onclick='teamEditor()'>Team Editor - Santos Neymar, Miami Messi, Nassr Ronaldo</button></div><div class='dark-card' style='margin-top:10px;text-align:left;max-width:360px;margin-left:auto;margin-right:auto'><div style='color:#22c55e;font-weight:800'>TOP 5 EUROPE:</div><div class='small'>EPL (20), La Liga (20), Bundesliga (18), Ligue 1 (18), Serie A (20) - Tier 1 + Tier 2 (Championship 24 etc)</div><div style='color:#22c55e;font-weight:800;margin-top:6px'>RoW LEAGUE 1 - 16 TEAMS:</div><div class='small'>1. Santos $75M - Neymar<br>2. Inter Miami $90M - Messi<br>3. Al Nassr $120M - Ronaldo<br>4. Flamengo $80M, 5. Palmeiras $75M, 6. River $70M, 7. Boca $65M, 8. Al Hilal $150M, 9. Ajax $90M, 10. Benfica $110M, 11. Porto $100M, 12. Celtic $60M, 13. Galatasaray $70M, 14. Al Ahly $20M, 15. LA Galaxy $55M, 16. Rangers $55M</div><div style='color:#22c55e;font-weight:800;margin-top:6px'>RoW LEAGUE 2 - 16 TEAMS:</div><div class='small'>Corinthians, Fluminense, Racing, Independiente, LAFC, Club America, Chivas, PSV, Feyenoord, Sporting, Fenerbahce, Wydad, Urawa, Al Ittihad Benzema, Seattle, Colo-Colo - Total 32 (16+16)</div></div></div>`;
+ document.getElementById('app').innerHTML=`<div class='cyber-bg center'><div class='title'>QFOOTY 10.6</div><div class='small' style='color:#22c55e'>RoW L1 & L2 - 32 real club squads - stat-driven match engine</div><div class='small'>Top 5 Europe + Tier 2 + RoW 32 teams (16+16) + UCL + WC</div><div style='margin-top:14px'><button class='menu-btn' onclick='newGameLeagues()'>New game - Select Leagues + RoW 32</button><button class='menu-btn' onclick='loadGameScreen()'>Load game - ${myTeam}</button><button class='menu-btn' onclick='teamEditor()'>Team Editor</button></div><div class='dark-card' style='margin-top:10px;text-align:left;max-width:360px;margin-left:auto;margin-right:auto'><div style='color:#22c55e;font-weight:800'>TOP 5 EUROPE:</div><div class='small'>EPL (20), La Liga (20), Bundesliga (18), Ligue 1 (18), Serie A (20) - Tier 1 + Tier 2 (Championship 24 etc)</div><div style='color:#22c55e;font-weight:800;margin-top:6px'>RoW LEAGUE 1 - 16 TEAMS:</div><div class='small'>Santos (Guilherme), Inter Miami (Messi, Suárez), Al Nassr (Ronaldo, Mané), Flamengo (Arrascaeta, Pedro), Palmeiras (Veiga), River Plate (Borja), Boca Juniors (Cavani), Al Hilal (Mitrović, Koulibaly), Ajax (Brobbey), Benfica (Di María), Porto (Diogo Costa), Celtic (McGregor), Galatasaray (Osimhen, Icardi), Al Ahly (Trézéguet), LA Galaxy (Puig), Rangers (Tavernier)</div><div style='color:#22c55e;font-weight:800;margin-top:6px'>RoW LEAGUE 2 - 16 TEAMS:</div><div class='small'>Corinthians (Depay, Yuri Alberto), Fluminense (Thiago Silva, Cano), Racing Club, Independiente, LAFC (Bouanga, Lloris), Club America (Henry Martín), Chivas (Alvarado), PSV (de Jong), Feyenoord, Sporting CP (Inácio), Fenerbahce (Džeko, Ederson), Wydad, Urawa Reds, Al Ittihad (Benzema, Kanté), Seattle Sounders, Colo-Colo (Vidal)</div><div class='small' style='margin-top:6px;opacity:.7'>Squads reflect the latest available data - use Team Editor to fix anything after a transfer window.</div></div></div>`;
 }
 function newGameLeagues(){
  let h=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:900'>Select Leagues - RoW 32 Teams (16+16) + Tier 2 - ${season}</div></div><div style='color:#22c55e;font-weight:800;margin-top:8px'>TIER 1 - TOP 5 EUROPE:</div>`;
  MY_LEAGUES.forEach(l=>{ let on=selectedLeagues.includes(l.id); h+=`<div class='dark-card row' onclick='toggleLeague("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge'>${l.tier}</span> <span class='small'>${l.teams} • ${l.dates}</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
  h+=`<div style='color:#22c55e;font-weight:800;margin-top:8px'>TIER 2:</div>`;
  TIER2_LEAGUES.forEach(l=>{ let on=selectedTier2.includes(l.id); h+=`<div class='dark-card row' onclick='toggleTier2("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge2'>${l.tier}</span> <span class='small'>${l.teams} • Promotes to ${MY_LEAGUES.find(m=>m.id===l.parent)?.name||''}</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
- h+=`<div style='color:#22c55e;font-weight:800;margin-top:10px'>RoW LEAGUE 1 - 16 TEAMS - Santos Neymar, Miami Messi, Nassr Ronaldo:</div>`;
+ h+=`<div style='color:#22c55e;font-weight:800;margin-top:10px'>RoW LEAGUE 1 - 16 TEAMS:</div>`;
  ROW_LEAGUES.filter(r=>r.id==='row1').forEach(l=>{ let on=selectedRow.includes(l.id); h+=`<div class='dark-card row' onclick='toggleRow("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge'>${l.teams} TEAMS</span> <span class='small'>• ${l.dates}</span><br><span class='small' style='color:#22c55e'>Santos Neymar, Inter Miami Messi, Al Nassr Ronaldo + Flamengo, Palmeiras, River, Boca, Al Hilal, Ajax, Benfica, Porto, Celtic, Galatasaray, Al Ahly, LA Galaxy, Rangers</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
  h+=`<div style='color:#22c55e;font-weight:800;margin-top:8px'>RoW LEAGUE 2 - 16 TEAMS:</div>`;
  ROW_LEAGUES.filter(r=>r.id==='row2').forEach(l=>{ let on=selectedRow.includes(l.id); h+=`<div class='dark-card row' onclick='toggleRow("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge2'>${l.teams} TEAMS</span> <span class='small'>• ${l.dates}</span><br><span class='small' style='color:#facc15'>Corinthians, Fluminense, Racing, Independiente, LAFC, Club America, Chivas, PSV, Feyenoord, Sporting, Fenerbahce, Wydad, Urawa, Al Ittihad Benzema, Seattle, Colo-Colo Vidal - Total 32 (16+16)</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
@@ -137,26 +238,27 @@ function toggleEuro(id){ if(selectedEuro.includes(id)) selectedEuro=selectedEuro
 function toggleIntl(id){ if(selectedIntl.includes(id)) selectedIntl=selectedIntl.filter(x=>x!==id); else selectedIntl.push(id); newGameLeagues(); }
 function selectTeamScreen(){
  let opts=TEAMS_DATA["Rest of World League 1"].map(t=>`<option ${t.includes(myTeam)?'selected':''}>${t}</option>`).join('');
- document.getElementById('app').innerHTML=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Select team - RoW L1 & L2 - 32 teams - ${season}</div><div class='small'>Santos Neymar, Miami Messi, Nassr Ronaldo in RoW L1 - 16+16=32</div></div><select class='select' id='leagueSel' onchange='updTeams()'><option>Rest of World League 1 (16) - Santos Neymar, Miami Messi, Nassr Ronaldo + 13 big teams - 2025/26</option><option>Rest of World League 2 (16) - Corinthians, Fluminense, LAFC, America, PSV, Sporting etc - 2025/26</option><option>Premier League (20) - 1st - Aug 2025-May 2026</option><option>Championship (24) - 2nd - Tier 2</option><option>La Liga (20) - 1st</option><option>Bundesliga (18) - 1st</option><option>Ligue 1 (18) - 1st</option><option>Serie A (20) - 1st</option></select><select class='select' id='teamPick'>${opts}</select><div class='small' style='color:#22c55e;margin-top:6px'>RoW League 1 includes: Santos $75M Neymar, Inter Miami $90M Messi, Al Nassr $120M Ronaldo as you said<br>RoW League 2: 16 teams - Total 32 (16+16) as you said</div><div style='margin-top:10px'><div class='small' style='color:#22c55e'>Coach</div><input class='input' id='coachInput' value='${coach}'></div><button class='gold-btn' onclick='startGame()'>Start - ${myTeam} - RoW 32 teams - ${season}</button></div>`;
+ document.getElementById('app').innerHTML=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Select team - RoW L1 & L2 - 32 teams - ${season}</div></div><select class='select' id='leagueSel' onchange='updTeams()'><option>Rest of World League 1 (16) - 2025/26</option><option>Rest of World League 2 (16) - 2025/26</option><option>Premier League (20) - 1st - Aug 2025-May 2026</option><option>Championship (24) - 2nd - Tier 2</option><option>La Liga (20) - 1st</option><option>Bundesliga (18) - 1st</option><option>Ligue 1 (18) - 1st</option><option>Serie A (20) - 1st</option></select><select class='select' id='teamPick'>${opts}</select><div style='margin-top:10px'><div class='small' style='color:#22c55e'>Coach</div><input class='input' id='coachInput' value='${coach}'></div><button class='gold-btn' onclick='startGame()'>Start - ${myTeam} - RoW 32 teams - ${season}</button></div>`;
 }
 function updTeams(){ let sel=document.getElementById('leagueSel').value; let leagueName="Rest of World League 1"; if(sel.includes("RoW League 1")||sel.includes("League 1 (16)")) leagueName="Rest of World League 1"; else if(sel.includes("RoW League 2")||sel.includes("League 2 (16)")) leagueName="Rest of World League 2"; else if(sel.includes("Premier League")) leagueName="Premier League"; else if(sel.includes("Championship")) leagueName="Championship"; else if(sel.includes("La Liga")) leagueName="La Liga"; else if(sel.includes("Bundesliga")) leagueName="Bundesliga"; else if(sel.includes("Ligue 1")) leagueName="Ligue 1"; else if(sel.includes("Serie A")) leagueName="Serie A"; let teams=TEAMS_DATA[leagueName]||TEAMS_DATA["Rest of World League 1"]; document.getElementById('teamPick').innerHTML=teams.map(t=>`<option>${t}</option>`).join(''); }
 function startGame(){
  let raw=document.getElementById('teamPick').value; let tp=raw.split(' $')[0]; let cn=document.getElementById('coachInput').value||'Given';
  let b=raw.match(/\$(\d+)/); let bud=b?parseInt(b[1]):75; localStorage.setItem('qfooty_team',tp); localStorage.setItem('coach',cn); localStorage.setItem('qfooty_budget',bud); myTeam=tp; coach=cn; budget=bud;
+ squad=JSON.parse(JSON.stringify(TEAM_SQUADS[myTeam]||TEAM_SQUADS["Santos"]));
  let save={id:Date.now(),team:tp,coach:cn,season:season,budget:bud}; saves.unshift(save); localStorage.setItem('qfooty_saves',JSON.stringify(saves.slice(0,5)));
  initSeason(); renderSquad();
 }
 function loadGameScreen(){
  let h=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Load Game - RoW 32 teams - ${season}</div></div>`;
  if(saves.length===0) h+=`<div class='dark-card'>No saves</div>`;
- saves.forEach(s=>{ h+=`<div class='dark-card row'><div><b>${s.team} (${s.coach}) - $${s.budget}M - ${s.season}</b><div class='small'>RoW L1 & L2 32 teams (16+16): Santos Neymar, Miami Messi, Nassr Ronaldo • Tier 1+2 • Euro UCL • WC 2026</div></div></div>`; });
- h+=`<div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px'><button class='gold-btn' style='width:49%;background:#334155;color:#fff' onclick='localStorage.removeItem("qfooty_saves");saves=[];loadGameScreen();'>Delete</button><button class='gold-btn' style='width:49%' onclick='if(saves[0]){myTeam=saves[0].team;coach=saves[0].coach;budget=saves[0].budget||75;initSeason();renderSquad();}else{newGameLeagues();}'>Load</button></div></div>`; document.getElementById('app').innerHTML=h;
+ saves.forEach(s=>{ h+=`<div class='dark-card row'><div><b>${s.team} (${s.coach}) - $${s.budget}M - ${s.season}</b><div class='small'>RoW L1 & L2 32 teams (16+16) • Tier 1+2 • Euro UCL • WC 2026</div></div></div>`; });
+ h+=`<div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px'><button class='gold-btn' style='width:49%;background:#334155;color:#fff' onclick='localStorage.removeItem("qfooty_saves");saves=[];loadGameScreen();'>Delete</button><button class='gold-btn' style='width:49%' onclick='if(saves[0]){myTeam=saves[0].team;coach=saves[0].coach;budget=saves[0].budget||75;squad=JSON.parse(JSON.stringify(TEAM_SQUADS[myTeam]||TEAM_SQUADS["Santos"]));initSeason();renderSquad();}else{newGameLeagues();}'>Load</button></div></div>`; document.getElementById('app').innerHTML=h;
 }
 function teamEditor(){
  let all=[...TEAMS_DATA["Rest of World League 1"].slice(0,8),...TEAMS_DATA["Rest of World League 2"].slice(0,8)];
- let h=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Team Editor - RoW L1 & L2 - 32 teams - ${season}</div><div class='small' style='color:#22c55e'>Santos Neymar, Miami Messi, Nassr Ronaldo in RoW L1 as you said</div></div>`;
- all.forEach(t=>{ let badge=t.includes("Neymar")?"Neymar":t.includes("Messi")?"Messi":t.includes("Ronaldo")?"Ronaldo":t.includes("Benzema")?"Benzema":"RoW"; h+=`<div class='dark-card row'><div>${t} <span class='badge'>${badge}</span></div></div>`; });
- h+=`<div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px'><button class='gold-btn' style='width:49%;background:#334155;color:#fff'>Edit Info - Neymar/Messi/Ronaldo</button><button class='gold-btn' style='width:49%'>Edit Players - 32 teams</button></div></div>`; document.getElementById('app').innerHTML=h;
+ let h=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Team Editor - RoW L1 & L2 - 32 teams - ${season}</div></div>`;
+ all.forEach(t=>{ let badge=t.includes("Neymar")?"Neymar":t.includes("Messi")?"Messi":t.includes("Ronaldo")?"Ronaldo":t.includes("Benzema")?"Benzema":"RoW"; let rating=opponentRating(t.split(' $')[0]); h+=`<div class='dark-card row'><div>${t} <span class='badge'>${badge}</span></div><div class='ovr'>${rating}</div></div>`; });
+ h+=`<div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px'><button class='gold-btn' style='width:49%;background:#334155;color:#fff'>Edit Info</button><button class='gold-btn' style='width:49%'>Edit Players - 32 teams</button></div></div>`; document.getElementById('app').innerHTML=h;
 }
 function initSeason(){
  let isRoW1=TEAMS_DATA["Rest of World League 1"].map(t=>t.split(' $')[0]).includes(myTeam);
@@ -176,41 +278,91 @@ function renderSquad(){
  let next=fixtures.find(f=>!f.played); let nextText=next?`${next.comp} vs ${next.home===myTeam?next.away:next.home} - ${next.date} - ${next.tier}`:'Done';
  let pos=Object.entries(table).sort((a,b)=>b[1].PTS-a[1].PTS).findIndex(e=>e[0]===myTeam)+1;
  let tierLabel=fixtures[0]?.tier||'RoW L1';
- document.getElementById('app').innerHTML=`<div class='top'><div class='top1'><div><div class='teal'>${myTeam} (${pos||1}st) - $${budget}M - ${season} - ${tierLabel}</div><div>${coach}</div><div style='color:#22c55e;font-weight:800'>Next - ${tierLabel} - RoW 32 teams</div><div>${next?next.comp:'RoW League 1'} - GW${currentRound} - ${nextText}</div><div class='small' style='color:#22c55e'>RoW L1 & L2: 32 teams (16+16) - Santos Neymar, Miami Messi, Nassr Ronaldo in L1 • Tier1+2 • UCL Sep-Jun • WC Jun-Jul 2026</div></div><div style='text-align:right'><div>6/22/22 | ${season}</div><div>Chairman <div class='bar'><div style='width:100%'></div></div> 100%</div><div>Supporters <div class='bar'><div style='width:100%'></div></div> 100%</div><div style='margin-top:4px;font-weight:900'>$${budget}M</div><div class='small'>P ${table[myTeam]?.P||0} PTS ${table[myTeam]?.PTS||0}</div></div></div></div><div class='tabBar'><div class='tab on'>Squad ${tierLabel}</div><div class='tab' onclick='renderTableFull()'>Table ${tierLabel} 16</div><div class='tab' onclick='renderFixturesFull()'>Fix ${tierLabel}</div><div class='tab' onclick='renderPromo()'>Promo RoW L1-L2</div></div><div class='squad-head'><div>👤 ${squad.length} • ${season} • ${tierLabel} • Santos Neymar, Miami Messi, Nassr Ronaldo</div><div>Order by Pos</div></div><div>${squad.map(p=>`<div class='row'><div style='display:flex;gap:6px;align-items:center'><div class='pos'>${p.pos}</div><div><div style='font-weight:700'>${p.n} ${p.star?'<span class="star">★</span>':''} <span class='small'>${stats[p.n]?.g||0}⚽ ${p.note||''}</span></div><div class='small'>${p.val} (Sal: ${p.sal})<br>${p.flag} Age: ${p.age} Energy: ${p.energy}% ${p.note||''}</div></div></div><div class='ovr'>${p.ovr}</div></div>`).join('')}</div><div id='popup'></div><div class='bottom'><div class='bicon active' onclick='renderSquad()'>⚽</div><div class='bicon' onclick='openPopup("tactics")'>📋</div><div class='bicon' onclick='openPopup("fixtures")'>📅</div><div class='bicon' onclick='openPopup("trophy")'>🏆</div><div class='bicon' onclick='openPopup("settings")'>⚙️</div></div>`;
+ let myR=squadRating().toFixed(1);
+ document.getElementById('app').innerHTML=`<div class='top'><div class='top1'><div><div class='teal'>${myTeam} (${pos||1}st) - $${budget}M - ${season} - ${tierLabel}</div><div>${coach}</div><div style='color:#22c55e;font-weight:800'>Squad rating: ${myR}</div><div>${next?next.comp:'RoW League 1'} - GW${currentRound} - ${nextText}</div></div><div style='text-align:right'><div>${season}</div><div>Chairman <div class='bar'><div style='width:100%'></div></div> 100%</div><div>Supporters <div class='bar'><div style='width:100%'></div></div> 100%</div><div style='margin-top:4px;font-weight:900'>$${budget}M</div><div class='small'>P ${table[myTeam]?.P||0} PTS ${table[myTeam]?.PTS||0}</div></div></div></div><div class='tabBar'><div class='tab on'>Squad ${tierLabel}</div><div class='tab' onclick='renderTableFull()'>Table ${tierLabel} 16</div><div class='tab' onclick='renderFixturesFull()'>Fix ${tierLabel}</div><div class='tab' onclick='renderPromo()'>Promo RoW L1-L2</div></div><div class='squad-head'><div>👤 ${squad.length} • ${season} • ${tierLabel}</div><div>Order by Pos</div></div><div>${squad.map(p=>`<div class='row'><div style='display:flex;gap:6px;align-items:center'><div class='pos'>${p.pos}</div><div><div style='font-weight:700'>${p.n} ${p.star?'<span class="star">★</span>':''} <span class='small'>${stats[p.n]?.g||0}⚽</span></div><div class='small'>${p.val} (Sal: ${p.sal})<br>${p.flag} Age: ${p.age} Energy: ${p.energy}%</div></div></div><div class='ovr'>${p.ovr}</div></div>`).join('')}</div><div id='popup'></div><div class='bottom'><div class='bicon active' onclick='renderSquad()'>⚽</div><div class='bicon' onclick='openPopup("tactics")'>📋</div><div class='bicon' onclick='openPopup("fixtures")'>📅</div><div class='bicon' onclick='openPopup("trophy")'>🏆</div><div class='bicon' onclick='openPopup("settings")'>⚙️</div></div>`;
 }
 function renderTableFull(){
  let sorted=Object.entries(table).sort((a,b)=>b[1].PTS-a[1].PTS);
  let tierLabel=fixtures[0]?.tier||'RoW L1';
- document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Table - ${myTeam} #${sorted.findIndex(e=>e[0]===myTeam)+1} - ${season} - ${tierLabel} - 16 teams</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab on'>Table ${tierLabel} 16</div><div class='tab' onclick='renderPromo()'>Promo RoW L1-L2</div></div><div class='dark-card'><div class='row' style='font-weight:800'><div># Team ${tierLabel} (16)</div><div>P PTS</div></div>${sorted.map((e,i)=>`<div class='row' style='${e[0]===myTeam?'background:#22c55e22':''}'><div>${i+1}. ${e[0]} ${e[0]==='Santos'?'<span class="badge">Neymar</span>':''} ${e[0]==='Inter Miami'?'<span class="badge2">Messi</span>':''} ${e[0]==='Al Nassr'?'<span class="badgeR">Ronaldo</span>':''}</div><div>${e[1].P} ${e[1].PTS}</div></div>`).join('')}</div><div class='dark-card small'><div style='color:#22c55e'>RoW 32 teams (16+16) as you said:</div><b>RoW L1 (16):</b> Santos Neymar, Miami Messi, Nassr Ronaldo + 13 big teams<br><b>RoW L2 (16):</b> Corinthians, Fluminense, Racing, Independiente, LAFC, America, Chivas, PSV, Feyenoord, Sporting, Fenerbahce, Wydad, Urawa, Al Ittihad Benzema, Seattle, Colo-Colo<br>Promotion: RoW L1 Bottom 2 to L2, RoW L2 Top 2 to L1<br>Dates: Aug 2025-May 2026 + UCL Sep-Jun + WC Jun-Jul 2026</div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>📊</div><div class='bicon' onclick='home()'>🏠</div></div>`;
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Table - ${myTeam} #${sorted.findIndex(e=>e[0]===myTeam)+1} - ${season} - ${tierLabel} - 16 teams</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab on'>Table ${tierLabel} 16</div><div class='tab' onclick='renderPromo()'>Promo RoW L1-L2</div></div><div class='dark-card'><div class='row' style='font-weight:800'><div># Team ${tierLabel} (16)</div><div>P W-D-L PTS</div></div>${sorted.map((e,i)=>`<div class='row' style='${e[0]===myTeam?'background:#22c55e22':''}'><div>${i+1}. ${e[0]} <span class='xg'>${opponentRating(e[0])}</span></div><div>${e[1].P} ${e[1].W}-${e[1].D}-${e[1].L} ${e[1].PTS}</div></div>`).join('')}</div><div class='dark-card small'><div style='color:#22c55e'>Numbers next to each team are their club rating, used by the match engine to weight goal chances.</div>Promotion: bottom 2 → RoW L2, RoW L2 top 2 → RoW L1</div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>📊</div><div class='bicon' onclick='home()'>🏠</div></div>`;
 }
 function renderPromo(){
- document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Promotion - RoW L1-L2 + Tier 1-2 - ${season} - 32 teams RoW</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab' onclick='renderTableFull()'>Table</div><div class='tab on'>Promo RoW 32</div></div><div class='dark-card'><div style='color:#22c55e;font-weight:800'>RoW - 32 TEAMS (16+16):</div><div class='row'><div>RoW League 1 (16) → Bottom 2 to RoW L2</div><div>Santos Neymar, Miami Messi, Nassr Ronaldo in L1</div></div><div class='row'><div>RoW League 2 (16) → Top 2 to RoW L1</div><div>Total 32 as you said</div></div></div><div class='dark-card small'><div style='color:#22c55e'>Your Complete Setup 2025/26:</div>RoW L1 (16): Santos Neymar $75M, Miami Messi $90M, Nassr Ronaldo $120M + 13 big teams<br>RoW L2 (16): 16 teams - Total RoW 32 (16+16)<br>Tier 1+2 Europe + Euro UCL + WC 2026</div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>⬆️⬇️</div><div class='bicon' onclick='home()'>🏠</div></div>`;
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Promotion - RoW L1-L2 + Tier 1-2 - ${season} - 32 teams RoW</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab' onclick='renderTableFull()'>Table</div><div class='tab on'>Promo RoW 32</div></div><div class='dark-card'><div style='color:#22c55e;font-weight:800'>RoW - 32 TEAMS (16+16):</div><div class='row'><div>RoW League 1 (16) → Bottom 2 to RoW L2</div></div><div class='row'><div>RoW League 2 (16) → Top 2 to RoW L1</div></div></div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>⬆️⬇️</div><div class='bicon' onclick='home()'>🏠</div></div>`;
 }
 function renderFixturesFull(){
  document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e'>Fixtures - ${fixtures[0]?.tier||'RoW L1'} - 16 teams - RoW 32 total</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab on'>Fix ${fixtures[0]?.tier||'RoW L1'} 16</div><div class='tab' onclick='renderPromo()'>Promo</div></div><div class='dark-card'>${fixtures.map(f=>`<div class='row'><div><span class='badge'>${f.comp}</span> <span class='badge2'>${f.tier}</span> GW${f.gw} ${f.home} ${f.played?f.mg+'-'+f.og:'vs'} ${f.away}<br><span class='small'>${f.date||''}</span></div><div>${f.played?f.res:'UP'}</div></div>`).join('')}</div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>📅</div></div>`;
 }
 function openPopup(type){
  let el=document.getElementById('popup'); if(!el){ let d=document.createElement('div'); d.id='popup'; document.getElementById('app').appendChild(d); el=d; }
- if(type==='tactics'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderLineup()'>Lineup 4-4-2 - GW${currentRound} - ${season}</div><div class='pitem' onclick='renderTableFull()'>Show all teams - 16 teams - Santos Neymar, Miami Messi, Nassr Ronaldo</div><div class='pitem' onclick='renderPromo()'>Promotion - RoW L1-L2 - 32 teams</div></div>`; }
+ if(type==='tactics'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderLineup()'>Lineup 4-4-2 - GW${currentRound} - ${season}</div><div class='pitem' onclick='renderTableFull()'>Show all teams - 16 teams</div><div class='pitem' onclick='renderPromo()'>Promotion - RoW L1-L2 - 32 teams</div></div>`; }
  else if(type==='fixtures'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderTableFull()'>Standing - ${season}</div><div class='pitem' onclick='renderFixturesFull()'>Your Fixtures - ${fixtures.filter(f=>!f.played).length} left</div><div class='pitem' onclick='renderPromo()'>RoW L1-L2 - 32 teams (16+16)</div></div>`; }
  else if(type==='trophy'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderTableFull()'>Teams Ranking</div><div class='pitem' onclick='renderPromo()'>Promotion Table</div></div>`; }
- else if(type==='settings'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='saveSeason();alert("Saved")'>Save game</div><div class='pitem' onclick='home()'>Main menu</div><div class='pitem'>About 10.4 - RoW 32 teams (16+16): Santos Neymar, Miami Messi, Nassr Ronaldo in L1</div></div>`; }
+ else if(type==='settings'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='saveSeason();alert("Saved")'>Save game</div><div class='pitem' onclick='home()'>Main menu</div><div class='pitem'>About 10.6 - real club squads (32 RoW teams) + stat-driven match engine</div></div>`; }
 }
 function renderLineup(){
  let lineup=squad.slice(0,11);
- document.getElementById('app').innerHTML=`<div class='top'><div class='top1'><div>Lineup 4-4-2 GW${currentRound} - ${season} - ${fixtures[0]?.tier||'RoW L1'}</div><div><button class='btn' style='width:auto;padding:4px 8px' onclick='renderSquad()'>Back</button></div></div></div><div style='display:flex'><div style='flex:1'>${lineup.map(p=>`<div class='row'><div><div class='pos'>${p.pos.startsWith("GK")?"GK":"ATT"}</div><div style='font-weight:700'>${p.n} ${p.note||''}</div></div><div class='ovr'>${p.ovr}</div></div>`).join('')}</div><div style='width:130px;background:#1e293b;padding:6px'><button class='btn' style='margin-top:20px;background:#22c55e' onclick='startLive()'>Play GW${currentRound}</button></div></div>`;
+ let next=fixtures.find(f=>f.gw===currentRound);
+ let opp=next?(next.home===myTeam?next.away:next.home):'Flamengo';
+ let myR=squadRating(), oppR=opponentRating(opp);
+ let {myXG,oppXG}=expectedGoals(myR,oppR);
+ document.getElementById('app').innerHTML=`<div class='top'><div class='top1'><div>Lineup 4-4-2 GW${currentRound} - ${season} - ${fixtures[0]?.tier||'RoW L1'}</div><div><button class='btn' style='width:auto;padding:4px 8px' onclick='renderSquad()'>Back</button></div></div><div class='small' style='color:#22c55e'>vs ${opp} (rating ${oppR}) • Your rating ${myR.toFixed(1)} • Projected xG ${myXG.toFixed(2)}-${oppXG.toFixed(2)}</div></div><div style='display:flex'><div style='flex:1'>${lineup.map(p=>`<div class='row'><div><div class='pos'>${p.pos}</div><div style='font-weight:700'>${p.n} ${p.star?'★':''}</div></div><div class='ovr'>${p.ovr}</div></div>`).join('')}</div><div style='width:130px;background:#1e293b;padding:6px'><button class='btn' style='margin-top:20px;background:#22c55e' onclick='startLive()'>Play GW${currentRound}</button></div></div>`;
 }
-function startLive(){ liveMinute=0; scoreA=0; scoreB=0; scorersA=[]; renderLive(); let iv=setInterval(()=>{ liveMinute++; if(liveMinute===8){scoreA=1; scorersA.push(myTeam+" 8'");} if(liveMinute===36){scoreA=2; scorersA.push("Palmer 36'");} if(liveMinute===53){scoreA=3; scorersA.push("Blessed 53'");} if(liveMinute===45){clearInterval(iv); renderHalf(); return;} if(liveMinute>=90){clearInterval(iv); finishMatch(); return;} renderLive(); },200); }
+function startLive(){
+ let next=fixtures.find(f=>f.gw===currentRound);
+ let opp=next?(next.home===myTeam?next.away:next.home):'Flamengo';
+ let myR=squadRating(), oppR=opponentRating(opp);
+ let {myXG,oppXG}=expectedGoals(myR,oppR);
+ let events=buildMatchEvents(myXG,oppXG);
+ match={opp,myR,oppR,myXG,oppXG,events,idx:0};
+ liveMinute=0; scoreA=0; scoreB=0; scorersA=[]; scorersB=[];
+ renderLive();
+ let iv=setInterval(()=>{
+  liveMinute++;
+  while(match.idx<match.events.length && match.events[match.idx].min<=liveMinute){
+   let ev=match.events[match.idx];
+   if(ev.side==='me'){ scoreA++; let scorer=pickScorer(); stats[scorer.n]=stats[scorer.n]||{g:0,cs:0}; stats[scorer.n].g++; scorersA.push(scorer.n+" "+ev.min+"'"); }
+   else { scoreB++; scorersB.push(match.opp+" "+ev.min+"'"); }
+   match.idx++;
+  }
+  if(liveMinute===45){ clearInterval(iv); renderHalf(); return; }
+  if(liveMinute>=90){ clearInterval(iv); finishMatch(); return; }
+  renderLive();
+ },180);
+}
 function renderLive(){
- document.getElementById('app').innerHTML=`<div class='top'><div>${fixtures.find(f=>f.gw===currentRound)?.comp||'RoW League 1'} - GW${currentRound} - ${season}</div><div class='clock'>${liveMinute}'</div></div><div class='liveTop'><div class='scoreBox'><div class='tA'>${myTeam}</div><div class='sc'>${scoreA}-${scoreB}</div><div class='tB'>Flamengo</div></div></div><div class='mini' style='padding:4px 8px'>${scorersA.join(" ")} | ${season} | Santos Neymar, Miami Messi, Nassr Ronaldo in RoW L1 - 32 teams</div><div class='liveCard'><div style='text-align:center;color:#22c55e;font-weight:800'>Live GW${currentRound} - ${season} - RoW L1 16 teams</div><div class='row' style='background:#22c55e22'><div style='flex:1;text-align:right'>${myTeam}</div><div style='width:60px;text-align:center;font-weight:800'>${scoreA}-${scoreB}</div><div style='flex:1'>Flamengo</div></div><div class='row' style='background:transparent;border:0'><div style='flex:1;text-align:right'>Santos Neymar</div><div style='width:60px;text-align:center'>1-0</div><div style='flex:1'>Palmeiras - RoW L1</div></div><div class='row' style='background:transparent;border:0'><div style='flex:1;text-align:right'>Inter Miami Messi</div><div style='width:60px;text-align:center'>2-1</div><div style='flex:1'>LA Galaxy - RoW L1</div></div><div class='row' style='background:transparent;border:0'><div style='flex:1;text-align:right'>Al Nassr Ronaldo</div><div style='width:60px;text-align:center'>2-0</div><div style='flex:1'>Al Hilal - RoW L1</div></div></div>`;
+ let opp=match?match.opp:'Flamengo';
+ document.getElementById('app').innerHTML=`<div class='top'><div>${fixtures.find(f=>f.gw===currentRound)?.comp||'RoW League 1'} - GW${currentRound} - ${season}</div><div class='clock'>${liveMinute}'</div></div><div class='liveTop'><div class='scoreBox'><div class='tA'>${myTeam}</div><div class='sc'>${scoreA}-${scoreB}</div><div class='tB'>${opp}</div></div></div><div class='mini' style='padding:4px 8px'>${[...scorersA,...scorersB].join(" ")}</div><div class='liveCard'><div style='text-align:center;color:#22c55e;font-weight:800'>Live GW${currentRound} - ${season} - ${fixtures[0]?.tier||'RoW L1'}</div><div class='row' style='background:#22c55e22'><div style='flex:1;text-align:right'>${myTeam}</div><div style='width:60px;text-align:center;font-weight:800'>${scoreA}-${scoreB}</div><div style='flex:1'>${opp}</div></div><div class='xg' style='padding:4px'>Ratings: ${myTeam} ${match?match.myR.toFixed(1):'-'} vs ${opp} ${match?match.oppR:'-'} • xG ${match?match.myXG.toFixed(2):'-'}-${match?match.oppXG.toFixed(2):'-'}</div></div>`;
 }
 function renderHalf(){
- document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Half-Time GW${currentRound} - ${season}</div></div><div class='liveTop'><div style='flex:1;text-align:center'>${myTeam}</div><div style='flex:0 0 130px;text-align:center'><div style='background:#fff;color:#000;padding:4px'>Match info</div><div style='font-size:20px;font-weight:900'>${scoreA}-${scoreB}</div><div style='font-size:10px'>${scorersA.join("<br>")}</div></div><div style='flex:1;text-align:center'>Flamengo</div></div><button class='btn' style='position:fixed;bottom:0;left:0;right:0;border-radius:0' onclick='resumeSecondHalf()'>Back to match</button>`;
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Half-Time GW${currentRound} - ${season}</div></div><div class='liveTop'><div style='flex:1;text-align:center'>${myTeam}</div><div style='flex:0 0 130px;text-align:center'><div style='background:#fff;color:#000;padding:4px'>Match info</div><div style='font-size:20px;font-weight:900'>${scoreA}-${scoreB}</div><div style='font-size:10px'>${[...scorersA,...scorersB].join("<br>")}</div></div><div style='flex:1;text-align:center'>${match?match.opp:'Flamengo'}</div></div><button class='btn' style='position:fixed;bottom:0;left:0;right:0;border-radius:0' onclick='resumeSecondHalf()'>Back to match</button>`;
 }
-function resumeSecondHalf(){ liveMinute=45; renderLive(); let iv=setInterval(()=>{ liveMinute++; if(liveMinute>=90){clearInterval(iv); finishMatch();} else renderLive(); },150); }
+function resumeSecondHalf(){
+ liveMinute=45; renderLive();
+ let iv=setInterval(()=>{
+  liveMinute++;
+  while(match.idx<match.events.length && match.events[match.idx].min<=liveMinute){
+   let ev=match.events[match.idx];
+   if(ev.side==='me'){ scoreA++; let scorer=pickScorer(); stats[scorer.n]=stats[scorer.n]||{g:0,cs:0}; stats[scorer.n].g++; scorersA.push(scorer.n+" "+ev.min+"'"); }
+   else { scoreB++; scorersB.push(match.opp+" "+ev.min+"'"); }
+   match.idx++;
+  }
+  if(liveMinute>=90){ clearInterval(iv); finishMatch(); }
+  else renderLive();
+ },140);
+}
 function finishMatch(){
- let next=fixtures.find(f=>f.gw===currentRound); if(next){ next.played=true; next.mg=scoreA; next.og=scoreB; next.res=scoreA>scoreB?'W':'D'; let t=table[myTeam]; if(t){ t.P++; t.GF+=scoreA; t.GA+=scoreB; if(scoreA>scoreB){t.W++; t.PTS+=3;} else {t.D++; t.PTS++;} } } currentRound++; saveSeason();
- document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;color:#22c55e;width:100%'>Round results GW${currentRound-1} - ${season} - Santos Neymar, Miami Messi, Nassr Ronaldo - RoW L1</div></div><div class='liveCard'><div class='row' style='background:#22c55e22'><div style='flex:1;text-align:right'>${myTeam}</div><div style='width:50px;text-align:center;font-weight:900'>${scoreA}-${scoreB}</div><div style='flex:1'>Flamengo - WIN</div></div></div><div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px;background:#000'><button class='btn' style='width:33%;background:#334155;color:#fff' onclick='renderTableFull()'>Table</button><button class='btn' style='width:33%' onclick='renderSquad()'>Continue GW${currentRound}</button><button class='btn' style='width:33%;background:#facc15;color:#000' onclick='renderLineup()'>Next</button></div>`;
+ let next=fixtures.find(f=>f.gw===currentRound);
+ if(next){
+  next.played=true; next.mg=scoreA; next.og=scoreB;
+  next.res=scoreA>scoreB?'W':scoreA<scoreB?'L':'D';
+  let t=table[myTeam];
+  if(t){ t.P++; t.GF+=scoreA; t.GA+=scoreB; if(scoreA>scoreB){t.W++; t.PTS+=3;} else if(scoreA<scoreB){t.L++;} else {t.D++; t.PTS++;} if(scoreB===0) t.CS++; }
+  let ot=table[match?match.opp:next.away===myTeam?next.home:next.away];
+  if(ot){ ot.P++; ot.GF+=scoreB; ot.GA+=scoreA; if(scoreB>scoreA){ot.W++; ot.PTS+=3;} else if(scoreB<scoreA){ot.L++;} else {ot.D++; ot.PTS++;} }
+ }
+ currentRound++; saveSeason();
+ let resultWord=scoreA>scoreB?'WIN':scoreA<scoreB?'LOSS':'DRAW';
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;color:#22c55e;width:100%'>Round results GW${currentRound-1} - ${season}</div></div><div class='liveCard'><div class='row' style='background:#22c55e22'><div style='flex:1;text-align:right'>${myTeam}</div><div style='width:50px;text-align:center;font-weight:900'>${scoreA}-${scoreB}</div><div style='flex:1'>${match?match.opp:''} - ${resultWord}</div></div><div class='small' style='padding:4px'>${[...scorersA,...scorersB].join(" ")||'No goals'}</div></div><div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px;background:#000'><button class='btn' style='width:33%;background:#334155;color:#fff' onclick='renderTableFull()'>Table</button><button class='btn' style='width:33%' onclick='renderSquad()'>Continue GW${currentRound}</button><button class='btn' style='width:33%;background:#facc15;color:#000' onclick='renderLineup()'>Next</button></div>`;
 }
 home();
 </script></body></html>
