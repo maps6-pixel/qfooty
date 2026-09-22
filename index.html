@@ -1,160 +1,216 @@
-<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>QFooty 8.0 FINAL CYBER</title><style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#0f172a;color:#e2e8f0;font-family:system-ui;padding-bottom:70px}
-.top{background:#1e293b;border-bottom:3px solid #22c55e;padding:6px 8px;font-size:12px}
-.top1{display:flex;justify-content:space-between}.gold{color:#facc15;font-weight:800}.teal{background:#0f766e;padding:4px 8px;border-radius:4px;display:inline-block;font-weight:800}
+<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>QFooty 10.4 RoW 32 TEAMS</title><style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#0f172a;color:#e2e8f0;font-family:system-ui;min-height:100vh;padding-bottom:70px}
+.cyber-bg{min-height:100vh;background:#0f172a;padding:10px}
+.title{font-size:28px;font-weight:900;background:#e2e8f0;color:#000;display:inline-block;padding:6px 14px;transform:rotate(-2deg);margin:12px auto}
+.center{text-align:center}
+.menu-btn{background:#1e293b;color:#fff;border:2px solid #22c55e;padding:12px;border-radius:10px;width:320px;max-width:92%;margin:6px auto;display:block;font-weight:800;font-size:13px;cursor:pointer}
+.gold-btn{background:#22c55e;color:#000;border:0;padding:12px;border-radius:8px;width:100%;font-weight:900;font-size:15px;cursor:pointer;margin-top:10px}
+.dark-card{background:#1a2744;border:1px solid #334155;border-radius:8px;padding:8px;margin:6px 0}
+.row{display:flex;justify-content:space-between;align-items:center;padding:7px 4px;border-bottom:1px solid #ffffff0f;font-size:11px}
+.check{width:22px;height:22px;border:2px solid #555;background:#000;display:flex;align-items:center;justify-content:center;border-radius:4px}.check.on{background:#22c55e;border-color:#22c55e;color:#000}
+.select{background:#0f172a;border:1px solid #334155;color:#fff;padding:9px;border-radius:6px;width:100%;margin:5px 0;font-size:12px}
+.input{background:#fff;color:#000;padding:10px;border-radius:6px;width:100%;border:2px solid #22c55e;margin:6px 0}
+.top{background:#1e293b;border-bottom:3px solid #22c55e;padding:6px 8px;font-size:11px}.top1{display:flex;justify-content:space-between}.teal{background:#0f766e;padding:4px 8px;border-radius:4px;display:inline-block;font-weight:800;font-size:10px}
 .bar{height:8px;background:#334155;border-radius:4px;overflow:hidden;width:80px;display:inline-block}.bar div{height:100%;background:#22c55e}
-.squad-head{background:#0f172a;padding:6px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334155;font-size:12px}
-.row{background:#1a2744;border-bottom:1px solid #ffffff0f;padding:7px 6px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
-.row:hover{background:#1e334f}
-.pos{font-weight:800;color:#22c55e;width:32px}.name{font-weight:700}.val{font-size:10px;opacity:.7}.ovr{font-size:16px;font-weight:900}.star{color:#ef4444}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#0a0f1e;border-top:2px solid #22c55e;display:flex;justify-content:space-around;padding:6px 0;z-index:20}
-.bicon{width:48px;height:48px;background:#1e293b;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:1px solid #334155}.bicon.active{background:#22c55e;color:#000}
-.popup{position:fixed;bottom:70px;right:6px;background:#1e293b;border:1px solid #22c55e;border-radius:8px;min-width:220px;z-index:30;box-shadow:0 10px 30px #000}
-.pitem{padding:12px 14px;border-bottom:1px solid #ffffff11;cursor:pointer;font-size:14px}.pitem:hover{background:#22c55e;color:#000}
-.btn{background:#22c55e;color:#000;border:0;padding:10px 16px;border-radius:8px;font-weight:900;cursor:pointer;width:100%;margin-top:8px}
-.btnGold{background:#facc15;color:#000}
-.select{background:#0f172a;border:1px solid #334155;color:#fff;padding:8px;border-radius:6px;width:100%;margin:4px 0}
+.squad-head{background:#0f172a;padding:6px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334155;font-size:11px}
+.pos{font-weight:800;color:#22c55e;width:24px;font-size:10px}.ovr{font-size:13px;font-weight:900}.star{color:#ef4444}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#0a0f1e;border-top:2px solid #22c55e;display:flex;justify-content:space-around;padding:5px 0;z-index:20}
+.bicon{width:42px;height:42px;background:#1e293b;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;border:1px solid #334155}.bicon.active{background:#22c55e;color:#000}
+.popup{position:fixed;bottom:65px;right:6px;background:#1e293b;border:1px solid #22c55e;border-radius:8px;min-width:230px;z-index:30;max-height:60vh;overflow:auto}
+.pitem{padding:10px 12px;border-bottom:1px solid #ffffff11;cursor:pointer;font-size:11px}.pitem:hover{background:#22c55e;color:#000}
 .liveTop{background:#1e293b;padding:8px;display:flex;justify-content:space-between;align-items:center}
-.scoreBox{display:flex;align-items:center;gap:4px;width:100%}.tA{background:#0f766e;color:#fff;padding:8px 6px;border-radius:4px;flex:1;text-align:center;font-weight:800;font-size:14px}.tB{background:#dc2626;color:#fff;padding:8px 6px;border-radius:4px;flex:1;text-align:center;font-weight:800;font-size:14px}.sc{font-size:22px;font-weight:900;padding:0 8px}
-.clock{width:48px;height:48px;border:3px solid #facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
-.liveCard{background:#1a2744;margin:6px;padding:8px;border-radius:8px;border:1px solid #334155}
-.mini{font-size:11px;opacity:.8}.rating{width:32px;text-align:right;font-weight:800}
-</style></head><body>
-<div id='app'></div>
-<script>
-const BUDGETS={"Chelsea":200,"Man City":250,"Kaizer Chiefs":8,"Mamelodi Sundowns":12,"Orlando Pirates":8,"Real Madrid":300,"Liverpool":170};
-let myTeam=localStorage.getItem('qfooty_team')||'Chelsea';
-let coach=localStorage.getItem('coach')||'Given';
-let budget=parseInt(localStorage.getItem('qfooty_b_'+myTeam)||BUDGETS[myTeam]||60);
-let day=22; let month=6; let year=22;
-let confidenceC=100, confidenceS=100;
-let squad=[
-{n:"Logen",pos:"GK",age:18,energy:100,val:"92M 80k",sal:"384 k",flag:"🇩🇪",ovr:74,star:1,g:0,cs:0},
-{n:"Precious",pos:"GK",age:19,energy:100,val:"58M 806k",sal:"334 k",flag:"🏴󐁧󐁢󐁥󐁮󐁧󐁿",ovr:65,star:1,g:0,cs:0},
-{n:"Kimberley",pos:"WBL",age:17,energy:93,val:"87M 393k",sal:"388 k",flag:"🇭🇷",ovr:72,star:1,g:0,cs:0},
-{n:"Kuziva",pos:"WBR",age:19,energy:100,val:"83M 872k",sal:"382 k",flag:"🇵🇹",ovr:71,card:"🟨",g:0,cs:0},
-{n:"Nancy",pos:"WBL",age:19,energy:100,val:"35M 587k",sal:"348 k",flag:"🇪🇬",ovr:65,star:1,g:0,cs:0},
-{n:"Lorraine",pos:"WBR",age:19,energy:100,val:"33M 292k",sal:"337 k",flag:"🇲🇽",ovr:62,star:1,g:0,cs:0},
-{n:"Chelsea",pos:"CDL",age:16,energy:91,val:"98M 537k",sal:"407 k",flag:"🇧🇪",ovr:76,card:"🟨",g:0,cs:0},
-{n:"Faith",pos:"CDR",age:18,energy:100,val:"55M 389k",sal:"395 k",flag:"🇦🇷",ovr:74,inj:"2",g:0,cs:0},
-{n:"Dephine",pos:"CDR",age:18,energy:100,val:"63M 154k",sal:"356 k",flag:"🏴󐁧󐁢󐁥󐁮󐁧󐁿",ovr:67,star:1,g:0,cs:0},
-{n:"Chiedza",pos:"CDR",age:19,energy:100,val:"45M 200k",sal:"300 k",flag:"🇿🇼",ovr:68,star:1,g:0,cs:0},
-{n:"Palmer",pos:"ATT",age:22,energy:98,val:"85M",sal:"450 k",flag:"🏴󐁧󐁢󐁥󐁮󐁧󐁿",ovr:86,star:1,g:0,cs:0},
-{n:"Tariro",pos:"OM",age:20,energy:96,val:"40M",sal:"320 k",flag:"🇿🇼",ovr:73,g:0,cs:0},
-{n:"Blessed",pos:"F",age:19,energy:100,val:"50M",sal:"340 k",flag:"🇿🇦",ovr:75,g:0,cs:0},
+.scoreBox{display:flex;align-items:center;gap:4px;width:100%}.tA{background:#0f766e;color:#fff;padding:6px 5px;border-radius:4px;flex:1;text-align:center;font-weight:800;font-size:11px}.tB{background:#dc2626;color:#fff;padding:6px 5px;border-radius:4px;flex:1;text-align:center;font-weight:800;font-size:11px}.sc{font-size:18px;font-weight:900;padding:0 6px}
+.clock{width:42px;height:42px;border:3px solid #22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px}
+.liveCard{background:#1a2744;margin:5px;padding:8px;border-radius:8px;border:1px solid #334155}.mini{font-size:10px;opacity:.8}
+.btn{background:#22c55e;color:#000;border:0;padding:8px 12px;border-radius:8px;font-weight:900;cursor:pointer;width:100%;font-size:12px}
+.small{font-size:10px;opacity:.7}
+.tabBar{display:flex;gap:3px;background:#0a0f1e;padding:3px;overflow:auto}.tab{padding:5px 7px;background:#1e293b;border-radius:6px;font-size:10px;cursor:pointer;white-space:nowrap}.tab.on{background:#22c55e;color:#000}
+.badge{background:#22c55e;color:#000;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800}.badge2{background:#facc15;color:#000;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800}.badgeR{background:#3b82f6;color:#fff;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800}
+</style></head><body><div id='app'></div><script>
+const MY_LEAGUES=[
+{id:'epl',name:'Premier League',flag:'🏴󐁧󐁢󐁥󐁮󐁧󐁿',country:'England',tier:'1st',tier2:'Championship',teams:20,teams2:24,season:'2025/26',dates:'Aug 2025-May 2026'},
+{id:'laliga',name:'La Liga',flag:'🇪🇸',country:'Spain',tier:'1st',tier2:'La Liga 2',teams:20,teams2:22,season:'2025/26',dates:'Aug 2025-May 2026'},
+{id:'bundes',name:'Bundesliga',flag:'🇩🇪',country:'Germany',tier:'1st',tier2:'2. Bundesliga',teams:18,teams2:18,season:'2025/26',dates:'Aug 2025-May 2026'},
+{id:'ligue1',name:'Ligue 1',flag:'🇫🇷',country:'France',tier:'1st',tier2:'Ligue 2',teams:18,teams2:20,season:'2025/26',dates:'Aug 2025-May 2026'},
+{id:'seriea',name:'Serie A',flag:'🇮🇹',country:'Italy',tier:'1st',tier2:'Serie B',teams:20,teams2:20,season:'2025/26',dates:'Aug 2025-May 2026'}
 ];
-let lineup=[], subs=[], formation="4-4-2";
-let liveMinute=0, scoreA=0, scoreB=0, scorersA=[], statsA={poss:73,att:13,on:5,rec:7}, statsB={poss:27,att:6,on:1,rec:7};
-let fixtures=[{h:"Burnley",a:"Manchester City",r:"0-2"},{h:"Quatracul CF",a:"Liverpool",r:"3-0"},{h:"Norwich City",a:"Chelsea",r:"0-3"},{h:"Brighton",a:"Manchester United",r:"2-1"},{h:"Brentford",a:"Tottenham",r:"1-1"},{h:"Everton",a:"Wolverhampton",r:"0-3"},{h:"Crystal Palace",a:"West Ham",r:"1-1"},{h:"Aston Villa",a:"Leicester City",r:"3-1"}];
-let table={"Quatracul CF":30,"Liverpool":28,"Chelsea":27,"Man City":26};
-
+const TIER2_LEAGUES=[
+{id:'epl2',name:'Championship',flag:'🏴󐁧󐁢󐁥󐁮󐁧󐁿',country:'England',tier:'2nd',teams:24,season:'2025/26',parent:'epl'},
+{id:'laliga2',name:'La Liga 2',flag:'🇪🇸',country:'Spain',tier:'2nd',teams:22,season:'2025/26',parent:'laliga'},
+{id:'bundes2',name:'2. Bundesliga',flag:'🇩🇪',country:'Germany',tier:'2nd',teams:18,season:'2025/26',parent:'bundes'},
+{id:'ligue2',name:'Ligue 2',flag:'🇫🇷',country:'France',tier:'2nd',teams:20,season:'2025/26',parent:'ligue1'},
+{id:'serie2',name:'Serie B',flag:'🇮🇹',country:'Italy',tier:'2nd',teams:20,season:'2025/26',parent:'seriea'}
+];
+const ROW_LEAGUES=[
+{id:'row1',name:'Rest of World League 1',flag:'🌍',short:'RoW L1',country:'World',tier:'RoW 1st',teams:16,season:'2025/26',dates:'Aug 2025-May 2026',type:'RoW1'},
+{id:'row2',name:'Rest of World League 2',flag:'🌎',short:'RoW L2',country:'World',tier:'RoW 2nd',teams:16,season:'2025/26',dates:'Aug 2025-May 2026',type:'RoW2'}
+];
+const EURO_COMPS=[
+{id:'ucl',name:'UEFA Champions League',flag:'🏆',teams:32,dates:'Sep 2025-Jun 2026',format:'Group+Knockout'},
+{id:'uel',name:'Europa League',flag:'🥈',teams:32,dates:'Sep 2025-May 2026',format:'Group+Knockout'}
+];
+const INTL_TOURS=[
+{id:'wc2026',name:'World Cup 2026',flag:'🌎',teams:48,dates:'Jun 11-Jul 19 2026',host:'USA/Mex/Can'},
+{id:'euro2028',name:'Euro 2028',flag:'🇪🇺',teams:24,dates:'Jun-Jul 2028',host:'UK & Ireland'}
+];
+const TEAMS_DATA={
+"Premier League":["Man City $250M","Arsenal $180M","Liverpool $170M","Chelsea $200M","Man Utd $190M","Newcastle $150M","Tottenham $160M","Aston Villa $120M","Brighton $90M","West Ham $100M","Crystal Palace $80M","Fulham $70M","Wolves $75M","Everton $85M","Brentford $65M","Nottm Forest $60M","Bournemouth $55M","Luton Town $40M","Sheffield Utd $35M","Burnley $45M"],
+"Championship":["Leicester $80M","Leeds $75M","Southampton $70M","West Brom $40M","Norwich $35M","Sunderland $30M","Middlesbrough $30M","Ipswich $35M","Hull $25M","Watford $30M","Coventry $25M","Bristol City $20M","Millwall $20M","Blackburn $20M","Stoke $20M","QPR $18M","Swansea $18M","Sheff Wed $15M","Plymouth $12M","Preston $18M","Cardiff $15M","Birmingham $15M","Huddersfield $12M","Rotherham $10M"],
+"Rest of World League 1":[
+"Santos $75M - Neymar BRA",
+"Inter Miami $90M - Messi USA",
+"Al Nassr $120M - Ronaldo KSA",
+"Flamengo $80M - Pedro BRA",
+"Palmeiras $75M - Endrick BRA",
+"River Plate $70M - Borja ARG",
+"Boca Juniors $65M - Cavani ARG",
+"Al Hilal $150M - Mitrovic KSA",
+"Ajax $90M - Brobbey NED",
+"Benfica $110M - Di Maria POR",
+"Porto $100M - Pepe POR",
+"Celtic $60M - Furuhashi SCO",
+"Galatasaray $70M - Icardi TUR",
+"Al Ahly $20M - El Shahat EGY",
+"LA Galaxy $55M - Puig USA",
+"Rangers $55M - Tavernier SCO"
+],
+"Rest of World League 2":[
+"Corinthians $60M - Yuri Alberto BRA",
+"Fluminense $55M - Cano BRA",
+"Racing Club $35M - Martinez ARG",
+"Independiente $30M - Cauteruccio ARG",
+"LAFC $60M - Bouanga USA",
+"Club America $50M - Henry Martin MEX",
+"Chivas $40M - Vega MEX",
+"PSV $70M - De Jong NED",
+"Feyenoord $60M - Gimenez NED",
+"Sporting CP $90M - Gyokeres POR",
+"Fenerbahce $65M - Dzeko TUR",
+"Wydad $15M - Ounajem MAR",
+"Urawa Reds $25M - Scholz JPN",
+"Al Ittihad $110M - Benzema KSA",
+"Seattle Sounders $45M - Morris USA",
+"Colo-Colo $20M - Vidal CHI"
+],
+"La Liga":["Real Madrid $300M","Barcelona $200M","Atletico $150M","Sevilla $80M"],
+"Bundesliga":["Bayern Munich $220M","Leverkusen $90M","Dortmund $120M"],
+"Ligue 1":["PSG $280M","Marseille $80M","Lyon $70M"],
+"Serie A":["Inter $180M","AC Milan $170M","Juventus $200M"]
+};
+let selectedLeagues=['epl','laliga','bundes','ligue1','seriea']; let selectedTier2=['epl2','laliga2','bundes2','ligue2','serie2']; let selectedRow=['row1','row2']; let selectedEuro=['ucl']; let selectedIntl=['wc2026'];
+let myTeam=localStorage.getItem('qfooty_team')||'Santos'; let coach=localStorage.getItem('coach')||'Given'; let budget=75;
+let saves=JSON.parse(localStorage.getItem('qfooty_saves')||'[]');
+let baseSquad=[
+{n:"Neymar",pos:"ATT",age:33,energy:88,val:"75M",sal:"500 k",flag:"BRA",ovr:86,star:1,note:"Santos - Neymar"},
+{n:"Messi",pos:"ATT",age:38,energy:85,val:"90M",sal:"600 k",flag:"ARG",ovr:89,star:1,note:"Inter Miami - Messi"},
+{n:"Ronaldo",pos:"ATT",age:40,energy:82,val:"120M",sal:"800 k",flag:"POR",ovr:87,star:1,note:"Al Nassr - Ronaldo"},
+{n:"Logen",pos:"GK",age:18,energy:100,val:"92M",sal:"384 k",flag:"GER",ovr:74,star:1},
+{n:"Chelsea",pos:"CDL",age:16,energy:91,val:"98M",sal:"407 k",flag:"BEL",ovr:76},
+{n:"Tariro",pos:"OM",age:20,energy:96,val:"40M",sal:"320 k",flag:"ZIM",ovr:73,g:0},
+{n:"Palmer",pos:"ATT",age:22,energy:98,val:"85M",sal:"450 k",flag:"ENG",ovr:86,star:1,g:0},
+{n:"Blessed",pos:"F",age:19,energy:100,val:"50M",sal:"340 k",flag:"RSA",ovr:75,g:0}
+];
+let squad=JSON.parse(JSON.stringify(baseSquad));
+let fixtures=[], table={}, stats={}, liveMinute=0,scoreA=0,scoreB=0,scorersA=[], currentRound=1, season="2025/26";
+function home(){
+ document.getElementById('app').innerHTML=`<div class='cyber-bg center'><div class='title'>QFOOTY 10.4</div><div class='small' style='color:#22c55e'>RoW L1 & L2 - 32 TEAMS - Santos Neymar, Miami Messi, Nassr Ronaldo</div><div class='small'>Top 5 Europe + Tier 2 + RoW 32 teams (16+16) + UCL + WC</div><div style='margin-top:14px'><button class='menu-btn' onclick='newGameLeagues()'>New game - Select Leagues + RoW 32</button><button class='menu-btn' onclick='loadGameScreen()'>Load game - ${myTeam}</button><button class='menu-btn' onclick='teamEditor()'>Team Editor - Santos Neymar, Miami Messi, Nassr Ronaldo</button></div><div class='dark-card' style='margin-top:10px;text-align:left;max-width:360px;margin-left:auto;margin-right:auto'><div style='color:#22c55e;font-weight:800'>TOP 5 EUROPE:</div><div class='small'>EPL (20), La Liga (20), Bundesliga (18), Ligue 1 (18), Serie A (20) - Tier 1 + Tier 2 (Championship 24 etc)</div><div style='color:#22c55e;font-weight:800;margin-top:6px'>RoW LEAGUE 1 - 16 TEAMS:</div><div class='small'>1. Santos $75M - Neymar<br>2. Inter Miami $90M - Messi<br>3. Al Nassr $120M - Ronaldo<br>4. Flamengo $80M, 5. Palmeiras $75M, 6. River $70M, 7. Boca $65M, 8. Al Hilal $150M, 9. Ajax $90M, 10. Benfica $110M, 11. Porto $100M, 12. Celtic $60M, 13. Galatasaray $70M, 14. Al Ahly $20M, 15. LA Galaxy $55M, 16. Rangers $55M</div><div style='color:#22c55e;font-weight:800;margin-top:6px'>RoW LEAGUE 2 - 16 TEAMS:</div><div class='small'>Corinthians, Fluminense, Racing, Independiente, LAFC, Club America, Chivas, PSV, Feyenoord, Sporting, Fenerbahce, Wydad, Urawa, Al Ittihad Benzema, Seattle, Colo-Colo - Total 32 (16+16)</div></div></div>`;
+}
+function newGameLeagues(){
+ let h=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:900'>Select Leagues - RoW 32 Teams (16+16) + Tier 2 - ${season}</div></div><div style='color:#22c55e;font-weight:800;margin-top:8px'>TIER 1 - TOP 5 EUROPE:</div>`;
+ MY_LEAGUES.forEach(l=>{ let on=selectedLeagues.includes(l.id); h+=`<div class='dark-card row' onclick='toggleLeague("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge'>${l.tier}</span> <span class='small'>${l.teams} • ${l.dates}</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
+ h+=`<div style='color:#22c55e;font-weight:800;margin-top:8px'>TIER 2:</div>`;
+ TIER2_LEAGUES.forEach(l=>{ let on=selectedTier2.includes(l.id); h+=`<div class='dark-card row' onclick='toggleTier2("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge2'>${l.tier}</span> <span class='small'>${l.teams} • Promotes to ${MY_LEAGUES.find(m=>m.id===l.parent)?.name||''}</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
+ h+=`<div style='color:#22c55e;font-weight:800;margin-top:10px'>RoW LEAGUE 1 - 16 TEAMS - Santos Neymar, Miami Messi, Nassr Ronaldo:</div>`;
+ ROW_LEAGUES.filter(r=>r.id==='row1').forEach(l=>{ let on=selectedRow.includes(l.id); h+=`<div class='dark-card row' onclick='toggleRow("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge'>${l.teams} TEAMS</span> <span class='small'>• ${l.dates}</span><br><span class='small' style='color:#22c55e'>Santos Neymar, Inter Miami Messi, Al Nassr Ronaldo + Flamengo, Palmeiras, River, Boca, Al Hilal, Ajax, Benfica, Porto, Celtic, Galatasaray, Al Ahly, LA Galaxy, Rangers</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
+ h+=`<div style='color:#22c55e;font-weight:800;margin-top:8px'>RoW LEAGUE 2 - 16 TEAMS:</div>`;
+ ROW_LEAGUES.filter(r=>r.id==='row2').forEach(l=>{ let on=selectedRow.includes(l.id); h+=`<div class='dark-card row' onclick='toggleRow("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='badge2'>${l.teams} TEAMS</span> <span class='small'>• ${l.dates}</span><br><span class='small' style='color:#facc15'>Corinthians, Fluminense, Racing, Independiente, LAFC, Club America, Chivas, PSV, Feyenoord, Sporting, Fenerbahce, Wydad, Urawa, Al Ittihad Benzema, Seattle, Colo-Colo Vidal - Total 32 (16+16)</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
+ h+=`<div style='color:#22c55e;font-weight:800;margin-top:8px'>EUROPEAN + INTERNATIONAL:</div>`;
+ EURO_COMPS.forEach(l=>{ let on=selectedEuro.includes(l.id); h+=`<div class='dark-card row' onclick='toggleEuro("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='small'>${l.teams} • ${l.dates}</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
+ INTL_TOURS.forEach(l=>{ let on=selectedIntl.includes(l.id); h+=`<div class='dark-card row' onclick='toggleIntl("${l.id}")'><div><span>${l.flag}</span> <b>${l.name}</b> <span class='small'>${l.teams} • ${l.dates}</span></div><div class='check ${on?'on':''}'>${on?'✔':''}</div></div>`; });
+ h+=`<div class='dark-card small' style='color:#22c55e'>Total: ${selectedLeagues.length} Tier1 + ${selectedTier2.length} Tier2 + ${selectedRow.length} RoW leagues (32 teams 16+16) + Euro + Intl<br>Dates: Aug 2025-May 2026 + UCL Sep-Jun + WC Jun-Jul 2026</div><button class='gold-btn' onclick='selectTeamScreen()'>Continue - ${selectedLeagues.length+selectedTier2.length+selectedRow.length} leagues - RoW 32 teams</button></div>`;
+ document.getElementById('app').innerHTML=h;
+}
+function toggleLeague(id){ if(selectedLeagues.includes(id)) selectedLeagues=selectedLeagues.filter(x=>x!==id); else selectedLeagues.push(id); newGameLeagues(); }
+function toggleTier2(id){ if(selectedTier2.includes(id)) selectedTier2=selectedTier2.filter(x=>x!==id); else selectedTier2.push(id); newGameLeagues(); }
+function toggleRow(id){ if(selectedRow.includes(id)) selectedRow=selectedRow.filter(x=>x!==id); else selectedRow.push(id); newGameLeagues(); }
+function toggleEuro(id){ if(selectedEuro.includes(id)) selectedEuro=selectedEuro.filter(x=>x!==id); else selectedEuro.push(id); newGameLeagues(); }
+function toggleIntl(id){ if(selectedIntl.includes(id)) selectedIntl=selectedIntl.filter(x=>x!==id); else selectedIntl.push(id); newGameLeagues(); }
+function selectTeamScreen(){
+ let opts=TEAMS_DATA["Rest of World League 1"].map(t=>`<option ${t.includes(myTeam)?'selected':''}>${t}</option>`).join('');
+ document.getElementById('app').innerHTML=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Select team - RoW L1 & L2 - 32 teams - ${season}</div><div class='small'>Santos Neymar, Miami Messi, Nassr Ronaldo in RoW L1 - 16+16=32</div></div><select class='select' id='leagueSel' onchange='updTeams()'><option>Rest of World League 1 (16) - Santos Neymar, Miami Messi, Nassr Ronaldo + 13 big teams - 2025/26</option><option>Rest of World League 2 (16) - Corinthians, Fluminense, LAFC, America, PSV, Sporting etc - 2025/26</option><option>Premier League (20) - 1st - Aug 2025-May 2026</option><option>Championship (24) - 2nd - Tier 2</option><option>La Liga (20) - 1st</option><option>Bundesliga (18) - 1st</option><option>Ligue 1 (18) - 1st</option><option>Serie A (20) - 1st</option></select><select class='select' id='teamPick'>${opts}</select><div class='small' style='color:#22c55e;margin-top:6px'>RoW League 1 includes: Santos $75M Neymar, Inter Miami $90M Messi, Al Nassr $120M Ronaldo as you said<br>RoW League 2: 16 teams - Total 32 (16+16) as you said</div><div style='margin-top:10px'><div class='small' style='color:#22c55e'>Coach</div><input class='input' id='coachInput' value='${coach}'></div><button class='gold-btn' onclick='startGame()'>Start - ${myTeam} - RoW 32 teams - ${season}</button></div>`;
+}
+function updTeams(){ let sel=document.getElementById('leagueSel').value; let leagueName="Rest of World League 1"; if(sel.includes("RoW League 1")||sel.includes("League 1 (16)")) leagueName="Rest of World League 1"; else if(sel.includes("RoW League 2")||sel.includes("League 2 (16)")) leagueName="Rest of World League 2"; else if(sel.includes("Premier League")) leagueName="Premier League"; else if(sel.includes("Championship")) leagueName="Championship"; else if(sel.includes("La Liga")) leagueName="La Liga"; else if(sel.includes("Bundesliga")) leagueName="Bundesliga"; else if(sel.includes("Ligue 1")) leagueName="Ligue 1"; else if(sel.includes("Serie A")) leagueName="Serie A"; let teams=TEAMS_DATA[leagueName]||TEAMS_DATA["Rest of World League 1"]; document.getElementById('teamPick').innerHTML=teams.map(t=>`<option>${t}</option>`).join(''); }
+function startGame(){
+ let raw=document.getElementById('teamPick').value; let tp=raw.split(' $')[0]; let cn=document.getElementById('coachInput').value||'Given';
+ let b=raw.match(/\$(\d+)/); let bud=b?parseInt(b[1]):75; localStorage.setItem('qfooty_team',tp); localStorage.setItem('coach',cn); localStorage.setItem('qfooty_budget',bud); myTeam=tp; coach=cn; budget=bud;
+ let save={id:Date.now(),team:tp,coach:cn,season:season,budget:bud}; saves.unshift(save); localStorage.setItem('qfooty_saves',JSON.stringify(saves.slice(0,5)));
+ initSeason(); renderSquad();
+}
+function loadGameScreen(){
+ let h=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Load Game - RoW 32 teams - ${season}</div></div>`;
+ if(saves.length===0) h+=`<div class='dark-card'>No saves</div>`;
+ saves.forEach(s=>{ h+=`<div class='dark-card row'><div><b>${s.team} (${s.coach}) - $${s.budget}M - ${s.season}</b><div class='small'>RoW L1 & L2 32 teams (16+16): Santos Neymar, Miami Messi, Nassr Ronaldo • Tier 1+2 • Euro UCL • WC 2026</div></div></div>`; });
+ h+=`<div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px'><button class='gold-btn' style='width:49%;background:#334155;color:#fff' onclick='localStorage.removeItem("qfooty_saves");saves=[];loadGameScreen();'>Delete</button><button class='gold-btn' style='width:49%' onclick='if(saves[0]){myTeam=saves[0].team;coach=saves[0].coach;budget=saves[0].budget||75;initSeason();renderSquad();}else{newGameLeagues();}'>Load</button></div></div>`; document.getElementById('app').innerHTML=h;
+}
+function teamEditor(){
+ let all=[...TEAMS_DATA["Rest of World League 1"].slice(0,8),...TEAMS_DATA["Rest of World League 2"].slice(0,8)];
+ let h=`<div class='cyber-bg'><div class='center'><div style='color:#22c55e;font-weight:800'>Team Editor - RoW L1 & L2 - 32 teams - ${season}</div><div class='small' style='color:#22c55e'>Santos Neymar, Miami Messi, Nassr Ronaldo in RoW L1 as you said</div></div>`;
+ all.forEach(t=>{ let badge=t.includes("Neymar")?"Neymar":t.includes("Messi")?"Messi":t.includes("Ronaldo")?"Ronaldo":t.includes("Benzema")?"Benzema":"RoW"; h+=`<div class='dark-card row'><div>${t} <span class='badge'>${badge}</span></div></div>`; });
+ h+=`<div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px'><button class='gold-btn' style='width:49%;background:#334155;color:#fff'>Edit Info - Neymar/Messi/Ronaldo</button><button class='gold-btn' style='width:49%'>Edit Players - 32 teams</button></div></div>`; document.getElementById('app').innerHTML=h;
+}
+function initSeason(){
+ let isRoW1=TEAMS_DATA["Rest of World League 1"].map(t=>t.split(' $')[0]).includes(myTeam);
+ let isRoW2=TEAMS_DATA["Rest of World League 2"].map(t=>t.split(' $')[0]).includes(myTeam);
+ let leagueTeams;
+ if(isRoW1){ leagueTeams=TEAMS_DATA["Rest of World League 1"].map(t=>t.split(' $')[0]); }
+ else if(isRoW2){ leagueTeams=TEAMS_DATA["Rest of World League 2"].map(t=>t.split(' $')[0]); }
+ else { leagueTeams=TEAMS_DATA["Premier League"].map(t=>t.split(' $')[0]).slice(0,20); }
+ table={}; leagueTeams.forEach(t=>table[t]={P:0,W:0,D:0,L:0,GF:0,GA:0,PTS:0,CS:0});
+ fixtures=[]; let others=leagueTeams.filter(t=>t!==myTeam); let gw=1;
+ others.forEach(o=>{ fixtures.push({gw:gw++,home:myTeam,away:o,played:false,mg:0,og:0,res:'',comp:isRoW1?'RoW League 1 (16)':isRoW2?'RoW League 2 (16)':'League 1st',date:`Aug ${gw} 2025`,tier:isRoW1?'RoW L1':isRoW2?'RoW L2':'1st'}); });
+ others.forEach(o=>{ fixtures.push({gw:gw++,home:o,away:myTeam,played:false,mg:0,og:0,res:'',comp:isRoW1?'RoW L1':isRoW2?'RoW L2':'League',date:`Sep ${gw} 2025`,tier:isRoW1?'RoW L1':isRoW2?'RoW L2':'1st'}); });
+ fixtures=fixtures.slice(0,30); stats={}; squad.forEach(p=>{ stats[p.n]={g:0,cs:0}; }); saveSeason();
+}
+function saveSeason(){ localStorage.setItem('qfooty104_table_'+myTeam,JSON.stringify(table)); localStorage.setItem('qfooty104_fix_'+myTeam,JSON.stringify(fixtures)); }
 function renderSquad(){
- let nextOpp="Liverpool (3rd)";
- document.getElementById('app').innerHTML=`
- <div class='top'>
-  <div class='top1'><div><div class='teal'>${myTeam} (1st)</div><div>${coach}</div><div class='gold'>Next match</div><div>League - 1st D - ${day}nd round<br>Home - ${nextOpp}</div></div>
-  <div style='text-align:right'><div>${month}/${day}/${year}</div><div>Chairman confidence <div class='bar'><div style='width:${confidenceC}%'></div></div> ${confidenceC}%</div><div>Supporters confidence <div class='bar'><div style='width:${confidenceS}%'></div></div> ${confidenceS}%</div><div style='margin-top:6px;font-weight:900'>$${budget}M 695k</div></div></div>
- </div>
- <div class='squad-head'><div>👤 ${squad.length}</div><div>Order by</div><select class='select' style='width:120px'><option>Position</option></select></div>
- <div>${squad.map(p=>`<div class='row'><div style='display:flex;gap:8px;align-items:center'><div class='pos'>${p.pos}</div><div><div class='name'>${p.n} ${p.star?'<span class="star">★</span>':''}</div><div class='val'>${p.val} (Sal: ${p.sal})<br>${p.flag} Age: ${p.age} Energy: ${p.energy}% ${p.card||''} ${p.inj?'💢'+p.inj:''}</div></div></div><div style='display:flex;gap:8px;align-items:center'><div class='ovr'>${p.ovr}</div><div>👤</div></div></div>`).join('')}</div>
- <div id='popup'></div>
- <div class='bottom'>
-  <div class='bicon active' onclick='renderSquad()'>⚽</div>
-  <div class='bicon' onclick='openPopup("tactics")'>📋</div>
-  <div class='bicon' onclick='openPopup("fixtures")'>📅</div>
-  <div class='bicon' onclick='openPopup("trophy")'>🏆</div>
-  <div class='bicon' onclick='openPopup("settings")'>⚙️</div>
- </div>`;
+ let next=fixtures.find(f=>!f.played); let nextText=next?`${next.comp} vs ${next.home===myTeam?next.away:next.home} - ${next.date} - ${next.tier}`:'Done';
+ let pos=Object.entries(table).sort((a,b)=>b[1].PTS-a[1].PTS).findIndex(e=>e[0]===myTeam)+1;
+ let tierLabel=fixtures[0]?.tier||'RoW L1';
+ document.getElementById('app').innerHTML=`<div class='top'><div class='top1'><div><div class='teal'>${myTeam} (${pos||1}st) - $${budget}M - ${season} - ${tierLabel}</div><div>${coach}</div><div style='color:#22c55e;font-weight:800'>Next - ${tierLabel} - RoW 32 teams</div><div>${next?next.comp:'RoW League 1'} - GW${currentRound} - ${nextText}</div><div class='small' style='color:#22c55e'>RoW L1 & L2: 32 teams (16+16) - Santos Neymar, Miami Messi, Nassr Ronaldo in L1 • Tier1+2 • UCL Sep-Jun • WC Jun-Jul 2026</div></div><div style='text-align:right'><div>6/22/22 | ${season}</div><div>Chairman <div class='bar'><div style='width:100%'></div></div> 100%</div><div>Supporters <div class='bar'><div style='width:100%'></div></div> 100%</div><div style='margin-top:4px;font-weight:900'>$${budget}M</div><div class='small'>P ${table[myTeam]?.P||0} PTS ${table[myTeam]?.PTS||0}</div></div></div></div><div class='tabBar'><div class='tab on'>Squad ${tierLabel}</div><div class='tab' onclick='renderTableFull()'>Table ${tierLabel} 16</div><div class='tab' onclick='renderFixturesFull()'>Fix ${tierLabel}</div><div class='tab' onclick='renderPromo()'>Promo RoW L1-L2</div></div><div class='squad-head'><div>👤 ${squad.length} • ${season} • ${tierLabel} • Santos Neymar, Miami Messi, Nassr Ronaldo</div><div>Order by Pos</div></div><div>${squad.map(p=>`<div class='row'><div style='display:flex;gap:6px;align-items:center'><div class='pos'>${p.pos}</div><div><div style='font-weight:700'>${p.n} ${p.star?'<span class="star">★</span>':''} <span class='small'>${stats[p.n]?.g||0}⚽ ${p.note||''}</span></div><div class='small'>${p.val} (Sal: ${p.sal})<br>${p.flag} Age: ${p.age} Energy: ${p.energy}% ${p.note||''}</div></div></div><div class='ovr'>${p.ovr}</div></div>`).join('')}</div><div id='popup'></div><div class='bottom'><div class='bicon active' onclick='renderSquad()'>⚽</div><div class='bicon' onclick='openPopup("tactics")'>📋</div><div class='bicon' onclick='openPopup("fixtures")'>📅</div><div class='bicon' onclick='openPopup("trophy")'>🏆</div><div class='bicon' onclick='openPopup("settings")'>⚙️</div></div>`;
+}
+function renderTableFull(){
+ let sorted=Object.entries(table).sort((a,b)=>b[1].PTS-a[1].PTS);
+ let tierLabel=fixtures[0]?.tier||'RoW L1';
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Table - ${myTeam} #${sorted.findIndex(e=>e[0]===myTeam)+1} - ${season} - ${tierLabel} - 16 teams</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab on'>Table ${tierLabel} 16</div><div class='tab' onclick='renderPromo()'>Promo RoW L1-L2</div></div><div class='dark-card'><div class='row' style='font-weight:800'><div># Team ${tierLabel} (16)</div><div>P PTS</div></div>${sorted.map((e,i)=>`<div class='row' style='${e[0]===myTeam?'background:#22c55e22':''}'><div>${i+1}. ${e[0]} ${e[0]==='Santos'?'<span class="badge">Neymar</span>':''} ${e[0]==='Inter Miami'?'<span class="badge2">Messi</span>':''} ${e[0]==='Al Nassr'?'<span class="badgeR">Ronaldo</span>':''}</div><div>${e[1].P} ${e[1].PTS}</div></div>`).join('')}</div><div class='dark-card small'><div style='color:#22c55e'>RoW 32 teams (16+16) as you said:</div><b>RoW L1 (16):</b> Santos Neymar, Miami Messi, Nassr Ronaldo + 13 big teams<br><b>RoW L2 (16):</b> Corinthians, Fluminense, Racing, Independiente, LAFC, America, Chivas, PSV, Feyenoord, Sporting, Fenerbahce, Wydad, Urawa, Al Ittihad Benzema, Seattle, Colo-Colo<br>Promotion: RoW L1 Bottom 2 to L2, RoW L2 Top 2 to L1<br>Dates: Aug 2025-May 2026 + UCL Sep-Jun + WC Jun-Jul 2026</div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>📊</div><div class='bicon' onclick='home()'>🏠</div></div>`;
+}
+function renderPromo(){
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Promotion - RoW L1-L2 + Tier 1-2 - ${season} - 32 teams RoW</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab' onclick='renderTableFull()'>Table</div><div class='tab on'>Promo RoW 32</div></div><div class='dark-card'><div style='color:#22c55e;font-weight:800'>RoW - 32 TEAMS (16+16):</div><div class='row'><div>RoW League 1 (16) → Bottom 2 to RoW L2</div><div>Santos Neymar, Miami Messi, Nassr Ronaldo in L1</div></div><div class='row'><div>RoW League 2 (16) → Top 2 to RoW L1</div><div>Total 32 as you said</div></div></div><div class='dark-card small'><div style='color:#22c55e'>Your Complete Setup 2025/26:</div>RoW L1 (16): Santos Neymar $75M, Miami Messi $90M, Nassr Ronaldo $120M + 13 big teams<br>RoW L2 (16): 16 teams - Total RoW 32 (16+16)<br>Tier 1+2 Europe + Euro UCL + WC 2026</div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>⬆️⬇️</div><div class='bicon' onclick='home()'>🏠</div></div>`;
+}
+function renderFixturesFull(){
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e'>Fixtures - ${fixtures[0]?.tier||'RoW L1'} - 16 teams - RoW 32 total</div></div><div class='tabBar'><div class='tab' onclick='renderSquad()'>Squad</div><div class='tab on'>Fix ${fixtures[0]?.tier||'RoW L1'} 16</div><div class='tab' onclick='renderPromo()'>Promo</div></div><div class='dark-card'>${fixtures.map(f=>`<div class='row'><div><span class='badge'>${f.comp}</span> <span class='badge2'>${f.tier}</span> GW${f.gw} ${f.home} ${f.played?f.mg+'-'+f.og:'vs'} ${f.away}<br><span class='small'>${f.date||''}</span></div><div>${f.played?f.res:'UP'}</div></div>`).join('')}</div><div class='bottom'><div class='bicon' onclick='renderSquad()'>⚽</div><div class='bicon active'>📅</div></div>`;
 }
 function openPopup(type){
- let el=document.getElementById('popup');
- if(type==='tactics'){
-  el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderLineup()'>Lineup 4-4-2 - Play next match</div><div class='pitem' onclick='alert("Show all teams")'>Show all teams</div><div class='pitem'>Stadium</div><div class='pitem'>Youth Squad</div><div class='pitem'>Search</div><div class='pitem'>Finances $58M</div></div>`;
- } else if(type==='fixtures'){
-  el.innerHTML=`<div class='popup'><div class='pitem'>Standing and fixtures</div><div class='pitem'>Your Fixtures</div><div class='pitem'>Friendly Schedule</div></div>`;
- } else if(type==='trophy'){
-  el.innerHTML=`<div class='popup'><div class='pitem'>Teams Ranking</div><div class='pitem'>Coaches Ranking</div><div class='pitem'>Champions</div><div class='pitem'>Top Scorer - Palmer 8 goals</div><div class='pitem'>MVP Round</div><div class='pitem'>MVP year</div></div>`;
- } else if(type==='settings'){
-  el.innerHTML=`<div class='popup'><div class='pitem' onclick='localStorage.setItem("qfooty_save_"+Date.now(),JSON.stringify({team:myTeam}));alert("Game saved!")'>Save game</div><div class='pitem'>Settings</div><div class='pitem' onclick='if(confirm("Resign?")) location.reload()'>Resign</div><div class='pitem' onclick='location.reload()'>Main menu</div><div class='pitem'>About QFooty 8.0</div><div class='pitem'>Remove ads</div></div>`;
- } else { el.innerHTML=''; }
+ let el=document.getElementById('popup'); if(!el){ let d=document.createElement('div'); d.id='popup'; document.getElementById('app').appendChild(d); el=d; }
+ if(type==='tactics'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderLineup()'>Lineup 4-4-2 - GW${currentRound} - ${season}</div><div class='pitem' onclick='renderTableFull()'>Show all teams - 16 teams - Santos Neymar, Miami Messi, Nassr Ronaldo</div><div class='pitem' onclick='renderPromo()'>Promotion - RoW L1-L2 - 32 teams</div></div>`; }
+ else if(type==='fixtures'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderTableFull()'>Standing - ${season}</div><div class='pitem' onclick='renderFixturesFull()'>Your Fixtures - ${fixtures.filter(f=>!f.played).length} left</div><div class='pitem' onclick='renderPromo()'>RoW L1-L2 - 32 teams (16+16)</div></div>`; }
+ else if(type==='trophy'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderTableFull()'>Teams Ranking</div><div class='pitem' onclick='renderPromo()'>Promotion Table</div></div>`; }
+ else if(type==='settings'){ el.innerHTML=`<div class='popup'><div class='pitem' onclick='saveSeason();alert("Saved")'>Save game</div><div class='pitem' onclick='home()'>Main menu</div><div class='pitem'>About 10.4 - RoW 32 teams (16+16): Santos Neymar, Miami Messi, Nassr Ronaldo in L1</div></div>`; }
 }
 function renderLineup(){
- lineup=squad.slice(0,11); subs=squad.slice(11);
- document.getElementById('app').innerHTML=`
- <div class='top'><div class='top1'><div>Lineup (${formation})</div><div><button class='btn' style='width:auto;padding:4px 8px' onclick='renderSquad()'>Back</button></div></div></div>
- <div style='display:flex'><div style='flex:1'>
-  ${lineup.map(p=>`<div class='row'><div><div class='pos'>${p.pos.startsWith("GK")?"GK":p.pos.startsWith("W")||p.pos.includes("D")?"DEF":p.pos.includes("M")?"MID":"ATT"}</div><div class='name'>${p.n}</div><div class='mini'>${p.pos} ${p.flag}</div></div><div style='text-align:right'><div class='ovr'>${p.ovr}</div><div class='mini'>${p.energy}%</div></div></div>`).join('')}
-  <div style='padding:6px;font-weight:800;background:#0f766e'>SUBS</div>
-  ${subs.map(p=>`<div class='row' style='opacity:.8'><div><div class='pos'>SUB</div><div class='name'>${p.n}</div><div class='mini'>${p.pos}</div></div><div><div>${p.ovr}</div><div class='mini'>${p.energy}%</div></div></div>`).join('')}
- </div>
- <div style='width:140px;background:#1e293b;padding:6px'>
-  <div style='display:flex;gap:4px'><div style='background:#22c55e;color:#000;padding:6px;border-radius:6px;flex:1;text-align:center'>⇄</div><div style='background:#fff;color:#000;padding:6px;border-radius:6px;flex:1;text-align:center'>📋</div><div style='background:#facc15;padding:6px;border-radius:6px;flex:1'>🎽</div></div>
-  <select class='select' id='formSel' onchange='formation=this.value'><option>4-4-2</option><option>4-3-3</option><option>3-5-2</option></select>
-  <div style='margin-top:10px;font-weight:800;color:#facc15'>Available players</div>
-  <div>${squad.slice(0,5).map(p=>`<div class='row' style='font-size:10px'><div>${p.n}<br>${p.pos}</div><div>${p.ovr} ★<br>⚡${p.energy}%</div></div>`).join('')}</div>
-  <button class='btn btnGold' style='position:fixed;bottom:70px;right:6px;width:140px' onclick='startLive()'>Play match</button>
- </div></div>`;
+ let lineup=squad.slice(0,11);
+ document.getElementById('app').innerHTML=`<div class='top'><div class='top1'><div>Lineup 4-4-2 GW${currentRound} - ${season} - ${fixtures[0]?.tier||'RoW L1'}</div><div><button class='btn' style='width:auto;padding:4px 8px' onclick='renderSquad()'>Back</button></div></div></div><div style='display:flex'><div style='flex:1'>${lineup.map(p=>`<div class='row'><div><div class='pos'>${p.pos.startsWith("GK")?"GK":"ATT"}</div><div style='font-weight:700'>${p.n} ${p.note||''}</div></div><div class='ovr'>${p.ovr}</div></div>`).join('')}</div><div style='width:130px;background:#1e293b;padding:6px'><button class='btn' style='margin-top:20px;background:#22c55e' onclick='startLive()'>Play GW${currentRound}</button></div></div>`;
 }
-function startLive(){
- liveMinute=0; scoreA=0; scoreB=0; scorersA=[];
- renderLive(); let iv=setInterval(()=>{
-  liveMinute++;
-  if(liveMinute===8){ scoreA=1; scorersA.push("Chelsea 8'"); }
-  if(liveMinute===36){ scoreA=2; scorersA.push("Tariro 36'"); }
-  if(liveMinute===53){ scoreA=3; scorersA.push("Blessed 53'"); }
-  if(liveMinute===45){ clearInterval(iv); renderHalf(); return; }
-  if(liveMinute>=90){ clearInterval(iv); renderFull(); return; }
-  renderLive();
- }, 200);
- setTimeout(()=>{ liveMinute=11; renderLive(); }, 400);
- setTimeout(()=>{ liveMinute=43; scoreA=2; scorersA=["Chelsea 8'","Tariro 36'"]; renderLive(); }, 1200);
-}
+function startLive(){ liveMinute=0; scoreA=0; scoreB=0; scorersA=[]; renderLive(); let iv=setInterval(()=>{ liveMinute++; if(liveMinute===8){scoreA=1; scorersA.push(myTeam+" 8'");} if(liveMinute===36){scoreA=2; scorersA.push("Palmer 36'");} if(liveMinute===53){scoreA=3; scorersA.push("Blessed 53'");} if(liveMinute===45){clearInterval(iv); renderHalf(); return;} if(liveMinute>=90){clearInterval(iv); finishMatch(); return;} renderLive(); },200); }
 function renderLive(){
- document.getElementById('app').innerHTML=`
- <div class='top'><div>League - 1st D<br>${day}nd round</div><div class='clock'>${liveMinute}'</div></div>
- <div class='liveTop'><div class='scoreBox'><div class='tA'>${myTeam}</div><div class='sc'>${scoreA}-${scoreB}</div><div class='tB'>Liverpool</div></div></div>
- <div class='mini' style='padding:4px 8px'>⚽ ${scorersA.join(" ")}</div>
- <div class='liveCard'><div style='text-align:center;color:#facc15;font-weight:800'>Live results</div>
-  <div style='text-align:center;font-weight:800;margin:6px 0'>1st division</div>
-  ${fixtures.map(f=>`<div class='row' style='background:transparent;border:0;padding:2px 0'><div style='flex:1;text-align:right'>${f.h}</div><div style='width:60px;text-align:center;font-weight:800'>${f.h.includes("Quatracul")||f.h===myTeam?scoreA+"-"+scoreB:f.r}</div><div style='flex:1'>${f.a}</div></div>`).join('')}
-  <div style='text-align:center;font-weight:800;margin:6px 0'>2nd division</div>
-  <div class='row' style='background:transparent;border:0;padding:2px 0'><div style='flex:1;text-align:right'>Blackpool</div><div style='width:60px;text-align:center'>0-0</div><div style='flex:1'>Swansea</div></div>
-  <div class='row' style='background:transparent;border:0;padding:2px 0'><div style='flex:1;text-align:right'>Watford</div><div style='width:60px;text-align:center'>0-0</div><div style='flex:1'>Huddersfield</div></div>
- </div>`;
+ document.getElementById('app').innerHTML=`<div class='top'><div>${fixtures.find(f=>f.gw===currentRound)?.comp||'RoW League 1'} - GW${currentRound} - ${season}</div><div class='clock'>${liveMinute}'</div></div><div class='liveTop'><div class='scoreBox'><div class='tA'>${myTeam}</div><div class='sc'>${scoreA}-${scoreB}</div><div class='tB'>Flamengo</div></div></div><div class='mini' style='padding:4px 8px'>${scorersA.join(" ")} | ${season} | Santos Neymar, Miami Messi, Nassr Ronaldo in RoW L1 - 32 teams</div><div class='liveCard'><div style='text-align:center;color:#22c55e;font-weight:800'>Live GW${currentRound} - ${season} - RoW L1 16 teams</div><div class='row' style='background:#22c55e22'><div style='flex:1;text-align:right'>${myTeam}</div><div style='width:60px;text-align:center;font-weight:800'>${scoreA}-${scoreB}</div><div style='flex:1'>Flamengo</div></div><div class='row' style='background:transparent;border:0'><div style='flex:1;text-align:right'>Santos Neymar</div><div style='width:60px;text-align:center'>1-0</div><div style='flex:1'>Palmeiras - RoW L1</div></div><div class='row' style='background:transparent;border:0'><div style='flex:1;text-align:right'>Inter Miami Messi</div><div style='width:60px;text-align:center'>2-1</div><div style='flex:1'>LA Galaxy - RoW L1</div></div><div class='row' style='background:transparent;border:0'><div style='flex:1;text-align:right'>Al Nassr Ronaldo</div><div style='width:60px;text-align:center'>2-0</div><div style='flex:1'>Al Hilal - RoW L1</div></div></div>`;
 }
 function renderHalf(){
- document.getElementById('app').innerHTML=`
- <div class='top'><div style='text-align:center;width:100%;color:#facc15'>Half-Time</div></div>
- <div class='liveTop'><div style='flex:1;text-align:center'>${myTeam}</div><div style='flex:0 0 120px;text-align:center'><div style='background:#fff;color:#000;padding:4px'>Match info</div><div style='margin-top:4px'>2-0</div><div style='font-size:10px'>🏟️ Quatracul Arena<br>👥 74208<br>💰 1M 186k<br>⚽ Chelsea 8'<br>⚽ Tariro 36'</div></div><div style='flex:1;text-align:center'>Liverpool</div></div>
- <div class='liveCard'>
-  <div class='row'><div>73%</div><div style='color:#facc15'>ball possession</div><div>27%</div></div>
-  <div class='row'><div>13</div><div style='color:#facc15'>Attempts</div><div>6</div></div>
-  <div class='row'><div>5</div><div style='color:#facc15'>On-target</div><div>1</div></div>
-  <div class='row'><div>7</div><div style='color:#facc15'>Balls recovered</div><div>7</div></div>
- </div>
- <button class='btn btnGold' style='position:fixed;bottom:0;left:0;right:0;border-radius:0' onclick='resumeSecondHalf()'>Back to match</button>`;
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;width:100%;color:#22c55e;font-weight:800'>Half-Time GW${currentRound} - ${season}</div></div><div class='liveTop'><div style='flex:1;text-align:center'>${myTeam}</div><div style='flex:0 0 130px;text-align:center'><div style='background:#fff;color:#000;padding:4px'>Match info</div><div style='font-size:20px;font-weight:900'>${scoreA}-${scoreB}</div><div style='font-size:10px'>${scorersA.join("<br>")}</div></div><div style='flex:1;text-align:center'>Flamengo</div></div><button class='btn' style='position:fixed;bottom:0;left:0;right:0;border-radius:0' onclick='resumeSecondHalf()'>Back to match</button>`;
 }
-function resumeSecondHalf(){
- liveMinute=45; renderLive(); let iv=setInterval(()=>{ liveMinute++; if(liveMinute>=90){ clearInterval(iv); renderFull(); } else renderLive(); }, 150);
+function resumeSecondHalf(){ liveMinute=45; renderLive(); let iv=setInterval(()=>{ liveMinute++; if(liveMinute>=90){clearInterval(iv); finishMatch();} else renderLive(); },150); }
+function finishMatch(){
+ let next=fixtures.find(f=>f.gw===currentRound); if(next){ next.played=true; next.mg=scoreA; next.og=scoreB; next.res=scoreA>scoreB?'W':'D'; let t=table[myTeam]; if(t){ t.P++; t.GF+=scoreA; t.GA+=scoreB; if(scoreA>scoreB){t.W++; t.PTS+=3;} else {t.D++; t.PTS++;} } } currentRound++; saveSeason();
+ document.getElementById('app').innerHTML=`<div class='top'><div style='text-align:center;color:#22c55e;width:100%'>Round results GW${currentRound-1} - ${season} - Santos Neymar, Miami Messi, Nassr Ronaldo - RoW L1</div></div><div class='liveCard'><div class='row' style='background:#22c55e22'><div style='flex:1;text-align:right'>${myTeam}</div><div style='width:50px;text-align:center;font-weight:900'>${scoreA}-${scoreB}</div><div style='flex:1'>Flamengo - WIN</div></div></div><div style='position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;padding:6px;background:#000'><button class='btn' style='width:33%;background:#334155;color:#fff' onclick='renderTableFull()'>Table</button><button class='btn' style='width:33%' onclick='renderSquad()'>Continue GW${currentRound}</button><button class='btn' style='width:33%;background:#facc15;color:#000' onclick='renderLineup()'>Next</button></div>`;
 }
-function renderFull(){
- document.getElementById('app').innerHTML=`
- <div class='top'><div style='text-align:center;color:#facc15;width:100%'>Round results</div><div style='text-align:center'>🏴󐁧󐁢󐁥󐁮󐁧󐁿 England ⬇️<br>22nd round<br><b>1st division</b></div></div>
- <div class='liveCard'>
-  ${fixtures.map(f=>`<div class='row' style='background:transparent'><div style='flex:1;text-align:right'>${f.h}</div><div style='width:50px;text-align:center;font-weight:800'>${f.r}</div><div style='flex:1'>${f.a}</div></div>`).join('')}
-  <div style='text-align:center;margin-top:8px'><b>2nd division</b></div>
-  <div class='row' style='background:transparent'><div style='flex:1;text-align:right'>Blackpool</div><div style='width:50px;text-align:center'>0-2</div><div style='flex:1'>Swansea</div></div>
- </div>
- <div style='display:flex;background:#0f172a;border-top:2px solid #22c55e'>
-  <div style='flex:1;padding:6px'><div class='teal'>${myTeam}</div><div style='font-size:24px;font-weight:900'>3-0</div>
-   <div class='mini'>G Logen 10<br>D Kuziva 9.6<br>D Chelsea 7.5<br>D Faith 9.5<br>D Kimberley 10 ✎<br>M Martha 10<br>M Stayce 9.9<br>M Modesta 9.5<br>M Tariro 8.5<br>A Ropafadzo 10<br>A Blessed 10</div>
-  </div>
-  <div style='width:120px;text-align:center;padding:6px;border-left:1px solid #334155;border-right:1px solid #334155'><div>🏟️ Quatracul Arena<br>👥 74208<br>💰 1M 186k</div><div style='margin-top:8px;font-size:11px'>⚽ Chelsea 8'<br>⚽ Tariro 36'<br>⚽ Blessed 53'</div></div>
-  <div style='flex:1;padding:6px'><div style='background:#dc2626;padding:4px;border-radius:4px'>Liverpool</div>
-   <div class='mini'>G Alisson 4.8<br>D Alexander-Arnold 4.0<br>D Van Dijk 4.4<br>D Joe Gomez 2.3<br>D Joel Matip 3.8<br>D Robertson 4.7<br>M Henderson 3.5<br>M Oxlade-Chamberlain 3.1<br>M Diogo Jota 4.7<br>M Naby Keita 4.4<br>A Mané 5.8<br>A Takumi Minamino 4.0<br>A Salah 6.5<br>A Roberto Firmino 3.7</div>
-  </div>
- </div>
- <div style='position:fixed;bottom:0;left:0;right:0;background:#000;display:flex;justify-content:space-around;padding:8px'><div class='bicon'>📋</div><div class='bicon'>📊</div><div class='bicon' style='background:#22c55e;color:#000' onclick='renderSquad()'>➡️</div></div>`;
-}
-renderSquad();
+home();
 </script></body></html>
