@@ -1,101 +1,160 @@
-<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>QFooty 6.0 ULTIMATE COMPLETE</title><style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#0a0e1a;color:#e2e8f0;font-family:system-ui;padding-bottom:80px}
-header{position:sticky;top:0;background:linear-gradient(135deg,#1e293b,#0f172a);padding:10px;display:flex;justify-content:space-between;align-items:center;z-index:10;flex-wrap:wrap;gap:6px;border-bottom:2px solid #22c55e}
-.logo{font-weight:900;color:#22c55e;font-size:18px}.btn{background:#22c55e;color:#000;border:0;padding:8px 14px;border-radius:8px;font-weight:800;cursor:pointer}.btn:disabled{opacity:.4}.btn2{background:#334155;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px}
-.tabs{display:flex;gap:3px;background:#1e293b;padding:5px;position:sticky;top:56px;z-index:9;overflow:auto}
-.tab{padding:8px 12px;border-radius:8px;opacity:.6;white-space:nowrap;cursor:pointer;font-size:13px;font-weight:600}.tab.active{background:#22c55e;color:#000;opacity:1}
-.card{background:#1e293b;margin:8px;padding:12px;border-radius:12px;border:1px solid #334155}
-.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #ffffff12;align-items:center;font-size:13px}
-.badge{background:#22c55e;color:#000;font-size:9px;padding:2px 6px;border-radius:10px;margin-left:4px;font-weight:800}
-.small{font-size:11px;opacity:.7}.big{font-size:22px;font-weight:900}
-.table{width:100%;font-size:12px;border-collapse:collapse}.table th{text-align:left;opacity:.6;font-size:10px;padding:4px}.table td{padding:5px 3px;border-bottom:1px solid #ffffff0f}
-.fixture{background:#0f172a;padding:8px;border-radius:8px;margin:5px 0;display:flex;justify-content:space-between;align-items:center;border:1px solid #334155;font-size:12px}
-.progress{height:8px;background:#0f172a;border-radius:4px;overflow:hidden;margin:6px 0}.progress div{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a)}
-select,input{background:#0f172a;color:#e2e8f0;border:1px solid #334155;padding:6px;border-radius:6px}
-.formation{background:radial-gradient(circle at center,#1a5d1a,#0d3320);border:2px solid #22c55e;border-radius:12px;padding:10px;margin:8px 0;min-height:200px;position:relative}
-.player-dot{background:#1e293b;border:1px solid #22c55e;border-radius:8px;padding:4px 6px;font-size:10px;text-align:center;position:absolute;transform:translate(-50%,-50%);min-width:60px}
+<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>QFooty 8.0 FINAL CYBER</title><style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#0f172a;color:#e2e8f0;font-family:system-ui;padding-bottom:70px}
+.top{background:#1e293b;border-bottom:3px solid #22c55e;padding:6px 8px;font-size:12px}
+.top1{display:flex;justify-content:space-between}.gold{color:#facc15;font-weight:800}.teal{background:#0f766e;padding:4px 8px;border-radius:4px;display:inline-block;font-weight:800}
+.bar{height:8px;background:#334155;border-radius:4px;overflow:hidden;width:80px;display:inline-block}.bar div{height:100%;background:#22c55e}
+.squad-head{background:#0f172a;padding:6px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334155;font-size:12px}
+.row{background:#1a2744;border-bottom:1px solid #ffffff0f;padding:7px 6px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.row:hover{background:#1e334f}
+.pos{font-weight:800;color:#22c55e;width:32px}.name{font-weight:700}.val{font-size:10px;opacity:.7}.ovr{font-size:16px;font-weight:900}.star{color:#ef4444}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#0a0f1e;border-top:2px solid #22c55e;display:flex;justify-content:space-around;padding:6px 0;z-index:20}
+.bicon{width:48px;height:48px;background:#1e293b;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:1px solid #334155}.bicon.active{background:#22c55e;color:#000}
+.popup{position:fixed;bottom:70px;right:6px;background:#1e293b;border:1px solid #22c55e;border-radius:8px;min-width:220px;z-index:30;box-shadow:0 10px 30px #000}
+.pitem{padding:12px 14px;border-bottom:1px solid #ffffff11;cursor:pointer;font-size:14px}.pitem:hover{background:#22c55e;color:#000}
+.btn{background:#22c55e;color:#000;border:0;padding:10px 16px;border-radius:8px;font-weight:900;cursor:pointer;width:100%;margin-top:8px}
+.btnGold{background:#facc15;color:#000}
+.select{background:#0f172a;border:1px solid #334155;color:#fff;padding:8px;border-radius:6px;width:100%;margin:4px 0}
+.liveTop{background:#1e293b;padding:8px;display:flex;justify-content:space-between;align-items:center}
+.scoreBox{display:flex;align-items:center;gap:4px;width:100%}.tA{background:#0f766e;color:#fff;padding:8px 6px;border-radius:4px;flex:1;text-align:center;font-weight:800;font-size:14px}.tB{background:#dc2626;color:#fff;padding:8px 6px;border-radius:4px;flex:1;text-align:center;font-weight:800;font-size:14px}.sc{font-size:22px;font-weight:900;padding:0 8px}
+.clock{width:48px;height:48px;border:3px solid #facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.liveCard{background:#1a2744;margin:6px;padding:8px;border-radius:8px;border:1px solid #334155}
+.mini{font-size:11px;opacity:.8}.rating{width:32px;text-align:right;font-weight:800}
 </style></head><body>
-<header>
-<div class='logo'>QFooty 6.0 ULTIMATE</div>
-<select id='teamSel' onchange='changeTeam(this.value)'></select>
-<div class='small' id='budgetLabel'></div>
-<button class='btn' onclick='playNext()' id='playBtn'>PLAY GW</button>
-<button class='btn2' onclick='resetSeason()'>Reset</button>
-</header>
-<div class='tabs'>
-<div class='tab active' onclick="showTab('dash',this)">🏠 Season</div>
-<div class='tab' onclick="showTab('squad',this)">👥 Squad</div>
-<div class='tab' onclick="showTab('fixtures',this)">📅 Fixtures</div>
-<div class='tab' onclick="showTab('table',this)">📊 Table</div>
-<div class='tab' onclick="showTab('stats',this)">⚽ Stats</div>
-<div class='tab' onclick="showTab('awards',this)">🏆 Awards</div>
-<div class='tab' onclick="showTab('transfers',this)">💰 Market</div>
-</div>
-<div id='dash'></div><div id='squad' style='display:none'></div><div id='fixtures' style='display:none'></div><div id='table' style='display:none'></div><div id='stats' style='display:none'></div><div id='awards' style='display:none'></div><div id='transfers' style='display:none'></div>
+<div id='app'></div>
 <script>
-const TEAMS={"Premier League":["Man City","Arsenal","Liverpool","Chelsea","Man Utd","Newcastle","Tottenham","Aston Villa","Brighton","West Ham","Crystal Palace","Fulham","Wolves","Everton","Brentford","Nottm Forest","Bournemouth","Luton Town","Sheffield Utd","Burnley"],"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Real Sociedad","Villarreal","Real Betis","Athletic Bilbao","Valencia","Osasuna","Celta Vigo","Rayo Vallecano","Mallorca","Girona","Getafe","Las Palmas","Alaves","Cadiz","Granada","Almeria"],"Bundesliga":["Bayern Munich","Bayer Leverkusen","Dortmund","RB Leipzig","Stuttgart","Eintracht Frankfurt","Hoffenheim","Werder Bremen","Freiburg","Augsburg","Wolfsburg","Mainz","Gladbach","Union Berlin","Koln","Bochum","Heidenheim","Darmstadt"],"Ligue 1":["PSG","Lens","Marseille","Monaco","Lille","Rennes","Lyon","Nice","Reims","Montpellier","Toulouse","Strasbourg","Nantes","Brest","Lorient","Metz","Le Havre","Clermont"],"Serie A":["Inter Milan","AC Milan","Juventus","Napoli","AS Roma","Lazio","Atalanta","Fiorentina","Bologna","Torino","Monza","Genoa","Lecce","Udinese","Sassuolo","Frosinone","Verona","Cagliari","Empoli","Salernitana"],"Rest Super":["Ajax","PSV","Benfica","Porto","Celtic","Rangers","Al Hilal","Al Nassr","Al Ittihad","Mamelodi Sundowns","Flamengo","Galatasaray"],"Rest 2":["Santos","Kaizer Chiefs","Orlando Pirates","Simba SC","TP Mazembe","Inter Miami","LAFC","River Plate","Boca Juniors","Palmeiras"]};
-const BUDGETS={"Man City":250,"Arsenal":180,"Liverpool":170,"Chelsea":200,"Man Utd":190,"Newcastle":150,"Tottenham":140,"Real Madrid":300,"Barcelona":200,"Atletico Madrid":120,"Bayern Munich":220,"Bayer Leverkusen":90,"Dortmund":110,"PSG":280,"Inter Milan":110,"Juventus":130,"Ajax":70,"Al Hilal":180,"Al Nassr":160,"Al Ittihad":140,"Mamelodi Sundowns":12,"Santos":18,"Kaizer Chiefs":8,"Orlando Pirates":8,"Simba SC":5,"TP Mazembe":6,"Inter Miami":120,"Flamengo":45,"Aston Villa":80,"Brighton":70,"West Ham":75,"Crystal Palace":60,"Fulham":55,"Wolves":60,"Everton":50,"Brentford":45,"Nottm Forest":50,"Bournemouth":45};
-const REAL_SQUADS={"Chelsea":[{"n":"Palmer","pos":"FW","ovr":86},{"n":"Jackson","pos":"FW","ovr":78},{"n":"Nkunku","pos":"FW","ovr":83},{"n":"Sterling","pos":"FW","ovr":80},{"n":"Enzo","pos":"MID","ovr":84},{"n":"Caicedo","pos":"MID","ovr":82},{"n":"Lavia","pos":"MID","ovr":77},{"n":"James","pos":"DEF","ovr":84},{"n":"Cucurella","pos":"DEF","ovr":78},{"n":"Colwill","pos":"DEF","ovr":79},{"n":"Disasi","pos":"DEF","ovr":78},{"n":"Sanchez","pos":"GK","ovr":76,"cs":0}],"Man City":[{"n":"Haaland","pos":"FW","ovr":91},{"n":"Foden","pos":"MID","ovr":88},{"n":"De Bruyne","pos":"MID","ovr":90}],"Arsenal":[{"n":"Saka","pos":"FW","ovr":87},{"n":"Odegaard","pos":"MID","ovr":87}]};
-function getB(t){return BUDGETS[t]||60;}
+const BUDGETS={"Chelsea":200,"Man City":250,"Kaizer Chiefs":8,"Mamelodi Sundowns":12,"Orlando Pirates":8,"Real Madrid":300,"Liverpool":170};
 let myTeam=localStorage.getItem('qfooty_team')||'Chelsea';
-let myLeague=Object.keys(TEAMS).find(l=>TEAMS[l].includes(myTeam))||'Premier League';
-let budget=parseInt(localStorage.getItem('qfooty_b_'+myTeam)||getB(myTeam));
-let db={}, table={}, fixtures=[], results=[], stats={}, market=[], gw=1;
-function genSquad(tm){
- let base=REAL_SQUADS[tm]||[];
- let a=base.map(p=>({...p,g:0,a:0,cs:0,form:7}));
- if(a.length<11){ a.push({n:tm+' ST',ovr:74,pos:'FW',g:0,a:0,cs:0,form:7}); a.push({n:tm+' GK',ovr:70,pos:'GK',g:0,a:0,cs:0,form:7}); }
- for(let i=a.length;i<23;i++){ let pos=['DEF','MID','FW','GK'][i%4]; a.push({n:tm.slice(0,3).toUpperCase()+i,pos:pos,ovr:62+Math.floor(Math.random()*18),g:0,a:0,cs:0,form:5+Math.floor(Math.random()*5)}); }
- return a;
+let coach=localStorage.getItem('coach')||'Given';
+let budget=parseInt(localStorage.getItem('qfooty_b_'+myTeam)||BUDGETS[myTeam]||60);
+let day=22; let month=6; let year=22;
+let confidenceC=100, confidenceS=100;
+let squad=[
+{n:"Logen",pos:"GK",age:18,energy:100,val:"92M 80k",sal:"384 k",flag:"🇩🇪",ovr:74,star:1,g:0,cs:0},
+{n:"Precious",pos:"GK",age:19,energy:100,val:"58M 806k",sal:"334 k",flag:"🏴󐁧󐁢󐁥󐁮󐁧󐁿",ovr:65,star:1,g:0,cs:0},
+{n:"Kimberley",pos:"WBL",age:17,energy:93,val:"87M 393k",sal:"388 k",flag:"🇭🇷",ovr:72,star:1,g:0,cs:0},
+{n:"Kuziva",pos:"WBR",age:19,energy:100,val:"83M 872k",sal:"382 k",flag:"🇵🇹",ovr:71,card:"🟨",g:0,cs:0},
+{n:"Nancy",pos:"WBL",age:19,energy:100,val:"35M 587k",sal:"348 k",flag:"🇪🇬",ovr:65,star:1,g:0,cs:0},
+{n:"Lorraine",pos:"WBR",age:19,energy:100,val:"33M 292k",sal:"337 k",flag:"🇲🇽",ovr:62,star:1,g:0,cs:0},
+{n:"Chelsea",pos:"CDL",age:16,energy:91,val:"98M 537k",sal:"407 k",flag:"🇧🇪",ovr:76,card:"🟨",g:0,cs:0},
+{n:"Faith",pos:"CDR",age:18,energy:100,val:"55M 389k",sal:"395 k",flag:"🇦🇷",ovr:74,inj:"2",g:0,cs:0},
+{n:"Dephine",pos:"CDR",age:18,energy:100,val:"63M 154k",sal:"356 k",flag:"🏴󐁧󐁢󐁥󐁮󐁧󐁿",ovr:67,star:1,g:0,cs:0},
+{n:"Chiedza",pos:"CDR",age:19,energy:100,val:"45M 200k",sal:"300 k",flag:"🇿🇼",ovr:68,star:1,g:0,cs:0},
+{n:"Palmer",pos:"ATT",age:22,energy:98,val:"85M",sal:"450 k",flag:"🏴󐁧󐁢󐁥󐁮󐁧󐁿",ovr:86,star:1,g:0,cs:0},
+{n:"Tariro",pos:"OM",age:20,energy:96,val:"40M",sal:"320 k",flag:"🇿🇼",ovr:73,g:0,cs:0},
+{n:"Blessed",pos:"F",age:19,energy:100,val:"50M",sal:"340 k",flag:"🇿🇦",ovr:75,g:0,cs:0},
+];
+let lineup=[], subs=[], formation="4-4-2";
+let liveMinute=0, scoreA=0, scoreB=0, scorersA=[], statsA={poss:73,att:13,on:5,rec:7}, statsB={poss:27,att:6,on:1,rec:7};
+let fixtures=[{h:"Burnley",a:"Manchester City",r:"0-2"},{h:"Quatracul CF",a:"Liverpool",r:"3-0"},{h:"Norwich City",a:"Chelsea",r:"0-3"},{h:"Brighton",a:"Manchester United",r:"2-1"},{h:"Brentford",a:"Tottenham",r:"1-1"},{h:"Everton",a:"Wolverhampton",r:"0-3"},{h:"Crystal Palace",a:"West Ham",r:"1-1"},{h:"Aston Villa",a:"Leicester City",r:"3-1"}];
+let table={"Quatracul CF":30,"Liverpool":28,"Chelsea":27,"Man City":26};
+
+function renderSquad(){
+ let nextOpp="Liverpool (3rd)";
+ document.getElementById('app').innerHTML=`
+ <div class='top'>
+  <div class='top1'><div><div class='teal'>${myTeam} (1st)</div><div>${coach}</div><div class='gold'>Next match</div><div>League - 1st D - ${day}nd round<br>Home - ${nextOpp}</div></div>
+  <div style='text-align:right'><div>${month}/${day}/${year}</div><div>Chairman confidence <div class='bar'><div style='width:${confidenceC}%'></div></div> ${confidenceC}%</div><div>Supporters confidence <div class='bar'><div style='width:${confidenceS}%'></div></div> ${confidenceS}%</div><div style='margin-top:6px;font-weight:900'>$${budget}M 695k</div></div></div>
+ </div>
+ <div class='squad-head'><div>👤 ${squad.length}</div><div>Order by</div><select class='select' style='width:120px'><option>Position</option></select></div>
+ <div>${squad.map(p=>`<div class='row'><div style='display:flex;gap:8px;align-items:center'><div class='pos'>${p.pos}</div><div><div class='name'>${p.n} ${p.star?'<span class="star">★</span>':''}</div><div class='val'>${p.val} (Sal: ${p.sal})<br>${p.flag} Age: ${p.age} Energy: ${p.energy}% ${p.card||''} ${p.inj?'💢'+p.inj:''}</div></div></div><div style='display:flex;gap:8px;align-items:center'><div class='ovr'>${p.ovr}</div><div>👤</div></div></div>`).join('')}</div>
+ <div id='popup'></div>
+ <div class='bottom'>
+  <div class='bicon active' onclick='renderSquad()'>⚽</div>
+  <div class='bicon' onclick='openPopup("tactics")'>📋</div>
+  <div class='bicon' onclick='openPopup("fixtures")'>📅</div>
+  <div class='bicon' onclick='openPopup("trophy")'>🏆</div>
+  <div class='bicon' onclick='openPopup("settings")'>⚙️</div>
+ </div>`;
 }
-function changeTeam(t){ localStorage.setItem('qfooty_team',t); ['table','fix','stats','b'].forEach(k=>localStorage.removeItem('qfooty_'+k+'_'+myLeague)); localStorage.removeItem('qfooty_b_'+myTeam); location.reload(); }
-function resetSeason(){ if(confirm('Reset season?')){ ['table','fix','stats'].forEach(k=>localStorage.removeItem('qfooty_'+k+'_'+myLeague)); location.reload(); } }
-function init(){
- let sel=document.getElementById('teamSel'); let allTeams=[].concat(...Object.values(TEAMS)); allTeams.forEach(t=>{ let o=document.createElement('option'); o.value=t; o.textContent=t+' $'+getB(t)+'M'; sel.appendChild(o); }); sel.value=myTeam;
- Object.keys(TEAMS).forEach(lg=>TEAMS[lg].forEach(t=>{ db[t]=genSquad(t); }));
- let teams=TEAMS[myLeague]; table={}; teams.forEach(t=>table[t]={P:0,W:0,D:0,L:0,GF:0,GA:0,PTS:0});
- fixtures=[]; let others=teams.filter(t=>t!==myTeam); let s=[...others].sort(()=>Math.random()-0.5); let g=1; s.forEach(o=>{ fixtures.push({gw:g++,home:myTeam,away:o,played:false}); }); s.sort(()=>Math.random()-0.5).forEach(o=>{ fixtures.push({gw:g++,home:o,away:myTeam,played:false}); }); fixtures=fixtures.slice(0,38); fixtures.forEach((f,i)=>f.gw=i+1);
- for(let i=0;i<30;i++){ market.push({id:i,name:'Player '+i+' OVR '+(70+Math.floor(Math.random()*20)),ovr:70+Math.floor(Math.random()*20),val:5+Math.floor(Math.random()*35),pos:['FW','MID','DEF','GK'][i%4]}); }
- let saved=localStorage.getItem('qfooty_table_'+myLeague); if(saved){try{table=JSON.parse(saved);}catch(e){}} let savedF=localStorage.getItem('qfooty_fix_'+myLeague); if(savedF){try{fixtures=JSON.parse(savedF); results=fixtures.filter(f=>f.played);}catch(e){}} let savedS=localStorage.getItem('qfooty_stats_'+myLeague); if(savedS){try{stats=JSON.parse(savedS);}catch(e){}}
- render();
+function openPopup(type){
+ let el=document.getElementById('popup');
+ if(type==='tactics'){
+  el.innerHTML=`<div class='popup'><div class='pitem' onclick='renderLineup()'>Lineup 4-4-2 - Play next match</div><div class='pitem' onclick='alert("Show all teams")'>Show all teams</div><div class='pitem'>Stadium</div><div class='pitem'>Youth Squad</div><div class='pitem'>Search</div><div class='pitem'>Finances $58M</div></div>`;
+ } else if(type==='fixtures'){
+  el.innerHTML=`<div class='popup'><div class='pitem'>Standing and fixtures</div><div class='pitem'>Your Fixtures</div><div class='pitem'>Friendly Schedule</div></div>`;
+ } else if(type==='trophy'){
+  el.innerHTML=`<div class='popup'><div class='pitem'>Teams Ranking</div><div class='pitem'>Coaches Ranking</div><div class='pitem'>Champions</div><div class='pitem'>Top Scorer - Palmer 8 goals</div><div class='pitem'>MVP Round</div><div class='pitem'>MVP year</div></div>`;
+ } else if(type==='settings'){
+  el.innerHTML=`<div class='popup'><div class='pitem' onclick='localStorage.setItem("qfooty_save_"+Date.now(),JSON.stringify({team:myTeam}));alert("Game saved!")'>Save game</div><div class='pitem'>Settings</div><div class='pitem' onclick='if(confirm("Resign?")) location.reload()'>Resign</div><div class='pitem' onclick='location.reload()'>Main menu</div><div class='pitem'>About QFooty 8.0</div><div class='pitem'>Remove ads</div></div>`;
+ } else { el.innerHTML=''; }
 }
-function awardG(team,c){
- let sq=db[team]; if(!sq) return []; let fw=sq.filter(p=>p.pos==='FW'); let sc=[];
- for(let i=0;i<c;i++){ let p=fw[Math.floor(Math.random()*Math.min(5,fw.length))]; if(p){ p.g++; sc.push(p.n); let k=p.n+' ('+team+')'; if(!stats[k]) stats[k]={team:team,g:0,a:0,cs:0,pos:p.pos,ovr:p.ovr}; stats[k].g++; stats[k].team=team; } }
- return sc;
+function renderLineup(){
+ lineup=squad.slice(0,11); subs=squad.slice(11);
+ document.getElementById('app').innerHTML=`
+ <div class='top'><div class='top1'><div>Lineup (${formation})</div><div><button class='btn' style='width:auto;padding:4px 8px' onclick='renderSquad()'>Back</button></div></div></div>
+ <div style='display:flex'><div style='flex:1'>
+  ${lineup.map(p=>`<div class='row'><div><div class='pos'>${p.pos.startsWith("GK")?"GK":p.pos.startsWith("W")||p.pos.includes("D")?"DEF":p.pos.includes("M")?"MID":"ATT"}</div><div class='name'>${p.n}</div><div class='mini'>${p.pos} ${p.flag}</div></div><div style='text-align:right'><div class='ovr'>${p.ovr}</div><div class='mini'>${p.energy}%</div></div></div>`).join('')}
+  <div style='padding:6px;font-weight:800;background:#0f766e'>SUBS</div>
+  ${subs.map(p=>`<div class='row' style='opacity:.8'><div><div class='pos'>SUB</div><div class='name'>${p.n}</div><div class='mini'>${p.pos}</div></div><div><div>${p.ovr}</div><div class='mini'>${p.energy}%</div></div></div>`).join('')}
+ </div>
+ <div style='width:140px;background:#1e293b;padding:6px'>
+  <div style='display:flex;gap:4px'><div style='background:#22c55e;color:#000;padding:6px;border-radius:6px;flex:1;text-align:center'>⇄</div><div style='background:#fff;color:#000;padding:6px;border-radius:6px;flex:1;text-align:center'>📋</div><div style='background:#facc15;padding:6px;border-radius:6px;flex:1'>🎽</div></div>
+  <select class='select' id='formSel' onchange='formation=this.value'><option>4-4-2</option><option>4-3-3</option><option>3-5-2</option></select>
+  <div style='margin-top:10px;font-weight:800;color:#facc15'>Available players</div>
+  <div>${squad.slice(0,5).map(p=>`<div class='row' style='font-size:10px'><div>${p.n}<br>${p.pos}</div><div>${p.ovr} ★<br>⚡${p.energy}%</div></div>`).join('')}</div>
+  <button class='btn btnGold' style='position:fixed;bottom:70px;right:6px;width:140px' onclick='startLive()'>Play match</button>
+ </div></div>`;
 }
-function awardCS(team){ let sq=db[team]; if(!sq) return; let gk=sq.find(p=>p.pos==='GK'); if(gk){ gk.cs++; let k=gk.n+' ('+team+')'; if(!stats[k]) stats[k]={team:team,g:0,a:0,cs:0,pos:'GK',ovr:gk.ovr}; stats[k].cs++; } }
-function playNext(){
- let f=fixtures.find(x=>!x.played); if(!f){ alert('Season over! Champion: '+Object.entries(table).sort((a,b)=>b[1].PTS-a[1].PTS)[0][0]); return; }
- let myOVR=db[myTeam].reduce((s,p)=>s+p.ovr,0)/db[myTeam].length; let oppTeam=f.home===myTeam?f.away:f.home; let oppOVR=db[oppTeam]?db[oppTeam].reduce((s,p)=>s+p.ovr,0)/db[oppTeam].length:70;
- let diff=(myOVR-oppOVR)/15;
- let mg=Math.max(0,Math.floor(Math.random()*3 + (f.home===myTeam? diff:0) +0.5));
- let og=Math.max(0,Math.floor(Math.random()*3 + (f.away===myTeam? diff:0) +0.5));
- f.played=true; f.mg=f.home===myTeam?mg:og; f.og=f.home===myTeam?og:mg; f.res=f.mg>f.og?'W':f.mg===f.og?'D':'L';
- if(f.mg>0) f.scorers=awardG(f.home,f.mg); if(f.og>0) f.scorers2=awardG(f.away,f.og); if(f.mg===0) awardCS(f.away); if(f.og===0) awardCS(f.home);
- table[f.home].P++; table[f.away].P++; table[f.home].GF+=f.mg; table[f.home].GA+=f.og; table[f.away].GF+=f.og; table[f.away].GA+=f.mg;
- if(f.mg>f.og){ table[f.home].W++; table[f.home].PTS+=3; table[f.away].L++; }else if(f.og>f.mg){ table[f.away].W++; table[f.away].PTS+=3; table[f.home].L++; }else{ table[f.home].D++; table[f.away].D++; table[f.home].PTS++; table[f.away].PTS++; }
- results.push(f);
- localStorage.setItem('qfooty_table_'+myLeague,JSON.stringify(table));
- localStorage.setItem('qfooty_fix_'+myLeague,JSON.stringify(fixtures));
- localStorage.setItem('qfooty_stats_'+myLeague,JSON.stringify(stats));
- render();
+function startLive(){
+ liveMinute=0; scoreA=0; scoreB=0; scorersA=[];
+ renderLive(); let iv=setInterval(()=>{
+  liveMinute++;
+  if(liveMinute===8){ scoreA=1; scorersA.push("Chelsea 8'"); }
+  if(liveMinute===36){ scoreA=2; scorersA.push("Tariro 36'"); }
+  if(liveMinute===53){ scoreA=3; scorersA.push("Blessed 53'"); }
+  if(liveMinute===45){ clearInterval(iv); renderHalf(); return; }
+  if(liveMinute>=90){ clearInterval(iv); renderFull(); return; }
+  renderLive();
+ }, 200);
+ setTimeout(()=>{ liveMinute=11; renderLive(); }, 400);
+ setTimeout(()=>{ liveMinute=43; scoreA=2; scorersA=["Chelsea 8'","Tariro 36'"]; renderLive(); }, 1200);
 }
-function render(){
- document.getElementById('budgetLabel').innerText=myTeam+' $'+budget+'M (real $'+getB(myTeam)+'M)';
- let next=fixtures.find(f=>!f.played); let t=table[myTeam]||{P:0,PTS:0,GF:0,GA:0}; let played=fixtures.filter(f=>f.played).length; let prog=Math.round(played/fixtures.length*100);
- let sorted=Object.entries(table).sort((a,b)=>b[1].PTS-a[1].PTS); let pos=sorted.findIndex(e=>e[0]===myTeam)+1;
- document.getElementById('dash').innerHTML="<div class='card'><h3>"+myTeam+" | "+myLeague+" | $"+budget+"M <span class='badge'>POS #"+pos+"</span></h3><div class='progress'><div style='width:"+prog+"%'></div></div><div class='row'><div>P "+t.P+" | PTS "+t.PTS+" | GF "+t.GF+" GA "+t.GA+" GD "+(t.GF-t.GA)+"</div><div>"+prog+"%</div></div><div class='small'>Real Budget: $"+getB(myTeam)+"M - Your Budget: $"+budget+"M</div></div><div class='card'><h3>Next: GW"+(next?next.gw:'-')+" "+(next?next.home+" vs "+next.away:'SEASON DONE')+"</h3>"+(next?"<div class='fixture'><div><b>"+next.home+"</b> vs <b>"+next.away+"</b></div><button class='btn' onclick='playNext()'>PLAY MATCH</button></div>":"<div class='big'>CHAMPION: "+(sorted[0]?sorted[0][0]:'-')+"</div>")+"</div><div class='card'><h3>Last 5 Results</h3>"+(results.slice(-5).reverse().map(r=>"<div class='row'><div>GW"+r.gw+" "+r.home+" "+r.mg+"-"+r.og+" "+r.away+" <span class='small'>"+(r.scorers?r.scorers.join(', '):'CS')+(r.scorers2?' | '+r.scorers2.join(', '):'')+"</span></div><div><span class='badge'>"+r.res+"</span></div></div>").join('')||"<div class='small'>No games yet</div>")+"</div>";
- document.getElementById('squad').innerHTML="<div class='card'><h3>Squad - "+myTeam+" ("+db[myTeam].length+" players)</h3><div class='formation' id='formDiv'></div><table class='table'><tr><th>Name</th><th>Pos</th><th>OVR</th><th>G</th><th>CS</th></tr>"+db[myTeam].map(p=>"<tr><td>"+p.n+"</td><td>"+p.pos+"</td><td>"+p.ovr+"</td><td>"+p.g+"</td><td>"+p.cs+"</td></tr>").join('')+"</table></div>";
- setTimeout(()=>{ let fd=document.getElementById('formDiv'); if(!fd) return; let posMap={GK:[50,90],DEF:[[20,70],[40,70],[60,70],[80,70]],MID:[[30,45],[50,45],[70,45]],FW:[[40,15],[60,15]]}; let idx=0; db[myTeam].slice(0,11).forEach(p=>{ let d=document.createElement('div'); d.className='player-dot'; d.textContent=p.n.slice(0,8)+' '+p.ovr; if(p.pos==='GK'){ d.style.left='50%'; d.style.top='90%'; }else if(p.pos==='DEF'){ let arr=posMap.DEF; let pp=arr[idx%arr.length]; d.style.left=pp[0]+'%'; d.style.top=pp[1]+'%'; idx++; }else if(p.pos==='MID'){ let arr=posMap.MID; let pp=arr[idx%arr.length]; d.style.left=pp[0]+'%'; d.style.top=pp[1]+'%'; idx++; }else{ let arr=posMap.FW; let pp=arr[idx%arr.length]; d.style.left=pp[0]+'%'; d.style.top=pp[1]+'%'; idx++; } fd.appendChild(d); }); },100);
- document.getElementById('fixtures').innerHTML="<div class='card'><h3>38 Fixtures - "+myLeague+"</h3>"+fixtures.map(f=>"<div class='fixture'><div>GW"+f.gw+" "+f.home+" "+(f.played?f.mg+"-"+f.og+"":"vs")+" "+f.away+" "+(f.played?"<span class='small'>"+(f.scorers?f.scorers.join(','):'')+"</span>":"")+"</div><div>"+(f.played?"<span class='badge'>"+f.res+"</span>":"UP")+"</div></div>").join('')+"</div>";
- document.getElementById('table').innerHTML="<div class='card'><h3>Table - "+myLeague+"</h3><table class='table'><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr>"+sorted.map((e,i)=>"<tr style='"+(e[0]===myTeam?"background:#22c55e22;font-weight:800":"")+"'><td>"+(i+1)+"</td><td>"+e[0]+(e[0]===myTeam?" YOU":"")+"</td><td>"+e[1].P+"</td><td>"+e[1].W+"</td><td>"+e[1].D+"</td><td>"+e[1].L+"</td><td>"+e[1].GF+"</td><td>"+e[1].GA+"</td><td>"+(e[1].GF-e[1].GA)+"</td><td><b>"+e[1].PTS+"</b></td></tr>").join('')+"</table></div>";
- let top=Object.entries(stats).sort((a,b)=>b[1].g-a[1].g).slice(0,15); let topCS=Object.entries(stats).filter(e=>e[1].cs>0).sort((a,b)=>b[1].cs-a[1].cs).slice(0,10);
- document.getElementById('stats').innerHTML="<div class='card'><h3>⚽ Top Scorers - Golden Boot</h3><table class='table'><tr><th>#</th><th>Player</th><th>Team</th><th>OVR</th><th>Goals</th></tr>"+top.map((e,i)=>"<tr><td>"+(i+1)+"</td><td>"+e[0]+"</td><td>"+e[1].team+"</td><td>"+(e[1].ovr||'-')+"</td><td><b>"+e[1].g+"</b></td></tr>").join('')+"</table></div><div class='card'><h3>🧤 Clean Sheets - Golden Glove</h3><table class='table'><tr><th>#</th><th>GK</th><th>Team</th><th>CS</th></tr>"+topCS.map((e,i)=>"<tr><td>"+(i+1)+"</td><td>"+e[0]+"</td><td>"+e[1].team+"</td><td><b>"+e[1].cs+"</b></td></tr>").join('')+"</table></div>";
- document.getElementById('awards').innerHTML="<div class='card'><h3>🏆 End of Season Awards</h3><div class='row'><div>🏆 Champion ("+myLeague+")</div><div><b>"+(sorted[0]?sorted[0][0]:'-')+"</b> "+(sorted[0]?sorted[0][1].PTS+" pts":'')+"</div></div><div class='row'><div>⚽ Golden Boot (Top Scorer)</div><div><b>"+(top[0]?top[0][0]+" - "+top[0][1].g+" goals":"-")+"</b></div></div><div class='row'><div>🧤 Golden Glove (Most Clean Sheets)</div><div><b>"+(topCS[0]?topCS[0][0]+" - "+topCS[0][1].cs+" CS":"-")+"</b></div></div><div class='row'><div>💰 Richest Budget</div><div>Real Madrid $300M</div></div><div class='row'><div>📊 Your Position</div><div>#"+pos+" - "+t.PTS+" pts - GD "+(t.GF-t.GA)+"</div></div><div class='row'><div>Progress</div><div>"+played+"/38 ("+prog+"%)</div></div></div>";
- document.getElementById('transfers').innerHTML="<div class='card'><h3>💰 Transfer Market - Budget $"+budget+"M (Real $"+getB(myTeam)+"M)</h3><div class='small'>Chelsea can buy big - Sundowns $12M / Chiefs $8M small</div>"+market.map(m=>"<div class='row'><div><b>"+m.name+"</b> "+m.pos+" OVR "+m.ovr+" <span class='badge'>$"+m.val+"M</span></div><div><button class='btn2' onclick='buy("+m.id+")'>Buy</button></div></div>").join('')+"</div>";
+function renderLive(){
+ document.getElementById('app').innerHTML=`
+ <div class='top'><div>League - 1st D<br>${day}nd round</div><div class='clock'>${liveMinute}'</div></div>
+ <div class='liveTop'><div class='scoreBox'><div class='tA'>${myTeam}</div><div class='sc'>${scoreA}-${scoreB}</div><div class='tB'>Liverpool</div></div></div>
+ <div class='mini' style='padding:4px 8px'>⚽ ${scorersA.join(" ")}</div>
+ <div class='liveCard'><div style='text-align:center;color:#facc15;font-weight:800'>Live results</div>
+  <div style='text-align:center;font-weight:800;margin:6px 0'>1st division</div>
+  ${fixtures.map(f=>`<div class='row' style='background:transparent;border:0;padding:2px 0'><div style='flex:1;text-align:right'>${f.h}</div><div style='width:60px;text-align:center;font-weight:800'>${f.h.includes("Quatracul")||f.h===myTeam?scoreA+"-"+scoreB:f.r}</div><div style='flex:1'>${f.a}</div></div>`).join('')}
+  <div style='text-align:center;font-weight:800;margin:6px 0'>2nd division</div>
+  <div class='row' style='background:transparent;border:0;padding:2px 0'><div style='flex:1;text-align:right'>Blackpool</div><div style='width:60px;text-align:center'>0-0</div><div style='flex:1'>Swansea</div></div>
+  <div class='row' style='background:transparent;border:0;padding:2px 0'><div style='flex:1;text-align:right'>Watford</div><div style='width:60px;text-align:center'>0-0</div><div style='flex:1'>Huddersfield</div></div>
+ </div>`;
 }
-function buy(id){ let p=market.find(x=>x.id===id); if(!p) return; if(budget<p.val){ alert('Not enough money! Need $'+p.val+'M, you have $'+budget+'M'); return; } budget-=p.val; db[myTeam].push({n:p.name,pos:p.pos,ovr:p.ovr,g:0,a:0,cs:0,form:7}); market=market.filter(x=>x.id!==id); localStorage.setItem('qfooty_b_'+myTeam,budget); render(); }
-function showTab(id,el){ document.querySelectorAll('#dash,#squad,#fixtures,#table,#stats,#awards,#transfers').forEach(d=>d.style.display='none'); document.getElementById(id).style.display='block'; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); }
-init();
+function renderHalf(){
+ document.getElementById('app').innerHTML=`
+ <div class='top'><div style='text-align:center;width:100%;color:#facc15'>Half-Time</div></div>
+ <div class='liveTop'><div style='flex:1;text-align:center'>${myTeam}</div><div style='flex:0 0 120px;text-align:center'><div style='background:#fff;color:#000;padding:4px'>Match info</div><div style='margin-top:4px'>2-0</div><div style='font-size:10px'>🏟️ Quatracul Arena<br>👥 74208<br>💰 1M 186k<br>⚽ Chelsea 8'<br>⚽ Tariro 36'</div></div><div style='flex:1;text-align:center'>Liverpool</div></div>
+ <div class='liveCard'>
+  <div class='row'><div>73%</div><div style='color:#facc15'>ball possession</div><div>27%</div></div>
+  <div class='row'><div>13</div><div style='color:#facc15'>Attempts</div><div>6</div></div>
+  <div class='row'><div>5</div><div style='color:#facc15'>On-target</div><div>1</div></div>
+  <div class='row'><div>7</div><div style='color:#facc15'>Balls recovered</div><div>7</div></div>
+ </div>
+ <button class='btn btnGold' style='position:fixed;bottom:0;left:0;right:0;border-radius:0' onclick='resumeSecondHalf()'>Back to match</button>`;
+}
+function resumeSecondHalf(){
+ liveMinute=45; renderLive(); let iv=setInterval(()=>{ liveMinute++; if(liveMinute>=90){ clearInterval(iv); renderFull(); } else renderLive(); }, 150);
+}
+function renderFull(){
+ document.getElementById('app').innerHTML=`
+ <div class='top'><div style='text-align:center;color:#facc15;width:100%'>Round results</div><div style='text-align:center'>🏴󐁧󐁢󐁥󐁮󐁧󐁿 England ⬇️<br>22nd round<br><b>1st division</b></div></div>
+ <div class='liveCard'>
+  ${fixtures.map(f=>`<div class='row' style='background:transparent'><div style='flex:1;text-align:right'>${f.h}</div><div style='width:50px;text-align:center;font-weight:800'>${f.r}</div><div style='flex:1'>${f.a}</div></div>`).join('')}
+  <div style='text-align:center;margin-top:8px'><b>2nd division</b></div>
+  <div class='row' style='background:transparent'><div style='flex:1;text-align:right'>Blackpool</div><div style='width:50px;text-align:center'>0-2</div><div style='flex:1'>Swansea</div></div>
+ </div>
+ <div style='display:flex;background:#0f172a;border-top:2px solid #22c55e'>
+  <div style='flex:1;padding:6px'><div class='teal'>${myTeam}</div><div style='font-size:24px;font-weight:900'>3-0</div>
+   <div class='mini'>G Logen 10<br>D Kuziva 9.6<br>D Chelsea 7.5<br>D Faith 9.5<br>D Kimberley 10 ✎<br>M Martha 10<br>M Stayce 9.9<br>M Modesta 9.5<br>M Tariro 8.5<br>A Ropafadzo 10<br>A Blessed 10</div>
+  </div>
+  <div style='width:120px;text-align:center;padding:6px;border-left:1px solid #334155;border-right:1px solid #334155'><div>🏟️ Quatracul Arena<br>👥 74208<br>💰 1M 186k</div><div style='margin-top:8px;font-size:11px'>⚽ Chelsea 8'<br>⚽ Tariro 36'<br>⚽ Blessed 53'</div></div>
+  <div style='flex:1;padding:6px'><div style='background:#dc2626;padding:4px;border-radius:4px'>Liverpool</div>
+   <div class='mini'>G Alisson 4.8<br>D Alexander-Arnold 4.0<br>D Van Dijk 4.4<br>D Joe Gomez 2.3<br>D Joel Matip 3.8<br>D Robertson 4.7<br>M Henderson 3.5<br>M Oxlade-Chamberlain 3.1<br>M Diogo Jota 4.7<br>M Naby Keita 4.4<br>A Mané 5.8<br>A Takumi Minamino 4.0<br>A Salah 6.5<br>A Roberto Firmino 3.7</div>
+  </div>
+ </div>
+ <div style='position:fixed;bottom:0;left:0;right:0;background:#000;display:flex;justify-content:space-around;padding:8px'><div class='bicon'>📋</div><div class='bicon'>📊</div><div class='bicon' style='background:#22c55e;color:#000' onclick='renderSquad()'>➡️</div></div>`;
+}
+renderSquad();
 </script></body></html>
